@@ -1,4 +1,8 @@
 #去掉开屏 两个轮播图 精简播放页面侧边栏推荐和搜索推荐
+
+#频道@IPAs_share
+#群组@IPAs_Dd
+
 hostname = bd-api.kuwo.cn, pgdt.gtimg.cn
 
 
