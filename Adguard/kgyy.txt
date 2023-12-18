@@ -1,7 +1,7 @@
 #频道@IPAs_share  群组:https://t.me/IPAs_share
 #群组@IPAs_Dd
 
-#去开屏广告   我的页面横幅
+#酷狗音乐    去开屏广告   我的页面横幅
 
 hostname = us.l.qq.com, gateway.kugou.com, ads.service.kugou.com, 
 
