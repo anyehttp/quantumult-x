@@ -6,11 +6,9 @@
 
 
 [rewrite_local]
-^https:\/\/bd-api\.kuwo\.cn\/api\/service\/(home\/index|banner\/myPage) url script-response-body 
-
-^https?:\/\/bd-api\.kuwo\.cn\/api\/service\/advert\/watch/ url script-response-body 
-
+^https:\/\/bd-api\.kuwo\.cn\/api\/(ucenter\/users|play\/listening\/user|service\/(home\/index|banner\/myPage|advert\/watch)) url script-response-body 
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/ddddddd.js
+
 [mitm]
 hostname = bd-api.kuwo.cn
 
