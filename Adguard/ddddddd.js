@@ -14,7 +14,7 @@
 
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/ddddddd.js
 [mitm]
-hostname = pgdt.gtimg.cn
+hostname = bd-api.kuwo.cn
 
   *************************************/
 
