@@ -1,1 +1,14 @@
+#频道@IPAs_share  群组:https://t.me/IPAs_share
+#群组@IPAs_Dd
 
+#去开屏广告   我的页面横幅
+
+hostname = us.l.qq.com, gateway.kugou.com, ads.service.kugou.com, 
+
+^https:\/\/gateway\.kugou\.com\/adp\/ad\/v1\/mine_top_banner\?appid url reject-200
+
+^https:\/\/us\.l\.qq\.com\/exapp\?adposcount url reject-200
+
+^http:\/\/ads\.service\.kugou\.com\/v4\/mobile_splash_sort\?appid url reject-200
+
+^http:\/\/ads\.service\.kugou\.com\/v4\/mobile_splash\?appid url reject-200
