@@ -3,8 +3,9 @@
 #频道@IPAs_share  群组:https://t.me/IPAs_share
 #群组@IPAs_Dd
 
-hostname = bd-api.kuwo.cn, pgdt.gtimg.cn
+hostname = bd-api.kuwo.cn, pgdt.gtimg.cn, bd-api.kuwo.cn
 
+^https:\/\/bd-api\.kuwo\.cn\/api\/service\/home\/module\?uid url reject-dict
 
 ^https:\/\/bd-api\.kuwo\.cn\/api\/voice\/room\/sidebar\?uid url reject-dict
 
