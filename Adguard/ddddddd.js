@@ -12,10 +12,9 @@
 
 ^https?:\/\/bd-api\.kuwo\.cn\/api\/service\/banner\/myPage\?uid url reject-dict
 
-^https:\/\/pgdt\.gtimg\.cn\/141\/20204\/snscosdownload\/SZ\/reserved url reject-200
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/ddddddd.js
 [mitm]
-hostname = bd-api.kuwo.cn, pgdt.gtimg.cn
+hostname = pgdt.gtimg.cn
 
   *************************************/
 
