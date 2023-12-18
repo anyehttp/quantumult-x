@@ -6,11 +6,11 @@
 
 
 [rewrite_local]
-^https:\/\/bd-api\.kuwo\.cn\/api\/voice\/room\/sidebar\?uid url reject-dict
+^https:\/\/bd-api\.kuwo\.cn\/api\/voice\/room\/sidebar\?uid url script-response-body 
 
-^https:\/\/bd-api\.kuwo\.cn\/api\/search\/topic\/word\/list\?uid url reject-dict
+^https:\/\/bd-api\.kuwo\.cn\/api\/search\/topic\/word\/list\?uid url script-response-body 
 
-^https?:\/\/bd-api\.kuwo\.cn\/api\/service\/banner\/myPage\?uid url reject-dict
+^https?:\/\/bd-api\.kuwo\.cn\/api\/service\/banner\/myPage\?uid url script-response-body 
 
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/ddddddd.js
 [mitm]
