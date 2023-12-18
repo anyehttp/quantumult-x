@@ -1,0 +1,11 @@
+#去掉开屏 两个轮播图 精简播放页面侧边栏推荐和搜索推荐
+hostname = bd-api.kuwo.cn, pgdt.gtimg.cn
+
+
+^https:\/\/bd-api\.kuwo\.cn\/api\/voice\/room\/sidebar\?uid url reject-dict
+
+^https:\/\/bd-api\.kuwo\.cn\/api\/search\/topic\/word\/list\?uid url reject-dict
+
+^https?:\/\/bd-api\.kuwo\.cn\/api\/service\/banner\/myPage\?uid url reject-dict
+
+^https:\/\/pgdt\.gtimg\.cn\/141\/20204\/snscosdownload\/SZ\/reserved url reject-200
