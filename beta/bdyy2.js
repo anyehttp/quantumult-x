@@ -1,6 +1,6 @@
 [rewrite_local]
-^https:\/\/bd-api\.kuwo\.cn\/api\/service\/home\/index url script-response-body
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/bdyy2.js
+^https:\/\/bd-api\.kuwo\.cn\/api\/service\/home\/index url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/bdyy2.js
+
 
 [mitm]
 hostname = bd-api.kuwo.cn
