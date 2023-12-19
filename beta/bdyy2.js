@@ -9,7 +9,7 @@ hostname = bd-api.kuwo.cn
 var body = $response.body;
 var anye = JSON.parse(body);
 
-const ay = /api\/service\/home\/index/;
+const ay = /api\/service\/home\/index;
 
 if(ay.test($request.url))
 {
