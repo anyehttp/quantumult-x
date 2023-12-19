@@ -16,7 +16,7 @@ if(ay.test($request.url))
     anye.data.list = [];
     if(anye.data.list && anye.data.list.length >0)
     {
-        anye.data.list = anye.data.list.filter(home => home.name !== "个性化歌单" || home.name !== "偶遇心动歌单" || home.name !== "波点排行榜");
+        anye.data.list = anye.data.list.filter(home => home.name !== "波点排行榜" && home.name !== "偶遇心动歌单" && home.name !== "个性化歌单");
     }
 }
 
