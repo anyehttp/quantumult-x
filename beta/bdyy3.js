@@ -1,17 +1,17 @@
 /*************************************
 [rewrite_local]
 ^https:\/\/usercenter\.kugou\.com\/v3\/get_my_info url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/bdyy3.js
-#^https:\/\/kugouvip\.kugou\.com\/v1\/get_union_vip url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/bdyy3.js
+
 
 [mitm]
-hostname = usercenter.kugou.com, kugouvip.kugou.com
+hostname = usercenter.kugou.com
 *************************************/
 
 var body = $response.body;
 var anye = JSON.parse(body);
 
 const vip1 = /v3\/get_my_info/;
-const vip2 = /v1\/get_union_vip/;
+
 
 if (vip1.test($request.url)) {
     anye.data = {
@@ -40,16 +40,7 @@ if (vip1.test($request.url)) {
               "vip_type" : 1,
     }
 }
-#if (vip2.test($request.url)) {
-#    anye.data = {
-#        "busi_vip":[{
-#            "vip_begin_time":"1999-09-09 17:32:25",
-#            "is_vip": 1,
-#            "vip_end_time":"1999-09-09 17:32:25",
-#        
-#        }]
-#    }
-#}
+
 
 
 $done({body: JSON.stringify(anye)});
