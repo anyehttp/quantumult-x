@@ -1,6 +1,6 @@
 /*************************************
 [rewrite_local]
-^http:\/\/login\.user\.kugou\.com\/v5\/login_by_token url reject-dict url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/sj2.js
+^http:\/\/login\.user\.kugou\.com\/v5\/login_by_token url reject-dict https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/sj2.js
 
 
 [mitm]
