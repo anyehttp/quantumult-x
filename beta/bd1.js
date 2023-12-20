@@ -14,17 +14,25 @@ const vip2 = /^https:\/\/bd-api\.kuwo\.cn\/api\/ucenter\/users\/login/;
 
 if (vip1.test($request.url)) {
     anye.data.userInfo = {
+        "expireDate" : 4092599349000,
+        "isSigned" : 1,
+        "lastPayType" : 1,
         "isVip" : 1,
-        "authType" : 2,
-        "status" : 1
+        "authType" : 3,
+        "status" : 1,
+        "isBind" : 1
     };
 }
 
 if (vip2.test($request.url)) {
     anye.data.userInfo = {
+        "expireDate" : 4092599349000,
+        "isSigned" : 1,
+        "lastPayType" : 1,
         "isVip" : 0,
-        "authType" : 2,
-        "status" : 1
+        "authType" : 3,
+        "status" : 1,
+        "isBind" : 1
     };
 }
 
