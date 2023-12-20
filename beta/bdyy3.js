@@ -10,7 +10,7 @@ hostname = usercenter.kugou.com
 var body = $response.body;
 var anye = JSON.parse(body);
 
-const vip1 = ^https:\/\/usercenter\.kugou\.com\/v3\/get_my_info/;
+const vip1 = /^https:\/\/usercenter\.kugou\.com\/v3\/get_my_info/;
 
 
 if (vip1.test($request.url)) {
