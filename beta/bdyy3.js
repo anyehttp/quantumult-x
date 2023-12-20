@@ -1,10 +1,11 @@
+/*************************************
 [rewrite_local]
 ^https:\/\/usercenter\.kugou\.com\/v3\/get_my_info url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/bdyy3.js
 ^https:\/\/kugouvip\.kugou\.com\/v1\/get_union_vip url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/bdyy3.js
 
 [mitm]
 hostname = bd-api.kuwo.cn, kugouvip.kugou.com
-
+*************************************/
 
 var body = $response.body;
 var anye = JSON.parse(body);
