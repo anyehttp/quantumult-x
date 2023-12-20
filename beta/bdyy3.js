@@ -12,8 +12,6 @@ var anye = JSON.parse(body);
 
 const vip1 = /^https:\/\/usercenter\.kugou\.com\/v3\/get_my_info/;
 
-
-if (vip1.test($request.url)) {
     anye.data = {
             "k_nickname" : "暗夜",
             "nickname" : "暗夜",
@@ -39,7 +37,7 @@ if (vip1.test($request.url)) {
               },
               "vip_type" : 1,
     }
-}
+
 
 
 
