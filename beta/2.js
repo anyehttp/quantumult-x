@@ -1,6 +1,7 @@
 /*************************************
 [rewrite_local]
 ^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/user\/getUserInfo url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/2.js
+^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/trialNumber\/getRemainNum url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/2.js
 
 
 [mitm]
@@ -8,7 +9,9 @@ hostname = pdfapi.soouya.com
 *************************************/
 
 var anye = JSON.parse($response.body);
-
+const vip1 = /^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/user\/getUserInfo/;
+const vip2 = /^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/trialNumber\/getRemainNum/;
+if(vip1.test($request.url)){
 anye.obj = {
     "forever" : 1,
     "expireTime" : 99,
@@ -27,6 +30,15 @@ anye.obj = {
     "sceneId" : 1,
     "allowLoginDeviceCount" : 1,
     "paid" : 1
-  }
+  };
+}
+if(vip2.test($request.url)){
+anye.obj = {
+    "trialCount" : 9999,
+    "remainNum" : 9999
+  };
+}
+
+
 
 $done({ body: JSON.stringify(anye) });
