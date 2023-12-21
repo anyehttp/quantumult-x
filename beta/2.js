@@ -1,6 +1,6 @@
 /*************************************
 [rewrite_local]
-^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/ user\/getUserInfo url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/2.js
+^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/user\/getUserInfo url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/2.js
 
 
 [mitm]
