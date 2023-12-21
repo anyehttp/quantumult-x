@@ -7,16 +7,22 @@ hostname = social.blued.cn
 *************************************/
 var anye = JSON.parse($response.body);
 
-if (/\/users\?birth_time/.test($request.url)) {
-    const ad = anye.extra;
+if (/users\?birth_time/.test($request.url)) {
+    const data = anye.data;
 
-    for (const key in ad) {
-        if (ad.hasOwnProperty(key) && Array.isArray(ad[key])) {
-            ad[key].forEach(item => {
-                item.ranking = 0;
-                item.ranking_banner_one = 0;
-                item.is_ads = 0;
-            });
+    for (const key in data) {
+        if (data.hasOwnProperty(key) && data[key].hasOwnProperty('extra') && typeof data[key]['extra'] === 'object') {
+            const extra = data[key]['extra'];
+
+            for (const item of extra) {
+                if (item.hasOwnProperty('adms_user') && Array.isArray(item['adms_user'])) {
+                    item['adms_user'].forEach(ad => {
+                        ad.ranking = 0;
+                        ad.ranking_banner_one = 0;
+                        ad.is_ads = 0;
+                    });
+                }
+            }
         }
     }
 
