@@ -1,0 +1,29 @@
+hostname = social.blued.cn, mobads.baidu.com, mi.gdt.qq.com, open.e.kuaishou.com, argo.blued.cn, v2-ad.video.yximgs.com, 
+
+^https:\/\/open\.e\.kuaishou\.com\/rest\/e\/v3\/open\/config url reject-dic
+
+^https:\/\/argo\.blued\.cn\/blued\/config\?latitude url reject-dict
+
+
+^https:\/\/argo\.blued\.cn\/blued\/promotion\/banners\?banners_click_num url reject-dict
+
+^http:\/\/v2-ad\.video\.yximgs\.com\/kos\/nlav11461 url reject-dict
+
+^https:\/\/mi\.gdt\.qq\.com\/server_bidding2\?posid url reject-dict
+
+^https:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php url reject-dict
+
+^https:\/\/mi\.gdt\.qq\.com\/gdt_mview\.fcg\?spsa url reject-dict
+
+
+^https:\/\/mi\.gdt\.qq\.com\/gdt_mview\.fcg\?posid url reject-dict
+
+
+
+^https:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php url reject-dict
+
+
+
+^https:\/\/social\.blued\.cn\/users\/face\/goods_list url reject-dict
+
+
