@@ -11,7 +11,7 @@ var anye = JSON.parse($response.body);
 
 anye.obj = {
     "forever" : 0,
-    "expireTime" : 0,
+    "expireTime" : 9999—99—99,
     "id" : 132756,
     "headImgUrl" : "https://thirdwx.qlogo.cn/mmopen/vi_32/G2JuvdJrdhbw2bnUiaUcorQS3C5cRAFqezSPiaTmsLVn7GSgo1LG9rhcJlRQlHy6TVI6ltMZhmSCbykQAoapCeFHIcpa86nZAaX0ibqsJPPjEE/132",
     "uuid" : "654462c5-5ca7-44cb-a7ff-de472ad9843d",
