@@ -1,13 +1,13 @@
 /*************************************
 [rewrite_local]
-^https:\/\/social\.blued\.cn\/users\?birth_time.*$ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued3.js
+^https:\/\/social\.blued\.cn\/users url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued3.js
 
 [mitm]
 hostname = social.blued.cn
 *************************************/
 
 // 正则表达式匹配 URL
-if (/^https:\/\/social\.blued\.cn\/users\?birth_time.*$/.test($request.url)) {
+if (/^https:\/\/social\.blued\.cn\/users.test($request.url)) {
     var anye = JSON.parse($response.body);
 
     function deleteFields(data) {
@@ -17,7 +17,7 @@ if (/^https:\/\/social\.blued\.cn\/users\?birth_time.*$/.test($request.url)) {
             } else if (key === 'show_url'  key === 'ads_id'  key === 'id') {
                 delete data[key];
             } else if (key === 'is_ads') {
-                data[key] = 0;
+                data["is_ads"] = 0;
             }
         }
     }
