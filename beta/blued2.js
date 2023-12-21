@@ -1,16 +1,15 @@
 /*************************************
 [rewrite_local]
-^https:\/\/social\.blued\.cn\/users\? url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued2.js
+^https:\/\/social\.blued\.cn\/users url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued2.js
 
 [mitm]
 hostname = social.blued.cn
 *************************************/
-
+var anye = JSON.parse($response.body);
 // 正则表达式匹配 URL
-if (/^https:\/\/social\.blued\.cn\/users\?/.test($request.url)) {
-    var anye = JSON.parse($response.body);
+const ad = /^https:\/\/social\.blued\.cn\/users/
 
-    // 删除字段
+if(ad.test($request.url){
     anye.extra.adms_user.forEach(item => {
         delete item.show_url;
         delete item.ads_id;
