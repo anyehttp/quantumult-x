@@ -10,8 +10,6 @@ hostname = pdfapi.soouya.com
 var anye = JSON.parse($response.body);
 
 anye.obj = {
-  "success" : "1",
-  "obj" : {
     "forever" : 0,
     "expireTime" : 0,
     "id" : 132756,
@@ -29,9 +27,6 @@ anye.obj = {
     "sceneId" : 1,
     "allowLoginDeviceCount" : 1,
     "paid" : 1
-  },
-  "msg" : "操作成功",
-  "_time" : 1703162243528
-}
+  }
 
 $done({ body: JSON.stringify(anye) });
