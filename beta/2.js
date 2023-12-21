@@ -2,7 +2,7 @@
 [rewrite_local]
 ^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/user\/getUserInfo url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/2.js
 ^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/trialNumber\/getRemainNum url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/2.js
-
+^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/convert\/doc2pdf url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/2.js
 
 [mitm]
 hostname = pdfapi.soouya.com
@@ -11,6 +11,8 @@ hostname = pdfapi.soouya.com
 var anye = JSON.parse($response.body);
 const vip1 = /^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/user\/getUserInfo/;
 const vip2 = /^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/trialNumber\/getRemainNum/;
+const vip3 = /^https:\/\/pdfapi\.soouya\.com\/v1\/mobile\/convert\/doc2pdf/;
+
 if(vip1.test($request.url)){
 anye.obj = {
     "forever" : 1,
@@ -39,6 +41,11 @@ anye.obj = {
   };
 }
 
-
+if(vip3.test($request.url)){
+anye = {
+  "msg" : "试用次足够",
+  "success" : "99999"
+   };
+}
 
 $done({ body: JSON.stringify(anye) });
