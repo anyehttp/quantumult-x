@@ -6,18 +6,21 @@
 hostname = social.blued.cn
 *************************************/
 var anye = JSON.parse($response.body);
-// 正则表达式匹配 URL
-const ad = /^https:\/\/social\.blued\.cn\/users/
 
-if(ad.test($request.url){
-    anye.extra.adms_user.forEach(item => {
-        delete item.show_url;
-        delete item.ads_id;
-        delete item.id;
-        item.is_ads = 0;
-    });
+if (/^https:\/\/social\.blued\.cn\/users/.test($request.url)) {
+    const ad = anye.extra;
+
+    for (const key in ad) {
+        if (ad.hasOwnProperty(key) && Array.isArray(ad[key])) {
+            ad[key].forEach(item => {
+                item.ranking = 0;
+                item.ranking_banner_one = 0;
+                item.is_ads = 0;
+            });
+        }
+    }
 
     $done({ body: JSON.stringify(anye) }); // 输出处理后的 JSON 数据
 } else {
-    $done({}); // 不符合正则匹配规则的 URL 原样返回
+    $done({});
 }
