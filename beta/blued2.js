@@ -1,13 +1,13 @@
 /*************************************
 [rewrite_local]
-^https:\/\/social\.blued\.cn\/users\?birth_time=\d+\.\d+&.*$ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued2.js
+^https:\/\/social\.blued\.cn\/users\?birth_time.*$ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued2.js
 
 [mitm]
 hostname = social.blued.cn
 *************************************/
 
 // 正则表达式匹配 URL
-if (/^https:\/\/social\.blued\.cn\/users\?birth_time=\d+\.\d+&.*$/.test($request.url)) {
+if (/^https:\/\/social\.blued\.cn\/users\?birth_time.*$/.test($request.url)) {
     var anye = JSON.parse($response.body);
 
     // 删除字段
