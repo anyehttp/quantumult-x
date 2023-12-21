@@ -7,7 +7,7 @@ hostname = social.blued.cn
 *************************************/
 var anye = JSON.parse($response.body);
 
-if (/^https:\/\/social\.blued\.cn\/users\?birth_time/.test($request.url)) {
+if (/\/users\?birth_time/.test($request.url)) {
     const ad = anye.extra;
 
     for (const key in ad) {
