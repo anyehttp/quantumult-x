@@ -24,4 +24,4 @@ if (obj.data && obj.data.viewer) {
   $done({});
 }
 
-$done({body : JSON.stringify(chxm1023)});
+$done({body : JSON.stringify(obj)});
