@@ -13,7 +13,6 @@ var vip1 = /^https:\/\/learning\.quark\.cn\/api\/home_data/;
 
     anye.initialState = {
         "isVip" : true,
-        "home_data_ready" : true
     }
 
 $done({ body: JSON.stringify(anye) });
