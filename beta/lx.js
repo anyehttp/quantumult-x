@@ -6,5 +6,6 @@ hostname = api.club.lenovo.cn
 
 */
 var anye = JSON.parse($response.body);
-anye. res =｛"residence_Time" = 0｝
+anye.res.residence_Time = 0;
 $done({ body: JSON.stringify(anye) });
+
