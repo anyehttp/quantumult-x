@@ -8,8 +8,8 @@ hostname = api.revenuecat.com
 
 */
 var anye = JSON.parse($response.body);
-anye.request_date_ms = 148204937166000,
-anye.request_date = "9999-12-22T03:19:30Z",
+anye.request_date_ms = 148204937166000;
+anye.request_date = "9999-12-22T03:19:30Z";
 anye.subscriber = {
     "first_seen" : "9999-12-22T03:17:51Z",
     "original_purchase_date" : "9999-12-22T03:17:41Z",
