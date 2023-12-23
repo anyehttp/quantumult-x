@@ -21,7 +21,7 @@ hostname = api.feihua100.com
 var anye = JSON.parse($response.body);
 let array = anye.data;
     array.map(open => {
-        open.isOpen = 1;
+        open.isOpen = -1;
         open.starVal = 3;
     });
 
