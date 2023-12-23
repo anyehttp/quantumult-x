@@ -10,7 +10,7 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/api\.popai\.pro\/api\/v1\/user\/currentUser url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/popaipro.js 
+^https:\/\/api\.popai\.pro\/api\/v1\/user\/currentUser url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/popai pro.js 
 
 
 hostname = api.popai.pro
