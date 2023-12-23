@@ -21,7 +21,7 @@ hostname = api.feihua100.com
 var anye = JSON.parse($response.body);
 let array = anye.data;
     array.map(e => {
-        e.isOpen = 1;
+        e.isOpen = 0;
     });
 
 $done({body : JSON.stringify(anye)});
