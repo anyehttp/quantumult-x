@@ -10,7 +10,7 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/app\.coding61\.com\/server\/code_orange\/get_user_property url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/OKMath.js 
+^https:\/\/app\.coding61\.com\/server\/code_orange\/get_user_property\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/OKMath.js 
 
 [mitm]
 hostname = app.coding61.com
