@@ -21,12 +21,18 @@ hostname = api.changecollective.com
 var body = $response.body;
 var anye = JSON.parse(body);
     anye.user = {
-    "subscription_period" : 2099-12-23T17:57:36Z,
-    "admin" : true,
-    "expiration_date" : 2099-12-23T17:57:36Z,
+    "subscription_period" : "P1Y",
+    "created_at" : "2023-12-23T17:57:36Z",
+    "expiration_date" : "12/31/2099, 06:21:58 PM UTC",
+    "subscription_in_trial" : true,
+    "plan_description" : "1 year (Trial)",
+    "completed_trial" : true,
     "display_name" : "暗夜",
-    "subscription_end_date" : 2099-12-23T17:57:36Z,
+    "subscription_end_date" : "12/30/2099, 08:21:58 PM UTC",
+    "home_segment" : "Default",
+    "subscription_is_auto_renewing" : true,
     "first_name" : "暗夜",
+    "subscription_source" : "Apple"
   }
 
 $done({body : JSON.stringify(anye)});
