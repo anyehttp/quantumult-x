@@ -21,7 +21,7 @@ var anye = JSON.parse($response.body);
     
     anye.data.leftDays = 9999;
     anye.data.vipEndTime = 4101794198000;
-    anye.data.wordNum = 9999999999;
+    anye.data.wordNum = 99;
     anye.data.endTime = 4101794198000;
     anye.data.vipLeftDaysForDisplay = 999;
     anye.data.superEndTime = 4101794198000;
