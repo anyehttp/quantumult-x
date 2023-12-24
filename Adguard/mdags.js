@@ -25,6 +25,8 @@ var body = $response.body;
 
 //关卡
 body = body.replace(/"isOpen"\s*:\s*0/g, '"isOpen": 1');
+//星星
+body = body.replace(/"starVal"\s*:\s*0/g, '"starVal": 3');
 
 //畅学包
 body = body.replace(/"isEnable"\s*:\s*2/g, '"isEnable": 1');
