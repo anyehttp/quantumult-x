@@ -11,18 +11,16 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/api\.finka\.cn\/user\/profile\/view\/v3 url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
+^https:\/\/api\.cikelink\.com\/fm\/v2\/fm\/userInfo url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
 
 [mitm]
-hostname = api.finka.cn
+hostname = api.cikelink.com
 
 *************************************/
 
 
-var anye = JSON.parse($response.body);
-    anye.data.user.vipAd = 3;
-    anye.data.user.svip = true;
-    anye.data.user.annualSsvip = true;
-    anye.data.user.annualVip = true;
-
-$done({body : JSON.stringify(anye)});
+var body = $response.body.replace(/status":\d/g,'status":1')
+.replace(/expireTime":\d+/g,'expireTime":4567891456')
+.replace(/expireUnixTime":\d+/g,'expireUnixTime":4567891456')
+.replace(/canPlay":\w+/g,'canPlay":true')
+$done({ body });
