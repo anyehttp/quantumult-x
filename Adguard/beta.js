@@ -23,15 +23,15 @@ var anye = JSON.parse($response.body);
     anye.data.user.vipAd = 3;
     anye.data.user.vip = true;
     anye.data.user.pro = true;
-    anye.data.isVideoAvatarValid = true;
-    anye.data.officialAccount = true;
-    anye.data.aloha = true;
-    anye.data.match = true;
-    anye.data.ssvip = true;
-    anye.data.name = "暗夜";
-    anye.data.svip = true;
-    anye.data.annualSsvip = true;
-    anye.data.annualVip = true;
-
+    anye.data.user.isVideoAvatarValid = true;
+    anye.data.user.officialAccount = true;
+    anye.data.user.aloha = true;
+    anye.data.user.match = true;
+    anye.data.user.ssvip = true;
+    anye.data.user.name = "暗夜";
+    anye.data.user.svip = true;
+    anye.data.user.annualSsvip = true;
+    anye.data.user.annualVip = true;
+    anye.data.user.summary = "暗夜暗夜暗夜暗夜暗夜";
 
 $done({body : JSON.stringify(anye)});
