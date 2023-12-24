@@ -11,18 +11,22 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/moyin-gateway\.moyin\.com\/tts-web-api\/v1\/storeSpeakerV2\/searchSpeakerForMini url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
+^https:\/\/newdrugs\.dxy\.cn\/app\/user\/init url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
 
 [mitm]
-hostname = moyin-gateway.moyin.com
+hostname = newdrugs.dxy.cn
 
 *************************************/
 
 
-var anye = $response.body;
+var anye = JSON.parse($response.body);
+    anye.data.userProInfoVO.placeholderVip = true;
+    anye.data.userProInfoVO.expiredTime = 4101808842000;
+    anye.data.userProInfoVO.expiredTime = 4101808842000;
+    anye.data.userProInfoVO.subscribeExpiresDate = 4101808842000;
+    anye.data.userProInfoVO.expiredDay = 4101808842000;
+    anye.data.uname = "暗夜";
 
-anye = anye.replace(/"isUsable"\s*:\s*false/g, '"isUsable": true');
-anye = anye.replace(/"expiredAt"\s*:\s*null/g, '"expiredAt": "2099-12-25T19:01:47.000+0800"');
-anye = anye.replace(/"wordNum"\s*:\s*null/g, '"wordNum": 99999');
+
 
 $done({ body: anye });
