@@ -1,4 +1,4 @@
-/*************************************
+./*************************************
 
 项目名称：魔音工坊
 下载地址：https://too.st/723
@@ -21,6 +21,7 @@ var anye = JSON.parse($response.body);
     
     anye.data.leftDays = 9999;
     anye.data.vipEndTime = 4101794198000;
+    anye.data.wordNum = 9999999999;
     anye.data.endTime = 4101794198000;
     anye.data.vipLeftDaysForDisplay = 999;
     anye.data.superEndTime = 4101794198000;
