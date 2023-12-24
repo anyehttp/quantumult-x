@@ -11,22 +11,27 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/newdrugs\.dxy\.cn\/app\/user\/init url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
+^https:\/\/api\.finka\.cn\/user\/profile\/view\/v3 url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
 
 [mitm]
-hostname = newdrugs.dxy.cn
+hostname = api.finka.cn
 
 *************************************/
 
 
 var anye = JSON.parse($response.body);
-    anye.data.userProInfoVO.placeholderVip = true;
-    anye.data.userProInfoVO.expiredTime = 4101808842000;
-    anye.data.userProInfoVO.expiredTime = 4101808842000;
-    anye.data.userProInfoVO.subscribeExpiresDate = 4101808842000;
-    anye.data.userProInfoVO.expiredDay = 4101808842000;
-    anye.data.uname = "暗夜";
-
+    anye.data.user.vipAd = 3;
+    anye.data.user.vip = true;
+    anye.data.user.pro = true;
+    anye.data.isVideoAvatarValid = true;
+    anye.data.officialAccount = true;
+    anye.data.aloha = true;
+    anye.data.match = true;
+    anye.data.ssvip = true;
+    anye.data.name = "暗夜";
+    anye.data.svip = true;
+    anye.data.annualSsvip = true;
+    anye.data.annualVip = true;
 
 
 $done({body : JSON.stringify(anye)});
