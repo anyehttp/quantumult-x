@@ -29,4 +29,4 @@ var anye = JSON.parse($response.body);
 
 
 
-$done({ body: anye });
+$done({body : JSON.stringify(anye)});
