@@ -17,9 +17,15 @@ hostname = moyin-gateway.moyin.com
 *************************************/
 
 
-var anye = JSON.parse($response.body);
-    
-    anye.data.expireDays = 4101794198000;
-    anye.data.realVip = true;
-    
-$done({body : JSON.stringify(anye)});
+let Q = JSON.parse($response.body);
+Q.data.leftDays = 9999;
+Q.data.wordNum = 9999;
+Q.data.vipEndTime = 4101794198000;
+Q.data.endTime = 4101794198000;
+Q.data.vipLeftDaysForDisplay = 999;
+Q.data.superEndTime = 4101794198000;
+Q.data.curSeatCountLeftDays = 999;
+Q.data.leftDaysForDisplay = 999;
+Q.data.expireDays = 4101794198000;
+Q.data.realVip = true;
+$done({body: JSON.stringify(Q)});
