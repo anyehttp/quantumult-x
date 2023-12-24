@@ -19,7 +19,6 @@ hostname = moyin-gateway.moyin.com
 
 let Q = JSON.parse($response.body);
 Q.data.leftDays = 9999;
-Q.data.wordNum = 9999;
 Q.data.vipEndTime = 4101794198000;
 Q.data.endTime = 4101794198000;
 Q.data.vipLeftDaysForDisplay = 999;
