@@ -1,15 +1,17 @@
-./*************************************
+/*************************************
 
-项目名称：魔音工坊
-下载地址：https://too.st/723
+项目名称：毛豆爱古诗
+下载地址：https://too.st/71L
 更新日期：2023-12-24
 脚本作者：@anyeyey
+指导: @ios151
 使用声明：⚠️仅供参考，🈲转载与售卖！
 
+解锁部分功能
 **************************************
 
 [rewrite_local]
-^https:\/\/moyin-gateway\.moyin\.com\/moyin-account\/v1\/vip\/status url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
+^https:\/\/moyin-gateway\.moyin\.com\/tts-web-api\/v1\/storeSpeakerV2\/searchSpeakerForMini url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
 
 [mitm]
 hostname = moyin-gateway.moyin.com
@@ -17,16 +19,10 @@ hostname = moyin-gateway.moyin.com
 *************************************/
 
 
-var anye = JSON.parse($response.body);
-    
-    anye.data.leftDays = 99;
-    anye.data.vipEndTime = 4101794198000;
-    anye.data.endTime = 4101794198000;
-    anye.data.vipLeftDaysForDisplay = 99;
-    anye.data.superEndTime = 4101794198000;
-    anye.data.curSeatCountLeftDays = 99;
-    anye.data.leftDaysForDisplay = 99;
-    anye.data.expireDays = 4101794198000;
-    anye.data.realVip = true;
-    
-$done({body : JSON.stringify(anye)});
+var anye = $response.body;
+
+anye = anye.replace(/"isUsable"\s*:\s*false/g, '"isUsable": true');
+anye = anye.replace(/"expiredAt"\s*:\s*null/g, '"expiredAt": "2099-12-25T19:01:47.000+0800"');
+anye = anye.replace(/"wordNum"\s*:\s*null/g, '"wordNum": 99999');
+
+$done({ body: anye });
