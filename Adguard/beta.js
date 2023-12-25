@@ -14,4 +14,4 @@ headers['Cookie'] = 'MUSIC_U=005FA76DF72058D39597ADF6D50152464301225CDE8181F5CD2
 headers['User-Agent'] = 'NeteaseMusic 8.20.30/4630 (iPhone; iOS 15.3.1; zh_CN)';
 headers['MConfig-Info'] = '{"zr4bw6pKFDIZScpo":{"version":1202176,"appver":"8.20.30"},"tPJJnts2H31BZXmp":{"version":2590720,"appver":"2.0.30"},"c0Ve6C0uNl2Am0Rl":{"version":595968,"appver":"1.7.50"},"IuRPVVmc3WWul9fT":{"version":27936768,"appver":"8.20.30"}}';
 
-$done({ headers });
+$done({headers});
