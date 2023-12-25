@@ -22,7 +22,7 @@ hostname = api.revenuecat.com
 var anye = JSON.parse($response.body);
 
 var vip1 = /^https:\/\/api\.revenuecat\.com\/v1\/subscribers\/$RCAnonymousID/
-var vip1 = /^https:\/\/api\.revenuecat\.com\/v1\/receipts/
+var vip2 = /^https:\/\/api\.revenuecat\.com\/v1\/receipts/
 
 if(vip1.test($request.url)){
     anye = {
@@ -70,8 +70,8 @@ if(vip1.test($request.url)){
 
 if(vip2.test($request.url)){
     anye = {
-  "request_date_ms" : 1703493890218,
-  "request_date" : "2023-12-25T08:44:50Z",
+  "request_date_ms" : 1703493893093,
+  "request_date" : "2023-12-25T08:44:53Z",
   "subscriber" : {
     "non_subscriptions" : {
       "lifetime" : [
@@ -109,5 +109,6 @@ if(vip2.test($request.url)){
     "last_seen" : "2023-12-25T08:42:59Z"
   }
 };
+
 }
 $done({ body: JSON.stringify(anye) });
