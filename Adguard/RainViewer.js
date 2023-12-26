@@ -9,7 +9,7 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/d1hzbu30hrhkoe\.cloudfront\.net\/mobile\/verify\/ios\/v2 url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/RainViewer.js 
+^https:\/\/d1hzbu30hrhkoe\.cloudfront\.net\/mobile\/verify\/ios\/v2\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/RainViewer.js 
 
 [mitm]
 hostname = d1hzbu30hrhkoe.cloudfront.net
