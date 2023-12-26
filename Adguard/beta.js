@@ -1,21 +1,3 @@
-/*************************************
-
-项目名称：RainViewer天气预报
-下载地址：https://t.cn/A6WqTbgz
-脚本作者：chxm1023
-电报频道：https://t.me/chxm1023
-使用声明：⚠️仅供参考，🈲转载与售卖！
-
-**************************************
-
-[rewrite_local]
-^https:\/\/d1hzbu30hrhkoe\.cloudfront\.net\/mobile\/places/* url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
-
-[mitm]
-hostname = d1hzbu30hrhkoe.cloudfront.net
-
-*************************************/
-
 
 /*************************************
 
