@@ -21,6 +21,7 @@ hostname = mbd.baidu.com
 var anye = JSON.parse($response.body);
     
     anye.data.fields.displayname = "暗夜";
+    anye.data.fields.nickname = "暗夜";
     anye.data.fields.username = "暗夜";
     anye.data.fields.member = {
         "is_vip" : 1,
