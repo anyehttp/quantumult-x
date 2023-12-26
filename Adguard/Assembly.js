@@ -19,8 +19,7 @@ hostname = api.revenuecat.com
 
 var anye = JSON.parse($response.body);
     
-    anye = {
-  "request_date_ms" : 1703570618045,
+    anye = {"request_date_ms" : 1703570618045,
   "request_date" : "2023-12-26T06:03:38Z",
   "subscriber" : {
     "non_subscriptions" : {
@@ -40,18 +39,18 @@ var anye = JSON.parse($response.body);
         "refunded_at" : null,
         "store_transaction_id" : "500001582951240",
         "unsubscribe_detected_at" : null,
-        "grace_period_expires_date" : 4101948793,
+        "grace_period_expires_date" : null,
         "period_type" : "trial",
         "purchase_date" : "2023-12-26T06:03:12Z",
-        "billing_issues_detected_at" : 4101948793,
+        "billing_issues_detected_at" : null,
         "ownership_type" : "PURCHASED",
         "store" : "app_store",
-        "auto_resume_date" : 4101948793
+        "auto_resume_date" : null
       }
     },
     "entitlements" : {
       "premium_access" : {
-        "grace_period_expires_date" : 4101948793,
+        "grace_period_expires_date" : null,
         "purchase_date" : "2023-12-26T06:03:12Z",
         "product_identifier" : "com.pixite.assembly.1weekq",
         "expires_date" : "2099-01-02T06:03:12Z"
@@ -61,7 +60,8 @@ var anye = JSON.parse($response.body);
     "original_app_user_id" : "357DEB93-F134-44E3-8C99-8CD513D44EE3",
     "last_seen" : "2023-12-26T05:55:53Z"
   }
-};
+}
+;
 
 
 $done({body : JSON.stringify(anye)});
