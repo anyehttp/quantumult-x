@@ -19,10 +19,24 @@ hostname = d1hzbu30hrhkoe.cloudfront.net
 
 var anye = JSON.parse($response.body);
     
-    anye.data.purchased = true;
-    anye.data.is_cancelled = true;
-    anye.data.has_orders = true;
-    anye.data.expiration = 4073121495;
-    anye.data.is_expired = false;
+    anye = {
+  "message" : "",
+  "data" : {
+    "is_grace" : false,
+    "is_test" : false,
+    "products" : [
+      "PREMIUM_FEATURES_3_1MONTH"
+    ],
+    "id" : "480001752637582",
+    "purchased" : true,
+    "is_trial" : false,
+    "is_cancelled" : true,
+    "type" : 2,
+    "has_orders" : true,
+    "expiration" : 1706279895,
+    "is_expired" : false
+  },
+  "code" : 0
+}
 
 $done({body : JSON.stringify(anye)});
