@@ -10,23 +10,22 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/mbd\.baidu\.com\/userx\/v1\/info\/get url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
+^https:\/\/fapi\.zduhxck\.com\/vpn\/user_info url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
 
 [mitm]
-hostname = mbd.baidu.com
+hostname = fapi.zduhxck.com
 
 *************************************/
 
 
 var anye = JSON.parse($response.body);
     
-    anye.data.fields.displayname = "暗夜";
-    anye.data.fields.nickname = "暗夜";
-    anye.data.fields.username = "暗夜";
-    anye.data.fields.member = {
-        "is_vip" : 1,
-        "end_time" : 4101995901,
-      };
+    anye.result.vip_type = 2;
+    anye.result.invite_valid = true;
+    anye.result.is_new_user = 1;
+    anye.result.isTodayVip = 1;
+    anye.result.every_day_time = 9999;
+    anye.result.vip_time = 4102069110;
     
 
 $done({body : JSON.stringify(anye)});
