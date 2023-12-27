@@ -18,7 +18,7 @@ hostname = iosapi.peiyinxiu.com
 
 
 var anye = JSON.parse($response.body);
-        anye.data.vip_end_time = 4101794198000;
+        anye.data.vip_end_time = 2099-09-09;
         anye.data.gold2 = 99999;
         anye.data.vipLevel = 9999,
         anye.data.is_complete_info = 1;
