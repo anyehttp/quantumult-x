@@ -19,6 +19,6 @@ hostname = api.qiandurebo.com
 
 var anye = JSON.parse($response.body);
     
-    anye.viplevel = "1";
+    anye.viplevel = "999";
 
 $done({body : JSON.stringify(anye)});
