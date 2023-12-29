@@ -17,8 +17,7 @@ hostname = api.revenuecat.com
 *************************************/
 
 
-var body = $response.body;
-var anye = JSON.parse(body);
+var anye = JSON.parse($response.body);
     
     anye = {
               "request_date_ms" : 1703828856584,
