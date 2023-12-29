@@ -9,22 +9,16 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/fapi\.zduhxck\.com\/vpn\/user_info url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
+^https:\/\/api\.qiandurebo\.com\/v2\/users url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
 
 [mitm]
-hostname = fapi.zduhxck.com
+hostname = api.qiandurebo.com
 
 *************************************/
 
 
 var anye = JSON.parse($response.body);
     
-    anye.result.vip_type = 2;
-    anye.result.invite_valid = true;
-    anye.result.is_new_user = 1;
-    anye.result.isTodayVip = 1;
-    anye.result.every_day_time = 9999;
-    anye.result.vip_time = 4102069110;
-    
+    anye.viplevel = "1";
 
 $done({body : JSON.stringify(anye)});
