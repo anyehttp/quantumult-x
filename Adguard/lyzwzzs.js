@@ -22,7 +22,7 @@ const vip1 = /^https:\/\/api\.luyingou\.com\/user\/getAppUser/;
 const vip2 = /^https:\/\/api\.luyingou\.com\/user\/vip\/getIosVipPage/;
 
 if(vip1.test($request.url)){
-    anye.data.user.vipExpire = 9999;
+    anye.data.user.vipExpire = 9999-99-99;
     anye.data.user.vipMonthConvertTime = 9999;
     anye.data.user.isVip = true;
     anye.data.user.alias = "暗夜";
@@ -30,7 +30,7 @@ if(vip1.test($request.url)){
 }
 
 if(vip2.test($request.url)){
-    anye.data.userVo.vipExpire = 9999;
+    anye.data.userVo.vipExpire = 9999-99-99;
     anye.data.userVo.isVip = true;
     anye.data.userVo.alias = "暗夜";
     anye.data.userVo.name = "暗夜";
