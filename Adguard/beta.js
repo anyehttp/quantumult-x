@@ -9,16 +9,19 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/api\.qiandurebo\.com\/v2\/users url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
+^https:\/\/api-sub\.meitu\.com\/v2\/user\/vip url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
 
 [mitm]
-hostname = api.qiandurebo.com
+hostname = api-sub.meitu.com
 
 *************************************/
 
 
 var anye = JSON.parse($response.body);
     
-    anye.viplevel = "999";
+    anye.data.is_vip = true;
+    anye.data.have_valid_contract = true;
+    anye.data.use_vip = true;
+    
 
 $done({body : JSON.stringify(anye)});
