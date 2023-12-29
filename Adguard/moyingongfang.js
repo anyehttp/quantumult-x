@@ -17,15 +17,9 @@ hostname = moyin-gateway.moyin.com
 
 
 var anye = JSON.parse($response.body);
-        anye.data.leftDays = 9999;
+
         anye.data.isAnnualVip = true;
         anye.data.vipEndTime = 4101794198000;
-        anye.data.wordNum = 9999;
-        anye.data.endTime = 4101794198000;
-        anye.data.vipLeftDaysForDisplay = 999;
-        anye.data.superEndTime = 4101794198000;
-        anye.data.curSeatCountLeftDays = 999;
-        anye.data.leftDaysForDisplay = 999;
-        anye.data.expireDays = 4101794198000;
         anye.data.realVip = true;
+        
 $done({body: JSON.stringify(anye)});
