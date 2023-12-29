@@ -9,19 +9,20 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/api-sub\.meitu\.com\/v2\/user\/vip url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
+^https://api-(winkcut\.meitu\.com/user/show|sub\.meitu\.com/v2/user/vip)$ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js 
 
 [mitm]
-hostname = api-sub.meitu.com
+hostname = api-*.meitu.com
 
 *************************************/
 
 
 var anye = JSON.parse($response.body);
-    
+
     anye.data.is_vip = true;
     anye.data.have_valid_contract = true;
     anye.data.use_vip = true;
-    
+    anye.data.vip_type = 1;
+    anye.data.screen_name = "暗夜";
 
 $done({body : JSON.stringify(anye)});
