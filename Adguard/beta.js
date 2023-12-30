@@ -7,5 +7,9 @@
 hostname = api.widgetbox.top
 ********************************/
 var anye = JSON.parse($response.body);
-    anye.data.isDefault = true;
+
+anye.data.forEach(function(entry) {
+    entry.isDefault = true;
+});
+
 $done({body : JSON.stringify(anye)});
