@@ -13,7 +13,7 @@ var anye = JSON.parse($response.body);
 
     anye.vip_expire = 1;
     anye.nick_name = "暗夜";
-    anye.vip = 4102314836;
+    anye.vip = 2099-12-30;
     anye.vip_id = 1;
     
 $done({body : JSON.stringify(anye)}); 
