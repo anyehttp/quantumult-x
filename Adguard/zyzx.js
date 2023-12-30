@@ -10,13 +10,22 @@
 
 [rewrite_local]
 ^http:\/\/mmm\.tcmmooc\.com\/mapi_v3\/User\/loginWithToken url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/zyzx.js
-
+^http:\/\/mmm\.tcmmooc\.com\/mapi_v3\/User\/getUserCenterInfo url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/zyzx.js
 [mitm] 
 hostname = mmm.tcmmooc.com
 *************************************/
-
 var anye = JSON.parse($response.body);
-    anye.data.user.nickname = "暗夜";
+const vip1 = /^http:\/\/mmm\.tcmmooc\.com\/mapi_v3\/User\/loginWithToken/;
+const vip2 = /^http:\/\/mmm\.tcmmooc\.com\/mapi_v3\/User\/getUserCenterInfo/;
+
+if (vip1.test($request.url)) {
+    anye.data.user.nickname = "暗夜11";
     anye.data.user.vip = 1;
-    
-$done({body : JSON.stringify(anye)});
+}
+if (vip2.test($request.url)) {
+    anye.data.nickName = "暗夜11";
+    anye.data.userType = "1";
+    anye.data.vip = 1;
+}
+
+$done({body: JSON.stringify(anye)});
