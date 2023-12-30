@@ -6,10 +6,12 @@
 [mitm] 
 hostname = api.widgetbox.top
 ********************************/
-var anye = JSON.parse($response.body);
+let anye = JSON.parse($response.body);
 
-anye.data.forEach(function(entry) {
-    entry.isDefault = true;
+Object.keys(anye).forEach(key => {
+    if (anye[key] === true && key === "needVip") {
+        anye[key] = false;
+    }
 });
 
-$done({body : JSON.stringify(anye)});
+$done({body: JSON.stringify(anye)});
