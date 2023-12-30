@@ -12,7 +12,6 @@ hostname = doctorsclass.com
 var anye = JSON.parse($response.body);
 
     anye.vip_expire = 1;
-    anye.update_time = "2099-12-30 19:48:13";
     anye.nick_name = "暗夜";
     anye.vip = 4102314836;
     anye.vip_id = 1;
