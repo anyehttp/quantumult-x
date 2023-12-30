@@ -1,16 +1,9 @@
 /*****************************
-^https:\/\/www\.doctorsclass\.com\/api\/v1\.index\/subscribed url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk1.js
-^https:\/\/www\.doctorsclass\.com\/api\/v1\.index\/banner url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk1.js
-^https:\/\/www\.doctorsclass\.com\/api\/v1\.category\/homeCate url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk1.js
-^https:\/\/www\.doctorsclass\.com\/api\/v1\.index\/index url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk1.js
-^https:\/\/www\.doctorsclass\.com\/api\/v1\.category\/all url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk1.js
-^https:\/\/www\.doctorsclass\.com\/api\/v1\.wechatUser\/getUserInfo url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk1.js
-
 
 *****************************
 [rewrite_local]
 
-^https:\/\/www\.doctorsclass\.com url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk1.js
+^https:\/\/www\.doctorsclass\.com\/api\/v1\.index\/subscribed url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk1.js
 
 [mitm] 
 hostname = www.doctorsclass.com
