@@ -2,7 +2,7 @@
 headers['MConfig-Info'] = '';
 ****************************
 [rewrite_local]
-^https:\/\/www\.doctorsclass\.com\/api\/v1 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js
+^https:\/\/www\.doctorsclass\.com\/api\/v1 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk.js
 
 [mitm] 
 hostname = doctorsclass.com
