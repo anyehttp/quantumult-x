@@ -10,7 +10,7 @@
 
 [rewrite_local]
 
-https://api.revenuecat.com/v1/(receipts|subscribers)/* url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/Readle.js
+^https?:\/\/api\.revenuecat\.com\/.+\/(receipts$|subscribers\/?(.*?)*$) url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/Readle.js
 
 [mitm] 
 
