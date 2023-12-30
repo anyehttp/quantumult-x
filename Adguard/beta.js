@@ -1,10 +1,11 @@
 /*****************************
 
 
-^https:\/\/api\.widgetbox\.top\/v1\/payment\/products\/vip\/list url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js
+^https:\/\/api\.widgetbox\.top\/v1\/explore url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/beta.js
 
 [mitm] 
 hostname = api.widgetbox.top
+
 ********************************/
 let anye = JSON.parse($response.body);
 
