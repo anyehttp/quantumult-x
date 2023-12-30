@@ -5,7 +5,7 @@ headers['MConfig-Info'] = '';
 ^https:\/\/www\.doctorsclass\.com\/api\/v1 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/yk.js
 
 [mitm] 
-hostname = doctorsclass.com
+hostname = www.doctorsclass.com
 ***************************************/
 
 
