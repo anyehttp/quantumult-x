@@ -10,9 +10,10 @@
 
 [rewrite_local]
 ^https:\/\/api\.miaoread\.net\/book\/config\/getAdsSettings url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/mmyd.js
+^https:\/\/mi\.gdt\.qq\.com\/gdt_mview\.fcg url reject-dict
 
 [mitm]
-hostname = api.miaoread.net
+hostname = api.miaoread.net, mi.gdt.qq.com
 *************************************/
 
 
