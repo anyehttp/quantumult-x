@@ -22,6 +22,6 @@ var anye = JSON.parse($response.body);
     anye.result.listenFirstTime = 9999;
     anye.result.listenRewardTime = 9999;
     anye.result.useDownloadReward = true;
-
+    anye.result.insetScreenTime = 0;
 
 $done({body: JSON.stringify(anye)});
