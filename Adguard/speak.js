@@ -17,8 +17,8 @@ hostname = api.usespeak.com
 
 
 var anye = JSON.parse($response.body);
-				anye.info.premium = true;
-				anye.info.joinDate = "1924-01-02T07:09:02.000Z";
-				anye.info.progress.todaySentencesCount.lastRecordingDate = "1924-01-02T07:10:47.259Z";
-				anye.info.name = "暗夜";
+	anye.info.premium = true;
+	anye.info.joinDate = "1924-01-02T07:09:02.000Z";
+	anye.info.progress.todaySentencesCount.lastRecordingDate = "1924-01-02T07:10:47.259Z";
+	anye.info.name = "暗夜";
 $done({body: JSON.stringify(anye)});
