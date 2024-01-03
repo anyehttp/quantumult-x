@@ -15,8 +15,8 @@ hostname = gs.gateway.gameley.cn
 *************************************/
 var anye = JSON.parse($response.body);
 
-        for (var i = 0; i < anye.info.daily.length; i++) {
-            anye.info.daily[i].originalPrice = 0;
-        }
-        
+for (var i = 0; i < anye.info.daily.length; i++) {
+    anye.info.daily[i].originalPrice = 0;
+}
+
 $done({body : JSON.stringify(anye)});
