@@ -9,14 +9,11 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/gs\.gateway\.gameley\.cn\/np-user\/shopping\/list url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/zmm.js
+^https:\/\/gs\.gateway\.gameley\.cn\/np-user\/user\/coin\/info url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/zmm.js
 [mitm]
 hostname = gs.gateway.gameley.cn
 *************************************/
 var anye = JSON.parse($response.body);
-
-for (var i = 0; i < anye.info.daily.length; i++) {
-    anye.info.daily[i].originalPrice = 0;
-}
+    anye.info.coinNumber = 9999;
 
 $done({body : JSON.stringify(anye)});
