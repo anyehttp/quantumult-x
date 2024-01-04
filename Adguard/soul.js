@@ -33,4 +33,4 @@ if(vip2.test($request.url)){
     anye.data.speedup = true;
 }
 
-
+$done({ body: JSON.stringify(anye) });
