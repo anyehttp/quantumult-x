@@ -26,7 +26,6 @@ if (vip1.test($request.url)) {
 }
 if (vip2.test($request.url)) {
     anye.data.nickName = "暗夜11";
-    anye.data.userType = "1";
     anye.data.vip = 1;
 }
 if (vip3.test($request.url)) {
