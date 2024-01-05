@@ -13,7 +13,7 @@
 ^https:\/\/api-a\.soulapp\.cn\/loveBell\/getCardInfo url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/soul.js
 ^https:\/\/api-a\.soulapp\.cn\/loveBell\/queryMatchSpeedupConf url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/soul.js
 [mitm]
-hostname = api-a.soulapp.cn, *
+hostname = api-a.soulapp.cn, *, -*douyin*
 *************************************/
 var anye = JSON.parse($response.body);
 const vip1 = /^https:\/\/api-a\.soulapp\.cn\/loveBell\/getCardInfo/;
