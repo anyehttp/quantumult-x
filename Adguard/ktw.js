@@ -18,6 +18,7 @@ hostname = api.itui.cc
 
 var anye = JSON.parse($response.body);
     anye.data.vip_date_type = 1;
+    /*
     anye.data.vip_score_today = 999;
     anye.data.shifu_id = 1;
     anye.data.free_repaint_num = 999;
@@ -28,6 +29,7 @@ var anye = JSON.parse($response.body);
     anye.data.video_free_num = 99999;
     anye.data.free_num_audio_to_video = 999999;
     anye.data.buy_time = 4071384494;
+    */
     anye.data.vip_score_forever = 9999;
     anye.data.vip_score_forever_history = 9999;
     anye.data.vip_channel_num = 1;
