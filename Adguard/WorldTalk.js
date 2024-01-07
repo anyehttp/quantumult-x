@@ -9,7 +9,7 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/www\.zerophil\.com\/services\/v1\/query_user_detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/WorldTalk.js
+^https:\/\/www\.zerophil\.com\/services\/v1\/query_user_message_num url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/WorldTalk.js
 
 [mitm]
 hostname = www.zerophil.com
@@ -17,6 +17,5 @@ hostname = www.zerophil.com
 
 
 var anye = JSON.parse($response.body);
-    anye.data.vip = 1;
-    anye.data.name = "暗夜11";
+    anye.data.number = 1;
 $done({body: JSON.stringify(anye)});
