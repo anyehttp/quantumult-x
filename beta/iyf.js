@@ -6,7 +6,7 @@ URL:https://api.iyf.tv/api/Video/getPlayInfo
 quantumultx
 
 [rewrite_local]
-^https:\/\/api\.iyf\.tv\/api\/Video\/getPlayInfo url script-response-body url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/iyf.js
+^https:\/\/api\.iyf\.tv\/api\/Video\/getPlayInfo url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/iyf.js
 
 [mitm]
 hostname = api.iyf.tv
