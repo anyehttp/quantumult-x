@@ -6,5 +6,7 @@ hostname = api.iyf.tv
 
 
 anye = JSON.parse($response.body);
-    anye.data = {};
+    anye.data.bofang[0].showURL = "";
+    anye.data.bofang[0].piDuration = 0;
+    anye.data.bofang[0].chaBo = [];
 $done({body: JSON.stringify(anye)});
