@@ -13,7 +13,7 @@ hostname = greatios.xitengtech.cn
 
 *************************************/
 var anye = JSON.parse($response.body);
-    anye.data.identity.nickname = "游客6494";
+    anye.data.identity.nickname = "暗夜";
     anye.data.identity.vip_expire_time = 4071522823;
     anye.data.identity.vip_period_type = 1;
     anye.data.identity.vip = 1;
