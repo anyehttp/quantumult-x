@@ -11,6 +11,8 @@ quantumultx
 [mitm]
 hostname = api.iyf.tv
 */
+
+/*
 var url = $request.url;
 if (url.includes('/Video/getPlayInfo')) {
     var body = JSON.parse($response.body);
@@ -24,7 +26,7 @@ if (url.includes('/Video/getPlayInfo')) {
 
     $done({});
 }
-/*
+*/
 var url = $request.url;
 if (url.includes('/Video/getPlayInfo')) {
     var body = JSON.parse($response.body); 
@@ -36,4 +38,3 @@ if (url.includes('/Video/getPlayInfo')) {
 
     $done({});
 }
-*/
