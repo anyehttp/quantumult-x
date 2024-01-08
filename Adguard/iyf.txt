@@ -1,0 +1,12 @@
+#//播放页面横幅
+^https:\/\/api\.iyf\.tv\/api\/Video\/GetAdsDataList url reject-dict
+hostname = api.iyf.tv
+#//添加主页提示
+^https:\/\/m\.iyf\.tv\/static\/img\/guide\.png url reject-dict
+hostname = m.iyf.tv
+#//主页轮播
+^https:\/\/api\.iyf\.tv\/api\/List\/IndexPageRecomData url reject-dict
+hostname = api.iyf.tv
+#//提示更换浏览器
+^https:\/\/m\.iyf\.tv\/static\/img\/uc_tips\.png url reject-dict
+hostname = m.iyf.tv
