@@ -17,5 +17,5 @@ var anye = JSON.parse($response.body);
     anye.data.identity.vip_expire_time = 4071522823;
     anye.data.identity.vip_period_type = 1;
     anye.data.identity.vip = 1;
-    anye.data.identity.vip_period_text = 2024-01-08 10:25:51;
+    //anye.data.identity.vip_period_text = 2024-01-08 10:25:51;
 $done({body : JSON.stringify(anye)});
