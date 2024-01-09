@@ -23,7 +23,8 @@
 下载地址：TextMask
 下载地址：Music Mate
 下载地址：Langster https://too.st/7aW 同作者5个软件 
-下载地址：muse 同作者2个软件
+下载地址：muse/Nero lens智图    https://too.st/7bs
+下载地址：Light Meter Ultra      https://too.st/7m3
 使用声明：⚠️仅供参考，🈲️转载与售卖！
 
 **************************************
