@@ -9,5 +9,5 @@ anye = JSON.parse($response.body);
     anye.data.bofang[0].showURL = "";
     anye.data.bofang[0].piDuration = 0;
     anye.data.bofang[0].chaBo[0].piDuration = 0.01;
-    anye.data.bofang[0].chaBo[0].showURL = "https://files.catbox.moe/dcwmvg.MOV";
+    anye.data.bofang[0].chaBo[0].showURL = "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/-1969597149364451121.mp4";
 $done({body: JSON.stringify(anye)});
