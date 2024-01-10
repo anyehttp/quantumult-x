@@ -5,6 +5,7 @@
 小蓝视频网址:https://p4.gv009.fun/
 GTV :https://bda.qgtexa.com
 blued视频:blued.tips
+海角社区:http://haijiao.fun
 *****************
 
 [rewrite_local]
