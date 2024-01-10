@@ -8,11 +8,12 @@ blued视频:blued.tips
 *****************
 
 [rewrite_local]
+#gv系列 (GTV Blued视频 小蓝视频)  =*.xgfipub.cn
 https?:\/\/[\w.]+\/videos3\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
-
-
+#海角社区  =*yangyang4.cn
+https?:\/\/[\w.]+\/watch7\/[a-f0-9]+\/[a-f0-9]+\.m3u8
 [mitm]
-hostname = *.xgfipub.cn
+hostname = *.xgfipub.cn, *yangyang4.cn
 *****************/
 
 const $ = new Env("GOGOGOGO");
