@@ -3,6 +3,7 @@
 @ios151
 
 小蓝视频网址:https://p4.gv009.fun/
+GTV :https://bda.qgtexa.com
 *****************
 
 [rewrite_local]
