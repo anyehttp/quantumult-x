@@ -4,7 +4,7 @@
 #👑@anyeyey
 #👑@ios151
 
-#失效请反馈
+#失效请反馈  脚本通用的
 #群组：https://t.me/IPAs_Dd
 #频道：https://t.me/IPAs_share
 
@@ -54,9 +54,6 @@
 
 [MITM]
 hostname = %APPEND% *
-[Script]
-#!name=ghs
-#!desc=ghs
 
 [Script]
 ghs = type=http-request, pattern=https?:\/\/.*\.*\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js, timeout=60
