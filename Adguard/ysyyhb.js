@@ -7,9 +7,9 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/api\.crucio\.hecdn\.com\/v12\/user url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/ysyyhb.js
+^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/ysyyhb.js
 [mitm]
-hostname = api.crucio.hecdn.com
+hostname = buy.itunes.apple.com
 *************************************/
 var anye = JSON.parse($response.body);
     anye = {
