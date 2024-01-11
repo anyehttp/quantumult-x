@@ -51,7 +51,7 @@ pilipili(二次元) https://747.jkhpmy.com
 
 [rewrite_local]
 #gv系列 (GTV Blued视频 小蓝视频)  =*.yitdgm.com
-https?:\/\/.*\.yitdgm\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+https?:\/\/h5play\.*\.*\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
 #缅北禁地 =*.wykfnp.com 
 https?:\/\/.*\.wykfnp\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
 #暗网解密 = *.ndqvyg.com
@@ -132,7 +132,7 @@ https?:\/\/.*\.cxuvtk\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-he
 
 
 [mitm]
-hostname = *.yitdgm.com, *.wykfnp.com, *.ndqvyg.com, *.knjbzw.com, *.bjzezy.com, *.rwhmcn.com, *.wchgdn.com, *.mdplzw.com, *.yrhwse.com, *.rtlzhe.com, *.paxvrh.com, *.hzbwia.com, *.obntac.com, *.henwap.com, *.yangyang4.cn, *.luduwz.com, *.scrrzr.com, *.jaedlj.com, *.zzttja.com, *.sjlqjh.com, *.uvmtsn.com, *.lvxpha.com, *.dhlwyz.com, *.pbgrzh.com, *.npcwwc.com, *.gectab.com, *.zlnkbn.com, *.jkhpmy.com, *.qznpyr.com, *.rzvwcq.com, *.czhxnw.com, *.qhzvgn.com, *.smpaqa.com, *.vavkyj.com, *.obqyyh.com, *.kccber.com, *.rahzss.com, *.nnjzpw.com, *.cxuvtk.com
+hostname = h5play.*.*, *.wykfnp.com, *.ndqvyg.com, *.knjbzw.com, *.bjzezy.com, *.rwhmcn.com, *.wchgdn.com, *.mdplzw.com, *.yrhwse.com, *.rtlzhe.com, *.paxvrh.com, *.hzbwia.com, *.obntac.com, *.henwap.com, *.yangyang4.cn, *.luduwz.com, *.scrrzr.com, *.jaedlj.com, *.zzttja.com, *.sjlqjh.com, *.uvmtsn.com, *.lvxpha.com, *.dhlwyz.com, *.pbgrzh.com, *.npcwwc.com, *.gectab.com, *.zlnkbn.com, *.jkhpmy.com, *.qznpyr.com, *.rzvwcq.com, *.czhxnw.com, *.qhzvgn.com, *.smpaqa.com, *.vavkyj.com, *.obqyyh.com, *.kccber.com, *.rahzss.com, *.nnjzpw.com, *.cxuvtk.com
 *****************/
 
 const $ = new Env("GOGOGOGO");
