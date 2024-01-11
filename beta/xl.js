@@ -51,7 +51,7 @@ pilipili(二次元) https://747.jkhpmy.com
 
 [rewrite_local]
 #gv系列 (GTV Blued视频 小蓝视频)  =*.yitdgm.com
-https?:\/\/h5play\.*\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+https?:\/\/.*\.pvlzxh\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
 #缅北禁地 =*.wykfnp.com 
 https?:\/\/.*\.wykfnp\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
 #暗网解密 = *.ndqvyg.com
