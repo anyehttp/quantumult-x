@@ -132,7 +132,7 @@ https?:\/\/.*\.cxuvtk\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-he
 https?:\/\/.*\.pk2276\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
 
 [mitm]
-hostname = *.xgfipub.cn, *.wykfnp.com, *.ndqvyg.com, *.knjbzw.com, *.bjzezy.com, *.rwhmcn.com, *.wchgdn.com, *.mdplzw.com, *.yrhwse.com, *.rtlzhe.com, *.paxvrh.com, *.hzbwia.com, *.obntac.com, *.henwap.com, *.yangyang4.cn, *.luduwz.com, *.scrrzr.com, *.jaedlj.com, *.zzttja.com, *.sjlqjh.com, *.uvmtsn.com, *.lvxpha.com, *.dhlwyz.com, *.pbgrzh.com, *.npcwwc.com, *.gectab.com, *.zlnkbn.com, *.jkhpmy.com, *.qznpyr.com, *.rzvwcq.com, *.czhxnw.com, *.qhzvgn.com, *.smpaqa.com, *.vavkyj.com, *.obqyyh.com, *.kccber.com, *.rahzss.com, *.nnjzpw.com, *.cxuvtk.com, api.pk2276.com
+hostname = *.xgfipub.cn, *.wykfnp.com, *.ndqvyg.com, *.knjbzw.com, *.bjzezy.com, *.rwhmcn.com, *.wchgdn.com, *.mdplzw.com, *.yrhwse.com, *.rtlzhe.com, *.paxvrh.com, *.hzbwia.com, *.obntac.com, *.henwap.com, *.yangyang4.cn, *.luduwz.com, *.scrrzr.com, *.jaedlj.com, *.zzttja.com, *.sjlqjh.com, *.uvmtsn.com, *.lvxpha.com, *.dhlwyz.com, *.pbgrzh.com, *.npcwwc.com, *.gectab.com, *.zlnkbn.com, *.jkhpmy.com, *.qznpyr.com, *.rzvwcq.com, *.czhxnw.com, *.qhzvgn.com, *.smpaqa.com, *.vavkyj.com, *.obqyyh.com, *.kccber.com, *.rahzss.com, *.nnjzpw.com, *.cxuvtk.com, *.pk2276.com
 *****************/
 
 const $ = new Env("GOGOGOGO");
