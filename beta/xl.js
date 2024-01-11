@@ -1,20 +1,136 @@
 /*****************
-👑@anyeyey
 👑@ios151
+👑@anyeyey
+
+失效请反馈
+群组：https://t.me/IPAs_Dd
+频道：https://t.me/IPAs_share
 
 小蓝视频网址:https://p4.gv009.fun/
 GTV :https://bda.qgtexa.com
 blued视频:blued.tips
-海角社区:http://haijiao.fun
+*缅北禁地 https://ac9d.wykfnp.com 
+暗网解密 https://714.ndqvyg.com 
+51吃瓜Pro https://3d4f.knjbzw.com 
+51猎奇 https://088f.bjzezy.com 
+私房ktv https://89.rwhmcn.com 
+天涯社区 https://f3d.wchgdn.com 
+黑洞社区 https://ca64.mdplzw.com 
+暗网禁区 https://0b.yrhwse.com 
+她趣 https://5e7.rtlzhe.com 
+妹团 https://36.paxvrh.com 
+杏吧 https://9923.hzbwia.com 
+老九品茶 https://0a.obntac.com 
+微密圈 https://a4.henwap.com 
+海角乱伦社区 https://f58d.ipqjlb.com 
+51动漫 https://75.luduwz.com 
+蜜豆视频 https://6de.scrrzr.com 
+黑料天堂 https://42fa.jaedlj.com 
+51吃瓜 https://lz7as.zzttja.com 
+新版滴滴 https://cf.sjlqjh.com 
+七度少女 https://11a.uvmtsn.com 
+91妻友 https://08c0.lvxpha.com 
+91制片厂Pro https://baf.dhlwyz.com 
+抖阴Proj https://6f7s.pbgrzh.com 
+果冻传媒APP https://07.npcwwc.com 
+福利姬 https://9f.gectab.com 
+91fans https://fc.zlnkbn.com 
+pilipili(二次元) https://747.jkhpmy.com 
+歪歪视频 https://c8.qznpyr.com 
+91视频-全能版 https://fbrg.rzvwcq.com 
+撸先生 https://01f4.czhxnw.com 
+成人B站 https://d4.qhzvgn.com 
+50度灰 https://od5em.smpaqa.com 
+51品茶 https://f5f.vavkyj.com 
+蚂蚁翻墙 https://636d.obqyyh.com 
+91短视频 https://66.kccber.com 
+91AV https://ca7.rahzss.com 
+快手 https://eb81.nnjzpw.com 
+汤头条 https://a3ou.cxuvtk.com
 *****************
 
 [rewrite_local]
 #gv系列 (GTV Blued视频 小蓝视频)  =*.xgfipub.cn
 https?:\/\/.*\.xgfipub\.cn\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
-#海角社区  =*yangyang4.cn
+#缅北禁地 =*.wykfnp.com 
+https?:\/\/.*\.wykfnp\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#暗网解密 = *.ndqvyg.com
+https?:\/\/.*\.ndqvyg\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#51吃瓜Pro = *.knjbzw.com
+https?:\/\/.*\.knjbzw\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#51猎奇  =*.bjzezy.com
+https?:\/\/.*\.bjzezy\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#私房ktv   =*.rwhmcn.com 
+https?:\/\/.*\.rwhmcn\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#天涯社区 =*.wchgdn.com
+https?:\/\/.*\.wchgdn\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#黑洞社区  =*.mdplzw.com
+https?:\/\/.*\.mdplzw\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#暗网禁区 =*.yrhwse.com
+https?:\/\/.*\.yrhwse\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#她趣 =*.rtlzhe.com
+https?:\/\/.*\.rtlzhe\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#妹团 =*.paxvrh.com
+https?:\/\/.*\.paxvrh\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#杏吧 =*.hzbwia.com
+https?:\/\/.*\.hzbwia\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#老九品茶=*.obntac.com
+https?:\/\/.*\.obntac\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#微密圈 =*.henwap.com
+https?:\/\/.*\.henwap\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#海角社区  =*.yangyang4.cn
 https?:\/\/.*\.yangyang4\.cn\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#51动漫 =*.luduwz.com
+https?:\/\/.*\.luduwz\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#蜜豆视频=*.scrrzr.com
+https?:\/\/.*\.scrrzr\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#黑料天堂=*.jaedlj.com
+https?:\/\/.*\.jaedlj\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#51吃瓜=*.zzttja.com
+https?:\/\/.*\.zzttja\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#新版滴滴 =*.sjlqjh.com
+https?:\/\/.*\.sjlqjh\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#七度少女=*.uvmtsn.com
+https?:\/\/.*\.uvmtsn\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#91妻友 =*.lvxpha.com
+https?:\/\/.*\.lvxpha\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#91制片厂Pro =*.dhlwyz.com
+https?:\/\/.*\.dhlwyz\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#抖阴Pro  =*.pbgrzh.com
+https?:\/\/.*\.pbgrzh\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#果冻传媒APP =*.npcwwc.com
+https?:\/\/.*\.npcwwc\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#福利姬 =*.gectab.com
+https?:\/\/.*\.gectab\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#91fans =*.zlnkbn.com
+https?:\/\/.*\.zlnkbn\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#pilipili(二次元) =*.jkhpmy.com
+https?:\/\/.*\.jkhpmy\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#歪歪视频 =*.qznpyr.com
+https?:\/\/.*\.qznpyr\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#91视频-全能版 =*.rzvwcq.com
+https?:\/\/.*\.rzvwcq\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#撸先生 =*.czhxnw.com
+https?:\/\/.*\.czhxnw\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#成人B站 =*.qhzvgn.com
+https?:\/\/.*\.qhzvgn\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#50度灰 =*.smpaqa.com
+https?:\/\/.*\.smpaqa\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#51品茶 =*.vavkyj.com
+https?:\/\/.*\.vavkyj\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#蚂蚁翻墙 =*.obqyyh.com
+https?:\/\/.*\.obqyyh\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#91短视频 =*.kccber.com
+https?:\/\/.*\.kccber\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#91AV =*.rahzss.com
+https?:\/\/.*\.rahzss\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#快手 =*.nnjzpw.com
+https?:\/\/.*\.nnjzpw\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+#汤头条 =*.cxuvtk.com
+https?:\/\/.*\.cxuvtk\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+
 [mitm]
-hostname = *.xgfipub.cn, *yangyang4.cn
+hostname = *.xgfipub.cn, *.wykfnp.com, *.ndqvyg.com, *.knjbzw.com, *.bjzezy.com, *.rwhmcn.com, *.wchgdn.com, *.mdplzw.com, *.yrhwse.com, *.rtlzhe.com, *.paxvrh.com, *.hzbwia.com, *.obntac.com, *.henwap.com, *.yangyang4.cn, *.luduwz.com, *.scrrzr.com, *.jaedlj.com, *.zzttja.com, *.sjlqjh.com, *.uvmtsn.com, *.lvxpha.com, *.dhlwyz.com, *.pbgrzh.com, *.npcwwc.com, *.gectab.com, *.zlnkbn.com, *.jkhpmy.com, *.qznpyr.com, *.rzvwcq.com, *.czhxnw.com, *.qhzvgn.com, *.smpaqa.com, *.vavkyj.com, *.obqyyh.com, *.kccber.com, *.rahzss.com, *.nnjzpw.com, *.cxuvtk.com
 *****************/
 
 const $ = new Env("GOGOGOGO");
