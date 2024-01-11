@@ -2,10 +2,14 @@
 👑@ios151
 👑@anyeyey
 
+全部通用全部通用全部通用全部通用全部通用
+全部通用全部通用全部通用全部通用全部通用
+全部通用全部通用全部通用全部通用全部通用
+
 失效请反馈
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
-
+  
 小蓝视频网址:https://p4.gv009.fun/
 GTV :https://bda.qgtexa.com
 blued视频:blued.tips
@@ -50,7 +54,6 @@ pilipili(二次元) https://747.jkhpmy.com
 *****************
 
 [rewrite_local]
-#gv系列 (GTV Blued视频 小蓝视频)  =*.yitdgm.com
 https?:\/\/.*\.*\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js
 https?:\/\/.*\.*\.cn\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js
 
