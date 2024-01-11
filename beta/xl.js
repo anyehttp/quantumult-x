@@ -132,7 +132,7 @@ https?:\/\/.*\.cxuvtk\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-he
 
 
 [mitm]
-hostname = h5play.pvlzxh.com, *.wykfnp.com, *.ndqvyg.com, *.knjbzw.com, *.bjzezy.com, *.rwhmcn.com, *.wchgdn.com, *.mdplzw.com, *.yrhwse.com, *.rtlzhe.com, *.paxvrh.com, *.hzbwia.com, *.obntac.com, *.henwap.com, *.yangyang4.cn, *.luduwz.com, *.scrrzr.com, *.jaedlj.com, *.zzttja.com, *.sjlqjh.com, *.uvmtsn.com, *.lvxpha.com, *.dhlwyz.com, *.pbgrzh.com, *.npcwwc.com, *.gectab.com, *.zlnkbn.com, *.jkhpmy.com, *.qznpyr.com, *.rzvwcq.com, *.czhxnw.com, *.qhzvgn.com, *.smpaqa.com, *.vavkyj.com, *.obqyyh.com, *.kccber.com, *.rahzss.com, *.nnjzpw.com, *.cxuvtk.com
+hostname = *.pvlzxh.com, *.wykfnp.com, *.ndqvyg.com, *.knjbzw.com, *.bjzezy.com, *.rwhmcn.com, *.wchgdn.com, *.mdplzw.com, *.yrhwse.com, *.rtlzhe.com, *.paxvrh.com, *.hzbwia.com, *.obntac.com, *.henwap.com, *.yangyang4.cn, *.luduwz.com, *.scrrzr.com, *.jaedlj.com, *.zzttja.com, *.sjlqjh.com, *.uvmtsn.com, *.lvxpha.com, *.dhlwyz.com, *.pbgrzh.com, *.npcwwc.com, *.gectab.com, *.zlnkbn.com, *.jkhpmy.com, *.qznpyr.com, *.rzvwcq.com, *.czhxnw.com, *.qhzvgn.com, *.smpaqa.com, *.vavkyj.com, *.obqyyh.com, *.kccber.com, *.rahzss.com, *.nnjzpw.com, *.cxuvtk.com
 *****************/
 
 const $ = new Env("GOGOGOGO");
