@@ -79,7 +79,7 @@ https?:\/\/.*\.obntac\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-he
 #微密圈 =*.henwap.com
 https?:\/\/.*\.henwap\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
 #海角社区  =*.yangyang4.cn
-https?:\/\/.*\.yangyang4\.cn\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
+https?:\/\/.*\.yitdgm\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
 #51动漫 =*.luduwz.com
 https?:\/\/.*\.luduwz\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8 url script-request-header https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xl.js
 #蜜豆视频=*.scrrzr.com
