@@ -1,6 +1,9 @@
 /*****************
 👑@ios151
 👑@anyeyey
+
+小火箭用这个脚本 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xlxhj.js
+
 请打开http抓取请打开http抓取
 请打开http抓取请打开http抓取
 请打开http抓取请打开http抓取
