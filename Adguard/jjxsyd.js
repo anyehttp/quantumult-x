@@ -13,5 +13,5 @@
 hostname = ios.jjwxc.com
 *************************************/
 var anye = JSON.parse($response.body);
-    anye.data = [];
+    anye.data = [{}];
 $done({body: JSON.stringify(anye)});
