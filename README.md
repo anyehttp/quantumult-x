@@ -1,4 +1,5 @@
 # quantumult-x
+感谢@ios151提供的脚本
 
 群组 https://t.me/IPAs_Dd
 频道 https://t.me/IPAs_share
