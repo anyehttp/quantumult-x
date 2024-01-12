@@ -4,6 +4,8 @@
 #👑@anyeyey
 #👑@ios151
 
+#qx stash surge loon等用这个脚本 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js
+
 #失效请反馈  脚本通用的
 #群组：https://t.me/IPAs_Dd
 #频道：https://t.me/IPAs_share
