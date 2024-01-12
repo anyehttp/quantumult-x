@@ -7,11 +7,11 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/ios\.jjwxc\.com\/app\.jjwxc\/ios\/reading\/WapAdvertises\/getAd url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/jjxsyd.js
+^https:\/\/ios\.jjwxc\.com\/app\.jjwxc\/ios\/reading\/WapAdvertises\/getAd? url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/jjxsyd.js
 
 [mitm]
 hostname = ios.jjwxc.com
 *************************************/
 var anye = JSON.parse($response.body);
-    anye.data = [{}];
+    anye.data = [];
 $done({body: JSON.stringify(anye)});
