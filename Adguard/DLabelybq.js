@@ -20,7 +20,7 @@ var anye = JSON.parse($response.body);
         "equityCount" : 24,
         "forever" : 1,
         "levelDesc" : "高级会员",
-        "levelNo" : 2
+        "levelNo" : 1
       }
     
 $done({body: JSON.stringify(anye)});
