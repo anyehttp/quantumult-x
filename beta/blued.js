@@ -15,5 +15,5 @@ hostname = mi.gdt.qq.com
 
 
 var anye = JSON.parse($response.body);
-    anye.data = {};
+    anye = {};
 $done({body: JSON.stringify(anye)});
