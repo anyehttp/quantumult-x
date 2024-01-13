@@ -15,12 +15,15 @@ hostname = dlabel.ctaiot.com
 
 
 var anye = JSON.parse($response.body);
-    anye.data.vipInfo.baseInfo = {
-        "levelName" : "高级会员",
-        "equityCount" : 24,
-        "forever" : 1,
-        "levelDesc" : "高级会员",
-        "levelNo" : 1
-      }
-    
+anye.data.vipInfo.baseInfo = {
+    "levelName" : "高级会员",
+    "equityCount" : 24,
+    "forever" : 1,
+    "levelDesc" : "高级会员",
+    "levelNo" : 3
+};
+anye.data.vipInfo.funcInfo.forEach((item) => {
+    item.enable = 1;
+    item.limits = 999;
+});
 $done({body: JSON.stringify(anye)});
