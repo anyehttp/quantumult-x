@@ -7,7 +7,7 @@
 **************************************
 
 [rewrite_local]
-^https:\/\/subscription\.grammarly\.com\/api\/v1\/subscription url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/Grammarly.js
+^https:\/\/subscription\.grammarly\.com\/api\/v1\/subscription url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/Grammarly.js
 
 [mitm]
 hostname = subscription.grammarly.com
