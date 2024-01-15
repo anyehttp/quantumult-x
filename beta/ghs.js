@@ -1,6 +1,6 @@
 /*****************
-👑@ios151
-👑@anyeyey
+👑@ios151  我做适配
+👑@anyeyey  baby大佬脚本
 
 小火箭用这个脚本 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/xlxhj.js
 
