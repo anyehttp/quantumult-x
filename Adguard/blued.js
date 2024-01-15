@@ -86,8 +86,8 @@ const vip7 = /^https:\/\/argo\.blued\.cn\/ticktocks\/users\/.*\/photowall\?page/
         anye.data[0].has_right = 1;
     };
     if(vip7.test($request.url)){
-        anye.data[0].album.status = 1;
-        //anye.data[0].album.access_private_photos = 2;
-        anye.data[0].album.privacy_photos_has_locked = 1;
+        anye.data[0].album.status = 0;
+        anye.data[0].album.access_private_photos = 0;
+        anye.data[0].album.privacy_photos_has_locked = 0;
     };
 $done({body: JSON.stringify(anye)});
