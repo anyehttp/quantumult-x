@@ -12,6 +12,8 @@
 hostname = api.finka.cn
 *************************************/
 var anye = JSON.parse($response.body);
+    anye.data.hiddenActive = true;
+    anye.data.stealthMessage = true;
     anye.data.advertising = false;
     anye.data.hiddenFootmark = true;
     anye.data.hidden = true;
