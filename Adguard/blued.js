@@ -23,6 +23,7 @@ blued破解脚本   功能有:去广告.闪照次数，悄悄查看消息， 无
 ^https:\/\/social\.blued\.cn\/users\/call\/state\?detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/argo\.blued\.cn\/users\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/social\.blued\.cn\/users\/shadow url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
+^https:\/\/argo\.blued\.cn\/ticktocks\/users\/.*\/photowall\?page url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 
 [mitm]
 hostname = social.blued.cn, argo.blued.cn
@@ -34,6 +35,7 @@ const vip3 = /^https:\/\/social\.blued\.cn\/users\?birth_time/;
 const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
 const vip5 = /^https:\/\/argo\.blued\.cn\/users\//;
 const vip6 = /^https:\/\/social\.blued\.cn\/users\/shadow/;
+const vip7 = /^https:\/\/argo\.blued\.cn\/ticktocks\/users\/.*\/photowall\?page/;
     if(vip1.test($request.url)){
         //全局私密查看
         anye.data[0].is_global_view_secretly = 1;
@@ -82,5 +84,10 @@ const vip6 = /^https:\/\/social\.blued\.cn\/users\/shadow/;
     if(vip6.test($request.url)){
         anye.data[0].is_open_shadow = 1;
         anye.data[0].has_right = 1;
+    };
+    if(vip7.test($request.url)){
+        anye.data[0].album.status = 1;
+        //anye.data[0].album.access_private_photos = 2;
+        anye.data[0].album.privacy_photos_has_locked = 1;
     };
 $done({body: JSON.stringify(anye)});
