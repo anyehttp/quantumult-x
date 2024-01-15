@@ -9,7 +9,7 @@
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
 
-已知只有小火箭脚本生效情绪和surge脚本不能用
+已知只有小火箭脚本生效.qx和surge脚本不能用
 
 哪些功能不能用我不知道记得反馈
 
