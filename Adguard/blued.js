@@ -11,10 +11,21 @@
 
 哪些功能不能用我不知道记得反馈
 
-blued破解脚本   功能有:闪照次数，悄悄查看消息， 无痕访问， 消息页面的呼唤， 解锁身边人主页信息私密
+blued破解脚本   功能有:去广告.闪照次数，悄悄查看消息， 无痕访问， 消息页面的呼唤， 解锁身边人主页信息私密
 **************************************
 
 [rewrite_local]
+//主页推荐直播 
+^https:\/\/social\.blued\.cn\/users\/recommend url reject-dict
+
+//未登录时个人界面广告
+^https:\/\/social\.blued\.cn\/users\/no_auth\/benefit url reject-dict
+
+//登录后个人界面广告 
+^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v=2 url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
+#去广告 #Blued #Sliverkiss 
+
+
 ^https:\/\/social\.blued\.cn\/users\/.*\/setting url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/social\.blued\.cn\/users\/.*\/flash url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/social\.blued\.cn\/users\/call\/state\?detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
@@ -26,6 +37,8 @@ const vip1 = /^https:\/\/social\.blued\.cn\/users\/.*\/setting/;
 const vip2 = /^https:\/\/social\.blued\.cn\/users\/.*\/flash/;
 const vip3 = /^https:\/\/social\.blued\.cn\/users\?birth_time/;
 const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
+const vip5 = /^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v=2/;
+
     if(vip1.test($request.url)){
         //全局私密查看
         anye.data[0].is_global_view_secretly = 1;
@@ -51,5 +64,12 @@ const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
         anye.data[0].free_count = 9999;
         anye.data[0].call_type = 1;
         anye.data[0].call_status = 1
+    };
+    if(vip5.test($request.url)){
+        anye.data[0].banner={};
+        anye.data[0].service=[];
+        anye.data[0].healthy={};
+        anye.data[0].healthy_banner=[];
+        anye.data[0].emotions=[];
     };
 $done({body: JSON.stringify(anye)});
