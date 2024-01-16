@@ -71,7 +71,7 @@ let url = $request.url, headers = $request.headers;
 // yuheng基础上更改保留auth_key
 url = url.replace(/\/\/(?!long)[^\.]+\./, '//long.').replace(/\.m3u8/, '.m3u8');
 // X-Playback-Session-Id头部
-if (headers.hasOwnProperty("X-Playback-Session-Id")) {
+if (headers.hasOwnProperty("x-playback-session-id")) {
     try{
         const notify = $.getdata("m3u8");
         //console.log("Saved notify:", notify);
