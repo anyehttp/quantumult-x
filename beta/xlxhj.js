@@ -5,7 +5,6 @@
 #👑@ios151
 
 #qx stash  loon等用这个脚本 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js
-#surge用这个 :https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghssurge.js
 #小火箭用户撸完了记得关掉模块想撸再打开
 #小火箭用户撸完了记得关掉模块想撸再打开
 #小火箭用户撸完了记得关掉模块想撸再打开
