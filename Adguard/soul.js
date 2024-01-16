@@ -14,7 +14,6 @@
 [mitm]
 hostname = api-a.soulapp.cn
 *************************************/
-/*
 var anye = JSON.parse($response.body);
 const vip1 = /^https:\/\/api-a\.soulapp\.cn\/loveBell\/getCardInfo/;
 const vip2 = /^https:\/\/api-a\.soulapp\.cn\/loveBell\/queryMatchSpeedupConf/;
@@ -35,26 +34,4 @@ if(vip2.test($request.url)){
     //加速否
     anye.data.speedup = true;
 };
-$done({ body: JSON.stringify(anye) });
-*/
-
-var anye = JSON.parse($response.body);
-const vip1 = /^https:\/\/api-a\.soulapp\.cn\/loveBell\/getCardInfo/;
-const vip2 = /^https:\/\/api-a\.soulapp\.cn\/loveBell\/queryMatchSpeedupConf/;
-
-if (anye.data) {
-    if (vip1.test($request.url)) {
-        anye.data.speedUp = true;
-    }
-
-    if (vip2.test($request.url)) {
-        anye.data.currentSpeed = 100;
-        anye.data.speedupTime = 9999;
-        anye.data.speedupCount = 9999;
-        anye.data.speedup = true;
-    }
-} else {
-    console.error("anye.data 不可用或结构意外。");
-}
-
 $done({ body: JSON.stringify(anye) });
