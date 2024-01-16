@@ -42,6 +42,8 @@ const vip7 = /^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v/;
         anye.data[0].is_global_view_secretly = 1;
         //无痕模式访问
         anye.data[0].is_traceless_access = 1;
+        //隐藏距离
+        anye.data[0].is_hide_distance = 1;
         //黑名单数量
         anye.data[0].black_allowed_count = 999999;
     };
@@ -72,6 +74,8 @@ const vip7 = /^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v/;
     };
     if(vip5.test($request.url)){
         //anye.data[0].super_call_status = 1;
+        anye.data[0].is_traceless_access = 1;
+        anye.data[0].is_shadow = 1;
         anye.data[0].vip_exp = 9999;
         anye.data[0].expire_time = 4072189018;
         anye.data[0].is_show_vip_page = 1;
@@ -81,6 +85,12 @@ const vip7 = /^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v/;
         anye.data[0].is_filter_ads = 1;
         //账号是否封锁
         anye.data[0].is_locked = 0;
+        //消息封锁
+        anye.data[0].spam_lock = 0;
+        //消息//主题
+        anye.data[0].theme_message = 1;
+        //隐藏距离
+        anye.data[0].is_hide_distance = 1;
     };
     if(vip6.test($request.url)){
         anye.data[0].is_open_shadow = 1;
