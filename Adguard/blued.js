@@ -73,7 +73,7 @@ const vip7 = /^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v/;
         anye.data[0].call_status = 1
     };
     if(vip5.test($request.url)){
-        anye.data[0].super_call_status = 1;
+        //anye.data[0].super_call_status = 1;
         anye.data[0].vip_exp = 9999;
         anye.data[0].expire_time = 4072189018;
         anye.data[0].is_show_vip_page = 1;
