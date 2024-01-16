@@ -5,6 +5,11 @@
 #👑@ios151
 
 #qx stash surge loon等用这个脚本 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js
+#小火箭用户撸完了记得关掉模块想撸再打开
+#小火箭用户撸完了记得关掉模块想撸再打开
+#小火箭用户撸完了记得关掉模块想撸再打开
+#小火箭用户撸完了记得关掉模块想撸再打开
+#小火箭用户撸完了记得关掉模块想撸再打开
 
 #失效请反馈  脚本通用的
 #群组：https://t.me/IPAs_Dd
