@@ -1,6 +1,6 @@
 #!url=http://script.hub/file/_start_/https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js/_end_/blued.sgmodule?type=qx-rewrite&target=shadowrocket-module&del=true
 #!name=blued
-#!desc=blued
+#!desc=群组：https://t.me/IPAs_Dd 频道：https://t.me/IPAs_share 作者@anyeyey
 
 [URL Rewrite]
 https://social.blued.cn/users/recommend - reject-dict
