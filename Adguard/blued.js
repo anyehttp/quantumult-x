@@ -37,44 +37,44 @@ const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
 const vip5 = /^https:\/\/argo\.blued\.cn\/users\//;
 const vip6 = /^https:\/\/social\.blued\.cn\/users\/shadow/;
 const vip7 = /^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v/;
-    if(vip1.test($request.url)){
-        //全局私密查看
-        anye.data[0].is_global_view_secretly = 1;
-        //无痕模式访问
+if(vip1.test($request.url) && anye.data && anye.data.length > 0){
+    anye.data[0].is_global_view_secretly = 1;
+    anye.data[0].is_traceless_access = 1;
+    anye.data[0].is_hide_distance = 1;
+    anye.data[0].black_allowed_count = 999999;
+}
+
+if(vip2.test($request.url) && anye.data && anye.data.length > 0){
+    anye.data[0].is_vip = 1;
+    anye.data[0].flash_left_times = 9999;
+    anye.data[0].stimulate_flash = 1;
+    anye.data[0].adms_type = 6;
+}
+
+if(vip3.test($request.url) && anye.data && anye.data.length > 0){
+    anye.data.forEach((item) => {
+        item.is_invisible_half_delay = 0;
+        item.is_hide_last_operate = 0;
+        item.show_activity = 0;
+        item.is_invisible_all = 0;
+        item.is_invisible_half = 0;
+        item.is_hide_city_settled = 0;
+        item.is_stealth_distance = 0;
+        item.is_hide_distance = 0;
+    })
+}
+
+if(vip4.test($request.url) && anye.data && anye.data.length > 0){
+    anye.data[0].promote_person_num = 99999;
+    anye.data[0].pay_count = 9999;
+    anye.data[0].free_count = 9999;
+    anye.data[0].call_type = 1;
+    anye.data[0].call_status = 1
+}
+
+if(vip5.test($request.url) && anye.data && anye.data.length > 0){
+        anye.data[0].super_call_status = 1;
         anye.data[0].is_traceless_access = 1;
-        //隐藏距离
-        anye.data[0].is_hide_distance = 1;
-        //黑名单数量
-        anye.data[0].black_allowed_count = 999999;
-    };
-    if(vip2.test($request.url)){
-        anye.data[0].is_vip = 1;
-        anye.data[0].flash_left_times = 9999;
-        anye.data[0].stimulate_flash = 1;
-        anye.data[0].adms_type = 6;
-    };
-    if(vip3.test($request.url)){
-        anye.data.forEach((item) => {
-            item.is_invisible_half_delay = 0;
-            item.is_hide_last_operate = 0;
-            item.show_activity = 0;
-            item.is_invisible_all = 0;
-            item.is_invisible_half = 0;
-            item.is_hide_city_settled = 0;
-            item.is_stealth_distance = 0;
-            item.is_hide_distance = 0;
-        })
-    };
-    if(vip4.test($request.url)){
-        anye.data[0].promote_person_num = 99999;
-        anye.data[0].pay_count = 9999;
-        anye.data[0].free_count = 9999;
-        anye.data[0].call_type = 1;
-        anye.data[0].call_status = 1
-    };
-    if(vip5.test($request.url)){
-        //anye.data[0].super_call_status = 1;
-        //anye.data[0].is_traceless_access = 1;
         anye.data[0].is_shadow = 1;
         anye.data[0].vip_exp = 9999;
         anye.data[0].expire_time = 4072189018;
@@ -91,16 +91,19 @@ const vip7 = /^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v/;
         anye.data[0].theme_message = 1;
         //隐藏距离
         anye.data[0].is_hide_distance = 1;
-    };
-    if(vip6.test($request.url)){
-        anye.data[0].is_open_shadow = 1;
-        anye.data[0].has_right = 1;
-    };
-    if(vip7.test($request.url)){
-        anye.data[0].banner={};
-        anye.data[0].service=[];
-        anye.data[0].healthy={};
-        anye.data[0].healthy_banner=[];
-        anye.data[0].emotions=[];
-    }
+}
+
+if(vip6.test($request.url) && anye.data && anye.data.length > 0){
+    anye.data[0].is_open_shadow = 1;
+    anye.data[0].has_right = 1;
+}
+
+if(vip7.test($request.url) && anye.data && anye.data.length > 0){
+    anye.data[0].banner={};
+    anye.data[0].service=[];
+    anye.data[0].healthy={};
+    anye.data[0].healthy_banner=[];
+    anye.data[0].emotions=[];
+}
+
 $done({body: JSON.stringify(anye)});
