@@ -16,20 +16,31 @@
 blued破解脚本   功能有:无需开通会员和展示头像定位即可查看展示定位用户.闪照次数，黑名单9999➕.悄悄查看消息， 无痕访问， 消息页面的呼唤， 解锁身边人主页信息私密
 **********************************
 
-[rewrite_local]
-^https:\/\/social\.blued\.cn\/users\/.*\/setting url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
-^https:\/\/social\.blued\.cn\/users\/.*\/flash url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
-^https:\/\/social\.blued\.cn\/users\?birth_time url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
-^https:\/\/social\.blued\.cn\/users\/call\/state\?detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
-^https:\/\/argo\.blued\.cn\/users\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
-^https:\/\/social\.blued\.cn\/users\/shadow url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
-^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
-//主页推荐直播 
-https://social.blued.cn/users/recommend url reject-dict
-//未登录时个人界面广告
-^https:\/\/social\.blued\.cn\/users\/no_auth\/benefit url reject-dict
-[mitm]
-hostname = social.blued.cn, argo.blued.cn
+#!name=blued
+#!desc=blued
+
+[Map Local]
+https://social.blued.cn/users/recommend data="https://raw.githubusercontent.com/mieqq/mieqq/master/reject-dict.json"
+
+^https:\/\/social\.blued\.cn\/users\/no_auth\/benefit data="https://raw.githubusercontent.com/mieqq/mieqq/master/reject-dict.json"
+
+[Script]
+blued = type=http-response, pattern=^https:\/\/social\.blued\.cn\/users\/.*\/setting, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js, requires-body=true, max-size=-1, timeout=60
+
+blued = type=http-response, pattern=^https:\/\/social\.blued\.cn\/users\/.*\/flash, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js, requires-body=true, max-size=-1, timeout=60
+
+blued = type=http-response, pattern=^https:\/\/social\.blued\.cn\/users\?birth_time, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js, requires-body=true, max-size=-1, timeout=60
+
+blued = type=http-response, pattern=^https:\/\/social\.blued\.cn\/users\/call\/state\?detail, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js, requires-body=true, max-size=-1, timeout=60
+
+blued = type=http-response, pattern=^https:\/\/argo\.blued\.cn\/users\/, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js, requires-body=true, max-size=-1, timeout=60
+
+blued = type=http-response, pattern=^https:\/\/social\.blued\.cn\/users\/shadow, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js, requires-body=true, max-size=-1, timeout=60
+
+blued = type=http-response, pattern=^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js, requires-body=true, max-size=-1, timeout=60
+
+[MITM]
+hostname = %APPEND% social.blued.cn, argo.blued.cn
 *************************************/
 var anye = JSON.parse($response.body);
 const vip1 = /^https:\/\/social\.blued\.cn\/users\/.*\/setting/;
