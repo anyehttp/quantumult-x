@@ -35,10 +35,18 @@ const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
 const vip5 = /^https:\/\/argo\.blued\.cn\/users\//;
 const vip6 = /^https:\/\/social\.blued\.cn\/users\/shadow/;
 if(vip1.test($request.url) && anye.data && anye.data.length > 0){
+    /*
     anye.data[0].is_global_view_secretly = 1;
     anye.data[0].is_traceless_access = 1;
     anye.data[0].is_hide_distance = 1;
     anye.data[0].black_allowed_count = 999999;
+    */
+    anye.data.forEach((item) => {
+        itemanye.is_global_view_secretly = 1;
+        itemanye.is_traceless_access = 1;
+        itemanye.is_hide_distance = 1;
+        itemanye.black_allowed_count = 999999;
+        })
 }
 
 if(vip2.test($request.url) && anye.data && anye.data.length > 0){
