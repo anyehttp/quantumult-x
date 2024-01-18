@@ -14,27 +14,18 @@ const $ = new Env("GOGOGOGO");
 let url = $request.url;
 let headers = $request.headers;
 
-// 在 'headers.hasOwnProperty("User-Agent")'之间缺少了 '||' 运算符
-// 'if' 条件中对 'notify' 的检查也不正确。
 if (headers.hasOwnProperty("user-agent") || headers.hasOwnProperty("User-Agent")) {
     try {
-        // 使用 '||' 运算符检查 'notify' 是否未定义、为空或不等于 'url'
         const notify = $.getdata("pngUrl");
         if (!notify || notify != url) {
-            // 使用 '&&' 运算符正确地链接逻辑条件，并在语句末尾加上 ';'。
-            // 我们保存新的URL，下次脚本运行时将被提醒。
             $.setdata(url, "pngUrl");
-            // 根据似乎是常见脚本环境中的典型通知函数，正确地修正方法签名
             $.msg("PNG链接捕获成功", "", "点击此通知查看PNG", url);
-            // 'url' 应作为参数提供给 msg 函数的链接选项
         }
     } catch (e) {
         //打印错误信息
         console.error("发生错误:", e);
     }
 }
-
-// 用 done 回调函数结束脚本，表明它已经执行完毕。
 $.done({});
 
 
