@@ -36,7 +36,7 @@ if (vip1.test($request.url) && anye.data && anye.data.length > 0) {
     anye.data[0].is_traceless_access = 1;
     anye.data[0].is_hide_distance = 1;
     anye.data[0].black_allowed_count = 999999;
-    console.log(anye.data);
+    console.log(JSON.stringify(anye));
 }
 
 if (vip2.test($request.url) && anye.data && anye.data.length > 0) {
@@ -45,7 +45,7 @@ if (vip2.test($request.url) && anye.data && anye.data.length > 0) {
         anye.data[0].flash_left_times = 9999;
         anye.data[0].stimulate_flash = 1;
         anye.data[0].adms_type = 6;
-        console.log(anye);
+        console.log(JSON.stringify(anye.data));
     }
 }
 
