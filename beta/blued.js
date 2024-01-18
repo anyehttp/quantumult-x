@@ -36,7 +36,7 @@ if (vip1.test($request.url) && anye.data && anye.data.length > 0) {
     anye.data[0].is_traceless_access = 1;
     anye.data[0].is_hide_distance = 1;
     anye.data[0].black_allowed_count = 999999;
-    console.log(anye);
+    console.log(anye.data);
 }
 
 if (vip2.test($request.url) && anye.data && anye.data.length > 0) {
