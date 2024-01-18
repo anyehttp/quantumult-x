@@ -27,30 +27,29 @@ const vip1 = /^https:\/\/social\.blued\.cn\/users\/.*\/setting/;
 const vip2 = /^https:\/\/social\.blued\.cn\/users\/.*\/flash/;
 const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
 const vip6 = /^https:\/\/social\.blued\.cn\/users\/shadow/;
-if(vip1.test($request.url) {
+if (vip1.test($request.url)) {
     anye.data[0].is_global_view_secretly = 1;
     anye.data[0].is_traceless_access = 1;
     anye.data[0].is_hide_distance = 1;
     anye.data[0].black_allowed_count = 999999;
 }
 
-if(vip2.test($request.url){
+if (vip2.test($request.url)) {
     anye.data[0].is_vip = 1;
     anye.data[0].flash_left_times = 9999;
     anye.data[0].stimulate_flash = 1;
     anye.data[0].adms_type = 6;
 }
 
-
-if(vip4.test($request.url) {
+if (vip4.test($request.url)) {
     anye.data[0].promote_person_num = 99999;
     anye.data[0].pay_count = 9999;
     anye.data[0].free_count = 9999;
     anye.data[0].call_type = 1;
-    anye.data[0].call_status = 1
+    anye.data[0].call_status = 1;
 }
 
-if(vip6.test($request.url) {
+if (vip6.test($request.url)) {
     anye.data[0].is_open_shadow = 1;
     anye.data[0].has_right = 1;
 }
