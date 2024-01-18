@@ -22,7 +22,6 @@ blued破解脚本   功能有:无需开通会员和展示头像定位即可查�
 ^https:\/\/social\.blued\.cn\/users\/.*\/flash url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/social\.blued\.cn\/users\?birth_time url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/social\.blued\.cn\/users\/call\/state\?detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
-^https:\/\/argo\.blued\.cn\/users\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/social\.blued\.cn\/users\/shadow url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 [mitm]
 hostname = social.blued.cn, argo.blued.cn
@@ -32,7 +31,6 @@ const vip1 = /^https:\/\/social\.blued\.cn\/users\/.*\/setting/;
 const vip2 = /^https:\/\/social\.blued\.cn\/users\/.*\/flash/;
 const vip3 = /^https:\/\/social\.blued\.cn\/users\?birth_time/;
 const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
-const vip5 = /^https:\/\/argo\.blued\.cn\/users\//;
 const vip6 = /^https:\/\/social\.blued\.cn\/users\/shadow/;
 if(vip1.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].is_global_view_secretly = 1;
@@ -67,27 +65,6 @@ if(vip4.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].free_count = 9999;
     anye.data[0].call_type = 1;
     anye.data[0].call_status = 1
-}
-
-if(vip5.test($request.url) && anye.data && anye.data.length > 0){
-        anye.data[0].super_call_status = 1;
-        anye.data[0].is_traceless_access = 1;
-        anye.data[0].is_shadow = 1;
-        anye.data[0].vip_exp = 9999;
-        anye.data[0].expire_time = 4072189018;
-        anye.data[0].is_show_vip_page = 1;
-        anye.data[0].is_vip_annual = 1;
-        anye.data[0].vip_exp_lvl = 9999;
-        anye.data[0].black_allowed_count = 9999;
-        anye.data[0].is_filter_ads = 1;
-        //账号是否封锁
-        anye.data[0].is_locked = 0;
-        //消息封锁
-        anye.data[0].spam_lock = 0;
-        //消息//主题
-        anye.data[0].theme_message = 1;
-        //隐藏距离
-        anye.data[0].is_hide_distance = 1;
 }
 
 if(vip6.test($request.url) && anye.data && anye.data.length > 0){
