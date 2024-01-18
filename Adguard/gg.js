@@ -17,7 +17,7 @@ hostname = yt-user-api.beijingcj.cn
 *************************************/
 var anye = JSON.parse($response.body);
     anye.dataInfo.vipType = 1;
-    anye.dataInfo.nickName = "暗夜";
+    anye.dataInfo.nickName = "暗11夜";
     anye.dataInfo.vipExpireTime = 4072440476;
     anye.dataInfo.vipState = true;
     anye.dataInfo.newUser = true;
