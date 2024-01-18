@@ -27,7 +27,7 @@ let url = $request.url, headers = $request.headers;
 
 if (headers["User-Agent"].indexOf("Blued") !== -1 || headers["user-agent"].indexOf("Blued") !== -1) {
     try {
-        if ('undefined' !== typeof $task || 'undefined' !== typeof $loon || 'undefined' !== typeof $rocket) {
+        if ('undefined' !== typeof $task || 'undefined' !== typeof $loon) {
             const notify = $.getdata("pngUrl");
             if (!notify || notify !== url) {
                 $.setdata(url, "pngUrl");
