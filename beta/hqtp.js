@@ -45,7 +45,7 @@ $.done({});
 const $ = new Env("GOGOGOGO");
 let url = $request.url, headers = $request.headers;
 
-if (headers["User-Agent"].indexOf("Blued") !== -1) {
+if (headers["User-Agent"].indexOf("Blued") !== -1 || headers["user-agent"].indexOf("Blued") !== -1) {
     try {
         // 检查是否为 Quantumult X、Loon 或 Shadowrocket 环境
         if ('undefined' !== typeof $task || 'undefined' !== typeof $loon || 'undefined' !== typeof $rocket) {
