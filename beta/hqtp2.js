@@ -9,13 +9,13 @@
 [mitm]
 hostname = burn-chatfiles.bldimg.com
 *****************/
-
 const $ = new Env("GOGOGOGO");
 let url = $request.url, headers = $request.headers;
 
 // 判断请求头中是否包含 user-agent（不区分大小写）
 if (headers.hasOwnProperty("user-agent") || headers.hasOwnProperty("User-Agent")) {
     try {
+        // 检查是否为 Quantumult X、Loon 或 Shadowrocket 环境
         if ('undefined' !== typeof $task || 'undefined' !== typeof $loon || 'undefined' !== typeof $rocket) {
             const notify = $.getdata("pngUrl");
             if (!notify || notify !== url) {
