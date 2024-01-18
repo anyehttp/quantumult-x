@@ -17,7 +17,7 @@ let url = $request.url, headers = $request.headers;
 if (headers.hasOwnProperty("user-agent") || headers.hasOwnProperty("User-Agent")) {
     try {
         const notify = $.getdata("pngUrl");
-        if (!notify  notify != url) {
+        if (!notify || notify !== url) {
             // 如果不存在通知或者当前链接与之前存储的链接不同，则发送通知
             $.setdata(url, "pngUrl");
             $.msg("PNG链接捕获成功", "点击此通知查看PNG", "链接变化时会发送通知", url);
