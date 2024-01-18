@@ -42,10 +42,10 @@ if(vip1.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].black_allowed_count = 999999;
     */
     anye.data.forEach((item) => {
-        itemanye.is_global_view_secretly = 1;
-        itemanye.is_traceless_access = 1;
-        itemanye.is_hide_distance = 1;
-        itemanye.black_allowed_count = 999999;
+        item.is_global_view_secretly = 1;
+        item.is_traceless_access = 1;
+        item.is_hide_distance = 1;
+        item.black_allowed_count = 999999;
         })
 }
 
