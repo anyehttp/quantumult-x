@@ -15,12 +15,12 @@ blued破解脚本   功能有:无需开通会员和展示头像定位即可查�
 **************************************
 
 [rewrite_local]
-^https:\/\/social\.blued\.cn\/users\/.*\/setting url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
-^https:\/\/social\.blued\.cn\/users\/.*\/flash url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
-^https:\/\/social\.blued\.cn\/users\?birth_time url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
-^https:\/\/social\.blued\.cn\/users\/call\/state\?detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
-^https:\/\/argo\.blued\.cn\/users\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
-^https:\/\/social\.blued\.cn\/users\/shadow url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
+^https:\/\/social\.blued\.cn\/users\/.*\/setting url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
+^https:\/\/social\.blued\.cn\/users\/.*\/flash url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
+^https:\/\/social\.blued\.cn\/users\?birth_time url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
+^https:\/\/social\.blued\.cn\/users\/call\/state\?detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
+^https:\/\/argo\.blued\.cn\/users\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
+^https:\/\/social\.blued\.cn\/users\/shadow url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/blued.js
 [mitm]
 hostname = social.blued.cn, argo.blued.cn
 *************************************/
