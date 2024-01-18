@@ -21,11 +21,6 @@ blued破解脚本   功能有:无需开通会员和展示头像定位即可查�
 ^https:\/\/social\.blued\.cn\/users\/call\/state\?detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/argo\.blued\.cn\/users\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/social\.blued\.cn\/users\/shadow url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
-^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
-//主页推荐直播 
-https://social.blued.cn/users/recommend url reject-dict
-//未登录时个人界面广告
-^https:\/\/social\.blued\.cn\/users\/no_auth\/benefit url reject-dict
 [mitm]
 hostname = social.blued.cn, argo.blued.cn
 *************************************/
@@ -36,7 +31,6 @@ const vip3 = /^https:\/\/social\.blued\.cn\/users\?birth_time/;
 const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
 const vip5 = /^https:\/\/argo\.blued\.cn\/users\//;
 const vip6 = /^https:\/\/social\.blued\.cn\/users\/shadow/;
-const vip7 = /^https:\/\/social\.blued\.cn\/users\/.+\/more\/ios\?v/;
 if(vip1.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].is_global_view_secretly = 1;
     anye.data[0].is_traceless_access = 1;
@@ -96,14 +90,6 @@ if(vip5.test($request.url) && anye.data && anye.data.length > 0){
 if(vip6.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].is_open_shadow = 1;
     anye.data[0].has_right = 1;
-}
-
-if(vip7.test($request.url) && anye.data && anye.data.length > 0){
-    anye.data[0].banner={};
-    anye.data[0].service=[];
-    anye.data[0].healthy={};
-    anye.data[0].healthy_banner=[];
-    anye.data[0].emotions=[];
 }
 
 $done({body: JSON.stringify(anye)});
