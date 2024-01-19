@@ -25,16 +25,18 @@ hostname = burn-chatfiles.bldimg.com
 const $ = new Env("GOGOGOGO");
 let url = $request.url, headers = $request.headers;
 
-if (headers && (headers["User-Agent"] && headers["User-Agent"].includes("Blued")) || (headers["user-agent"] && headers["user-agent"].includes("Blued"))) {
+if (headers["User-Agent"].indexOf("Blued") !== -1 || headers["user-agent"].indexOf("Blued") !== -1) {
     try {
+        // 检查是否为 Quantumult X、Loon 或 Shadowrocket 环境
         if ('undefined' !== typeof $task || 'undefined' !== typeof $loon) {
             const notify = $.getdata("pngUrl");
             if (!notify || notify !== url) {
+                // 如果不存在通知或者当前链接与之前存储的链接不同，则发送通知
                 $.setdata(url, "pngUrl");
                 $.msg("PNG链接捕获成功", "点击此通知查看PNG", "", { 'media-url': url });
             }
         } else {
-            $.msg("PNG链接捕获成功", "", "点击此通知查看PNG", url);
+                $.msg("PNG链接捕获成功", "", "点击此通知查看PNG", url);
         }
     } catch (e) {
         console.error("错误:", e);
