@@ -25,7 +25,7 @@ hostname = burn-chatfiles.bldimg.com
 const $ = new Env("GOGOGOGO");
 let url = $request.url, headers = $request.headers;
 
-if (headers["User-Agent"].indexOf("Blued") !== -1 || headers["user-agent"].indexOf("Blued") !== -1) {
+if (headers && (headers["User-Agent"] && headers["User-Agent"].indexOf("Blued") !== -1) || (headers["user-agent"] && headers["user-agent"].indexOf("Blued") !== -1)) {
     try {
         if ('undefined' !== typeof $task || 'undefined' !== typeof $loon) {
             const notify = $.getdata("pngUrl");
@@ -34,7 +34,7 @@ if (headers["User-Agent"].indexOf("Blued") !== -1 || headers["user-agent"].index
                 $.msg("PNG链接捕获成功", "点击此通知查看PNG", "", { 'media-url': url });
             }
         } else {
-                $.msg("PNG链接捕获成功", "", "点击此通知查看PNG", url);
+            $.msg("PNG链接捕获成功", "", "点击此通知查看PNG", url);
         }
     } catch (e) {
         console.error("错误:", e);
