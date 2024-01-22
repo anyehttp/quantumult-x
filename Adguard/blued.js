@@ -24,6 +24,7 @@ blued破解脚本   功能有:无需开通会员和展示头像定位即可查�
 ^https:\/\/social\.blued\.cn\/users\/call\/state\?detail url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/argo\.blued\.cn\/users\/ url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 ^https:\/\/social\.blued\.cn\/users\/shadow url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
+^https:\/\/social\.blued\.cn\/users\/.*\/basi url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/blued.js
 [mitm]
 hostname = social.blued.cn, argo.blued.cn
 *************************************/
@@ -34,6 +35,7 @@ const vip3 = /^https:\/\/social\.blued\.cn\/users\?birth_time/;
 const vip4 = /^https:\/\/social\.blued\.cn\/users\/call\/state\?detail/;
 const vip5 = /^https:\/\/argo\.blued\.cn\/users\//;
 const vip6 = /^https:\/\/social\.blued\.cn\/users\/shadow/;
+const vip7 = /^https:\/\/social\.blued\.cn\/users\/.*\/basi/;
 if(vip1.test($request.url) && anye.data && anye.data.length > 0){
     /*
     anye.data[0].is_global_view_secretly = 1;
@@ -55,7 +57,7 @@ if(vip2.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].stimulate_flash = 1;
     anye.data[0].adms_type = 6;
 }
-
+/*
 if(vip3.test($request.url) && anye.data && anye.data.length > 0){
     anye.data.forEach((item) => {
         item.is_invisible_half_delay = 0;
@@ -68,7 +70,8 @@ if(vip3.test($request.url) && anye.data && anye.data.length > 0){
         item.is_hide_distance = 0;
     })
 }
-
+*/
+/*
 if(vip4.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].promote_person_num = 99999;
     anye.data[0].pay_count = 9999;
@@ -76,7 +79,8 @@ if(vip4.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].call_type = 1;
     anye.data[0].call_status = 1
 }
-
+*/
+/*
 if(vip5.test($request.url) && anye.data && anye.data.length > 0){
         anye.data[0].super_call_status = 1;
         anye.data[0].is_traceless_access = 1;
@@ -97,10 +101,13 @@ if(vip5.test($request.url) && anye.data && anye.data.length > 0){
         //隐藏距离
         anye.data[0].is_hide_distance = 0;
 }
-
+*/
 if(vip6.test($request.url) && anye.data && anye.data.length > 0){
     anye.data[0].is_open_shadow = 1;
     anye.data[0].has_right = 1;
 }
-
+if(vip7.test($request.url){
+    //聊天界面查看会员隐藏的距离
+    anye.data[0].is_hide_distance = 0;
+}
 $done({body: JSON.stringify(anye)});
