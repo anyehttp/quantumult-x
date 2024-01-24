@@ -43,13 +43,18 @@ function captureAuthHeader() {
   $done({});
 }
 
+
+
 function signIn() {
+  console.log("执行signIn函数");
   if (!savedAuthHeader) {
       savedAuthHeader = $.getdata(ckName);
+      console.log("从存储中获取的Authorization: " + savedAuthHeader);
   }
 
   if (!savedAuthHeader) {
       console.log("没有找到有效的Authorization头，无法签到");
+      $.msg("签到脚本", "签到失败", "没有找到有效的Authorization头");
       return;
   }
 
@@ -58,13 +63,16 @@ function signIn() {
       headers: { "Authorization": savedAuthHeader }
   };
 
+  console.log("发送签到请求");
   httpRequest(options, 'get').then(result => {
-      console.log("签到响应:", result);
+      console.log("签到响应:", JSON.stringify(result));
       // 根据result的内容执行签到成功或失败的逻辑
   }).catch(error => {
       console.log("签到请求失败:", error);
   });
 }
+
+
 
 if (typeof $request !== "undefined") {
   captureAuthHeader();
