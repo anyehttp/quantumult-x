@@ -65,12 +65,31 @@ class UserInfo {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=DoCheckin`,
                 //请求头, 所有接口通用
                 headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Content-Type": "application/json;charset=UTF-8",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.44(0x18002c2f) NetType/WIFI Language/zh_CN",
                     "Authorization":this.token,
                     "serialId":''
                 },
-                body: `{"promotionId" : 1001681,"promotionCode" : "CRM-QD","pointRecordRemark" : "连续签到"}`
+                body: `{
+  "jsonrpc": "2.0",
+  "id": 1706073615337,
+  "result": {
+    "record": {
+      "updateTime": null,
+      "id": 1842058,
+      "createTime": "2024-01-24 13:20:15",
+      "checkinTimes": 1,
+      "awards": [
+      ],
+      "checkinDate": "2024-01-24 13:20:15"
+    },
+    "hasAward": false,
+    "ziwiReward": {
+      "type": "z_credit",
+      "amount": "1"
+    }
+  }
+}`
             };
             //post方法
             let result = await httpRequest(options);
