@@ -70,26 +70,7 @@ class UserInfo {
                     "Authorization":this.token,
                     "serialId":''
                 },
-                body: `{
-  "jsonrpc": "2.0",
-  "id": 1706073615337,
-  "result": {
-    "record": {
-      "updateTime": null,
-      "id": 1842058,
-      "createTime": "2024-01-24 13:20:15",
-      "checkinTimes": 1,
-      "awards": [
-      ],
-      "checkinDate": "2024-01-24 13:20:15"
-    },
-    "hasAward": false,
-    "ziwiReward": {
-      "type": "z_credit",
-      "amount": "1"
-    }
-  }
-}`
+                body: `{"jsonrpc": "2.0","id": 1706073615337,"result": {"record": {"updateTime": null,"id": 1842058,"createTime": "2024-01-24 13:20:15","checkinTimes": 1,"awards": [],"checkinDate": "2024-01-24 13:20:15"},"hasAward": false,"ziwiReward": {"type": "z_credit","amount": "1"}}}`
             };
             //post方法
             let result = await httpRequest(options);
@@ -112,6 +93,7 @@ async function getCookie() {
         if (tokenValue) {
             $.setdata(tokenValue, ckName);
             $.msg($.name, "", "获取签到Cookie成功🎉");
+            await main();
         } else {
             $.msg($.name, "", "错误获取签到Cookie失败");
         }
