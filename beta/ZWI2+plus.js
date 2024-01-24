@@ -62,7 +62,7 @@ class UserInfo {
         try {
             const options = {
                 //签到任务调用签到接口
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=GetTaskList`,
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=DoCheckin`,
                 //请求头, 所有接口通用
                 headers: {
                     "Content-Type": "application/json",
