@@ -45,7 +45,7 @@ function captureAuthHeader() {
 }
 
 
-
+/*
 function signIn() {
   console.log("执行signIn函数");
   if (!savedAuthHeader) {
@@ -70,6 +70,41 @@ function signIn() {
       // 根据result的内容执行签到成功或失败的逻辑
   }).catch(error => {
       console.log("签到请求失败:", error);
+  });
+}
+*/
+function signIn() {
+  console.log("执行signIn函数");
+  if (!savedAuthHeader) {
+      savedAuthHeader = $.getdata(ckName);
+      console.log("从存储中获取的Authorization: " + savedAuthHeader);
+  }
+
+  if (!savedAuthHeader) {
+      console.log("没有找到有效的Authorization头，无法签到");
+      $.msg("签到脚本", "签到失败", "没有找到有效的Authorization头");
+      return;
+  }
+
+  const options = {
+      url: "https://ziwixcx.escase.cn/json-rpc?__method=GetTaskList",
+      headers: { "Authorization": savedAuthHeader }
+  };
+
+  console.log("发送签到请求");
+  httpRequest(options, 'get').then(result => {
+      console.log("签到响应:", JSON.stringify(result));
+      // 根据result的内容执行签到成功或失败的逻辑
+      if (result && result.body) {
+          console.log("签到响应体内容:", result.body);
+          // 在这里处理响应体的内容，根据需要执行相应逻辑
+      }
+  }).catch(error => {
+      console.log("签到请求失败:", error);
+      // 在请求失败时打印出响应体的内容
+      if (error.response && error.response.body) {
+          console.log("签到请求失败，响应体内容:", error.response.body);
+      }
   });
 }
 
