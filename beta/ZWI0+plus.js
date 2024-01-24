@@ -47,8 +47,18 @@ async function main() {
     }
 }
 
+// ...
+
 class UserInfo {
-    // ...
+    constructor(str) {
+        this.index = ++userIdx;
+        this.token = str;
+        this.ckStatus = true;
+        this.drawStatus = true;
+    }
+    getRandomTime() {
+        return randomInt(1000, 3000)
+    }
 
     //签到函数
     async signin() {
