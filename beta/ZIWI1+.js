@@ -34,7 +34,7 @@ function captureAuthHeader() {
   if (url.includes(targetUrl)) {
       let authHeader = $request.headers["Authorization"];
       if (authHeader) {
-          console.log("Captured Authorization Header: " + authHeader);
+          console.log("获取Cookie成功: " + authHeader);
           savedAuthHeader = authHeader;
           $.setdata(ckName, authHeader);
           $.msg("签到脚本", "获取Cookie成功", "");
