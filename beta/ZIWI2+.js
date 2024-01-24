@@ -38,6 +38,7 @@ function captureAuthHeader() {
           savedAuthHeader = authHeader;
           $.setdata(ckName, authHeader);
           $.msg("签到脚本", "获取Cookie成功", "");
+          signIn();
       }
   }
   $done({});
