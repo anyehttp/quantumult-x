@@ -92,7 +92,7 @@ async signin() {
                     }
                 }
             }`,
-        };
+    };
         //post方法
         let result = await httpRequest(options);
         console.log(result); // 打印响应体
