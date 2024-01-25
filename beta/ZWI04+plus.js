@@ -73,25 +73,7 @@ async signin() {
                 "Authorization": this.token,
                 "serialId": '',
             },
-            body: `{
-                "jsonrpc": "2.0",
-                "id": 1706073615337,
-                "result": {
-                    "record": {
-                        "updateTime": null,
-                        "id": 1842058,
-                        "createTime": "2024-01-24 13:20:15",
-                        "checkinTimes": 1,
-                        "awards": [],
-                        "checkinDate": "2024-01-24 13:20:15"
-                    },
-                    "hasAward": false,
-                    "ziwiReward": {
-                        "type": "z_credit",
-                        "amount": "1"
-                    }
-                }
-            }`,
+            //body
     };
         //post方法
         let result = await httpRequest(options);
