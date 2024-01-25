@@ -119,7 +119,6 @@ async function getCookie() {
     }
 }
 
-
 //主程序执行入口
 !(async () => {
     //没有设置变量,执行Cookie获取
