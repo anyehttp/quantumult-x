@@ -102,7 +102,8 @@ async signin() {
             DoubleLog(`❌签到失败! ${result?.emsg}`);
         }
     } catch (e) {
-        console.log(e);
+            console.log(e);
+        }
     }
 }
 //获取Cookie
