@@ -73,7 +73,16 @@ async signin() {
                 "Authorization": this.token,
                 "serialId": '',
             },
-            //body
+            body: `{
+                "jsonrpc": "2.0",
+                "result": {
+                    "hasAward": false,
+                    "ziwiReward": {
+                        "type": "z_credit",
+                        "amount": "1"
+                    }
+                }
+            }`,
     };
         //post方法
         let result = await httpRequest(options);
