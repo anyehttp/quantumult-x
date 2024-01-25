@@ -75,6 +75,7 @@ async signin() {
             },
             body: `{
                 "jsonrpc": "2.0",
+                "id": 1706073615337,
                 "result": {
                     "hasAward": false,
                     "ziwiReward": {
