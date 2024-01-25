@@ -60,50 +60,49 @@ class UserInfo {
         return randomInt(1000, 3000)
     }
 
-    //签到函数
-    async signin() {
-        try {
-            const options = {
-                //签到任务调用签到接口
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=DoCheckin`,
-                //请求头, 所有接口通用
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.44(0x18002c2f) NetType/WIFI Language/zh_CN",
-                    "Authorization": this.token,
-                    "serialId": ''
-                },
-                body: `{
-                    "jsonrpc": "2.0",
-                    "id": 1706073615337,
-                    "result": {
-                        "record": {
-                            "updateTime": null,
-                            "id": 1842058,
-                            "createTime": "2024-01-24 13:20:15",
-                            "checkinTimes": 1,
-                            "awards": [],
-                            "checkinDate": "2024-01-24 13:20:15"
-                        },
-                        "hasAward": false,
-                        "ziwiReward": {
-                            "type": "z_credit",
-                            "amount": "1"
-                        }
+ //签到函数
+async signin() {
+    try {
+        const options = {
+            //签到任务调用签到接口
+            url: `https://ziwixcx.escase.cn/json-rpc?__method=DoCheckin`,
+            //请求头, 所有接口通用
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.44(0x18002c2f) NetType/WIFI Language/zh_CN",
+                "Authorization": this.token,
+                "serialId": '',
+            },
+            body: `{
+                "jsonrpc": "2.0",
+                "id": 1706073615337,
+                "result": {
+                    "record": {
+                        "updateTime": null,
+                        "id": 1842058,
+                        "createTime": "2024-01-24 13:20:15",
+                        "checkinTimes": 1,
+                        "awards": [],
+                        "checkinDate": "2024-01-24 13:20:15"
+                    },
+                    "hasAward": false,
+                    "ziwiReward": {
+                        "type": "z_credit",
+                        "amount": "1"
                     }
-                }`
-            };
-            //post方法
-            let result = await httpRequest(options);
-            console.log(result); // 打印响应体
-            if (!result?.ecode) {
-                DoubleLog(`✅签到成功！`);
-            } else {
-                DoubleLog(`❌签到失败! ${result?.emsg}`);
-            }
-        } catch (e) {
-            console.log(e);
+                }
+            }`,
+        };
+        //post方法
+        let result = await httpRequest(options);
+        console.log(result); // 打印响应体
+        if (!result?.ecode) {
+            DoubleLog(`✅签到成功！`);
+        } else {
+            DoubleLog(`❌签到失败! ${result?.emsg}`);
         }
+    } catch (e) {
+        console.log(e);
     }
 }
 //获取Cookie
