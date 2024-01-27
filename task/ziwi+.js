@@ -25,7 +25,7 @@
 
 // env.js 全局
 const $ = new Env("微信小程序ZIWI+");
-const ckName = "czfajlb_data";
+const ckName = "ziwi_data";
 //-------------------- 一般不动变量区域 -------------------------------------
 const Notify = 1;//0为关闭通知,1为打开通知,默认为1
 const notify = $.isNode() ? require('./sendNotify') : '';
