@@ -83,7 +83,12 @@ async function main() {
             }
             //发帖
             taskall.push(await user.ft());
-
+            //点赞
+            for (let i = 0; i < 10; i++) {
+                taskall.push(await user.dz());
+            }
+            //Zb
+            taskall.push(await user.Zb());
 
 
             
@@ -262,9 +267,72 @@ class UserInfo {
 
 
 
+   // 点赞函数
+    async dz() {
+        try {
+            if (this.threadList.length === 0) {
+                // 如果帖子列表为空，调用this.list()获取并保存 不能重复爬列表
+                this.threadList = await this.list();
+            }
+
+            const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
+            
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=LikeThread`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706365735309,"jsonrpc": "2.0","method": "LikeThread","params": {"threadId": "${randomThreadId}"}}`
+            };
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
+                DoubleLog(`✅点赞成功！`)
+            } else {
+                DoubleLog(`❌点赞失败!${result?.emsg}`)
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+
+   // Zb函数
+async Zb() {
+    try {
+        const options = {
+            url: `https://ziwixcx.escase.cn/json-rpc?__method=GetUserCreditStats`,
+            headers: {
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                "Authorization": this.token,
+                "serialId": ''
+            },
+            body: `{"id": 1706366568453,"jsonrpc": "2.0","method": "GetUserCreditStats","params": {"currency": "Z_Point"}}`
+        };
+        let result = await httpRequest(options);
+        console.log(result)
+        if (!result?.ecode) {
+            // 打印 Z 币的值
+            DoubleLog(`Z币总数: ${result?.result?.total}`);
+            DoubleLog(`有效Z币: ${result?.result?.valid}`);
+            DoubleLog(`过期Z币: ${result?.result?.expired}`);
+        } else {
+            DoubleLog(`❌查询 Z 币失败! ${result?.emsg}`);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
 
     
-
+    
 }
 
 
@@ -371,6 +439,7 @@ async function SendMsg(message) {
         console.log(message)
     }
 }
+
 
 /** ---------------------------------固定不动区域----------------------------------------- */
 // prettier-ignore
