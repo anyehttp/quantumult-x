@@ -84,7 +84,7 @@ async function main() {
             //发帖
             taskall.push(await user.ft());
             //点赞
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 10; i++) {
                 taskall.push(await user.dz());
             }
 
