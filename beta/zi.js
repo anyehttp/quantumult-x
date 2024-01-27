@@ -217,9 +217,9 @@ class UserInfo {
             console.log(result);
 
             if (!result?.ecode) {
-                DoubleLog(`✅分享成功！`);
+                DoubleLog(`✅评论成功！`);
             } else {
-                DoubleLog(`❌分享失败!${result?.emsg}`);
+                DoubleLog(`❌评论失败!${result?.emsg}`);
             }
         } catch (e) {
             console.log(e);
