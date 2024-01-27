@@ -1,8 +1,10 @@
 /**************************************
-@Author：@anyeyey
-@Date：2024-01-27
+@anyeyey
+感谢樱花大佬的脚本框架和指点
+@sliverkiss
+@Date：2024-01-28
 
-适用于微信小程序WIZI+签到分享任务脚本
+适用于微信小程序WIZI+ 签到 和 任务
 
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
