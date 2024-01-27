@@ -77,7 +77,6 @@ async function main() {
             //分享
             for (let i = 0; i < 10; i++) {
                 taskall.push(await user.fx());
-                await $.wait(user.getRandomTime());
             }
             
             await $.wait(user.getRandomTime());
