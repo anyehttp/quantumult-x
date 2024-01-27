@@ -78,14 +78,13 @@ async function main() {
             for (let i = 0; i < 10; i++) {
                 taskall.push(await user.fx());
             }
-            
             await $.wait(user.getRandomTime());
         } else {
             //将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
         }
     }
-}
+};
 
 
 
@@ -99,7 +98,7 @@ class UserInfo {
     }
     getRandomTime() {
         return randomInt(1000, 3000)
-    }
+    };
 
 
 
@@ -132,7 +131,7 @@ class UserInfo {
             console.log(e);
         }
     }
-}
+};
 
 
 
@@ -164,7 +163,7 @@ class UserInfo {
             console.log(e);
         }
     }
-}
+};
 
 
 
