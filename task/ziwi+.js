@@ -8,15 +8,16 @@
 -----------------------------------------------
 Quantumult x
 -----------------------------------------------
-定时任务
+手动添加定时任务
 [task_local]
 10 0 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
 
-Cookie
+重写获取Cookie
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 -----------------------------------------------
 Surge
 -----------------------------------------------
+模块
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
 -----------------------------------------------
 -----------------------------------------------
