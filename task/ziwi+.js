@@ -1,10 +1,12 @@
 /**************************************
 @anyeyey
-感谢樱花大佬的脚本框架修改脚本和指点
+感谢樱花大佬的脚本框架和指点
 @sliverkiss
 @Date：2024-01-28
 
 适用于微信小程序WIZI+ 签到 和 任务
+
+樱花佬频道 @sliverkiss
 
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
@@ -59,8 +61,6 @@ let userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
 let userList = [];
 let userIdx = 0;
 let userCount = 0;
-//调试
-$.is_debug = ($.isNode() ? process.env.IS_DEDUG : $.getdata('is_debug')) || 'false';
 // 为通知准备的空数组
 $.notifyMsg = [];
 //bark推送
@@ -70,27 +70,33 @@ $.barkKey = ($.isNode() ? process.env["bark_key"] : $.getdata("bark_key")) || ''
 // 脚本入口函数main()
 async function main() {
     console.log('\n================== 任务 ==================\n');
-    // 签到
+    let taskall = [];
     for (let user of userList) {
-        await user.signin();
         if (user.ckStatus) {
             // ck未过期，开始执行任务
             console.log(`随机延迟${user.getRandomTime()}ms`);
-            //获取帖子列表
-            let threadIds = await user.GetZIWIThreadList();
-            //发贴
-            await user.AddThread();
-            //日常任务
-            for (let thread of threadIds) {
-                // 分享
-                await user.SubmitCrmTrackLog(thread);
-                //评论
-                await user.CommentThread(thread);
-                //点赞
-                await user.LikeThread(thread);
+            // 签到
+            taskall.push(await user.signin());
+            // 分享
+            for (let i = 0; i < 10; i++) {
+                taskall.push(await user.fx());
             }
-            let { total, valid, expired } = await user.GetUserCreditStats();
-            DoubleLog(`签到:${$.signMsg}\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})`);
+            // 评论
+            for (let i = 0; i < 5; i++) {
+                taskall.push(await user.pl());
+            }
+            //发帖
+            taskall.push(await user.ft());
+            //点赞
+            for (let i = 0; i < 10; i++) {
+                taskall.push(await user.dz());
+            }
+            //Zb
+            taskall.push(await user.Zb());
+
+
+            
+            await $.wait(user.getRandomTime());
         } else {
             // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -124,11 +130,12 @@ class UserInfo {
                 },
                 body: `{"id": 1706073615337,"jsonrpc": "2.0","method": "DoCheckin","params": {"activityId": "1"}}`
             };
-            let { result, error } = await httpRequest(options) ?? {};
-            if (!error) {
-                $.signMsg = `${result?.__showToast?.title}`;
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
+                DoubleLog(`✅签到成功！`)
             } else {
-                this.ckStatus = false;
+                DoubleLog(`❌签到失败!${result?.emsg}`)
             }
         } catch (e) {
             console.log(e);
@@ -136,7 +143,7 @@ class UserInfo {
     }
 
     // 获取帖子列表函数
-    async GetZIWIThreadList() {
+    async list() {
         try {
             const options = {
                 url: "https://ziwixcx.escase.cn/json-rpc?__method=GetZIWIThreadList",
@@ -149,11 +156,14 @@ class UserInfo {
                 body: `{"id": 1706357937106,"jsonrpc":"2.0","method":"GetZIWIThreadList","params":{"type":"ziwi","pageSize":10,"currentPage":1}}`
             };
             let result = await httpRequest(options);
-            //debug(result,"获取帖子列表")
             const threadList = result?.result?.list || [];
             const threadIds = threadList.map(thread => thread.threadId).slice(0, 10);
-            //save list
-            this.threadList = threadIds;
+            // 保存帖子列表到属性
+            // 保存帖子列表到属性
+            // 保存帖子列表到属性
+            // 保存帖子列表到属性
+            // 一定要保存
+            this.threadList = threadIds; 
             return threadIds;
         } catch (e) {
             console.log(e);
@@ -162,10 +172,14 @@ class UserInfo {
     }
 
     // 分享函数
-    async SubmitCrmTrackLog(threadId) {
+    async fx() {
         try {
+            if (this.threadList.length === 0) {
+                // 如果帖子列表为空，调用this.list()获取并保存 不能重复爬列表
+                this.threadList = await this.list();
+            }
 
-            //   const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
+            const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
 
             const options = {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=SubmitCrmTrackLog`,
@@ -175,14 +189,16 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706351980399,"jsonrpc": "2.0","method": "SubmitCrmTrackLog","params": {"event": "shareThread","params": {"path": "/pages/UserPosters/UserPosters?threadId=${threadId}","threadId": "${threadId}"}}}`
+                body: `{"id": 1706351980399,"jsonrpc": "2.0","method": "SubmitCrmTrackLog","params": {"event": "shareThread","params": {"path": "/pages/UserPosters/UserPosters?threadId=${randomThreadId}","threadId": "${randomThreadId}"}}}`
             };
 
-            let { result, error } = await httpRequest(options) ?? {};
-            if (!error) {
-                $.log(`✅分享成功！`);
+            let result = await httpRequest(options);
+            console.log(result);
+
+            if (!result?.ecode) {
+                DoubleLog(`✅分享成功！`);
             } else {
-                $.log(`❌分享失败!${cerror?.message}`);
+                DoubleLog(`❌分享失败!${result?.emsg}`);
             }
         } catch (e) {
             console.log(e);
@@ -192,8 +208,15 @@ class UserInfo {
 
 
     // 评论函数
-    async CommentThread(threadId) {
+    async pl() {
         try {
+            if (this.threadList.length === 0) {
+                // 如果帖子列表为空，调用this.list()获取并保存 不能重复爬列表
+                this.threadList = await this.list();
+            }
+
+            const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
+
             const options = {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=CommentThread`,
                 headers: {
@@ -202,21 +225,27 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706363458651,"jsonrpc": "2.0","method": "CommentThread","params": {"content": "5555555","level": "info","threadId": "${threadId}","threadCommentId": 0}}`
+                body: `{"id": 1706363458651,"jsonrpc": "2.0","method": "CommentThread","params": {"content": "5555555","level": "info","threadId": "${randomThreadId}","threadCommentId": 0}}`
             };
 
-            let { result, error } = await httpRequest(options) ?? {};
-            if (!error) {
-                $.log(`✅评论成功！`);
+            let result = await httpRequest(options);
+            console.log(result);
+
+            if (!result?.ecode) {
+                DoubleLog(`✅评论成功！`);
             } else {
-                $.log(`❌评论失败!${cerror?.message}`);
+                DoubleLog(`❌评论失败!${result?.emsg}`);
             }
         } catch (e) {
             console.log(e);
         }
     }
+
+
+
+
     // 发帖函数
-    async AddThread() {
+    async ft() {
         try {
             const options = {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=AddThread`,
@@ -228,12 +257,12 @@ class UserInfo {
                 },
                 body: `{"id": 1706364249449,"jsonrpc": "2.0","method": "AddThread","params": {"mediaFiles": [{"path": "https:\/\/ziwixcxcos.escase.cn\/2024\/01\/27\/45656b48f25e682c58e9c25495bfa88f.jpg","size": 0,"thumb": "https:\/\/ziwixcxcos.escase.cn\/2024\/01\/27\/45656b48f25e682c58e9c25495bfa88f.jpg","type": "image"}],"title": "用户帖子","content": "暗夜的猫好tm可爱喜欢吗","level": "info"}}`
             };
-            let { result, error } = await httpRequest(options) ?? {};
-            debug(error || result, "发贴")
-            if (!error) {
-                $.log(`✅发贴成功！`);
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
+                DoubleLog(`✅发帖成功！`)
             } else {
-                $.log(`❌发贴失败!${error?.message}`);
+                DoubleLog(`❌发帖失败!${result?.emsg}`)
             }
         } catch (e) {
             console.log(e);
@@ -242,9 +271,16 @@ class UserInfo {
 
 
 
-    // 点赞函数
-    async LikeThread(threadId) {
+   // 点赞函数
+    async dz() {
         try {
+            if (this.threadList.length === 0) {
+                // 如果帖子列表为空，调用this.list()获取并保存 不能重复爬列表
+                this.threadList = await this.list();
+            }
+
+            const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
+            
             const options = {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=LikeThread`,
                 headers: {
@@ -253,14 +289,14 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706365735309,"jsonrpc": "2.0","method": "LikeThread","params": {"threadId": "${threadId}"}}`
+                body: `{"id": 1706365735309,"jsonrpc": "2.0","method": "LikeThread","params": {"threadId": "${randomThreadId}"}}`
             };
-            let { result, error } = await httpRequest(options) ?? {};
-            debug(error || result, "点赞")
-            if (!error) {
-                $.log(`✅点赞成功！`);
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
+                DoubleLog(`✅点赞成功！`)
             } else {
-                $.log(`❌点赞失败!${cerror?.message}`);
+                DoubleLog(`❌点赞失败!${result?.emsg}`)
             }
         } catch (e) {
             console.log(e);
@@ -269,32 +305,38 @@ class UserInfo {
 
 
 
-    // 查询积分函数
-    async GetUserCreditStats() {
-        try {
-            const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=GetUserCreditStats`,
-                headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization": this.token,
-                    "serialId": ''
-                },
-                body: `{"id": 1706366568453,"jsonrpc": "2.0","method": "GetUserCreditStats","params": {"currency": "Z_Point"}}`
-            };
-            let { error, result } = await httpRequest(options) ?? {};
-            let { total, valid, expired } = result;
-            debug(error || result, "积分")
-            return { total, valid, expired }
-        } catch (e) {
-            console.log(e);
+   // Zb函数
+async Zb() {
+    try {
+        const options = {
+            url: `https://ziwixcx.escase.cn/json-rpc?__method=GetUserCreditStats`,
+            headers: {
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                "Authorization": this.token,
+                "serialId": ''
+            },
+            body: `{"id": 1706366568453,"jsonrpc": "2.0","method": "GetUserCreditStats","params": {"currency": "Z_Point"}}`
+        };
+        let result = await httpRequest(options);
+        console.log(result)
+        if (!result?.ecode) {
+            // 打印 Z 币的值
+            DoubleLog(`Z币总数: ${result?.result?.total}`);
+            DoubleLog(`有效Z币: ${result?.result?.valid}`);
+            DoubleLog(`过期Z币: ${result?.result?.expired}`);
+        } else {
+            DoubleLog(`❌查询 Z 币失败! ${result?.emsg}`);
         }
+    } catch (e) {
+        console.log(e);
     }
+}
 
 
 
-
-
+    
+    
 }
 
 
@@ -354,20 +396,7 @@ function DoubleLog(data) {
         $.notifyMsg.push(`${data}`);
     }
 }
-// DEBUG
-function debug(text, title = 'debug') {
-    if ($.is_debug === 'true') {
-        if (typeof text == "string") {
-            console.log(`\n-----------${title}------------\n`);
-            console.log(text);
-            console.log(`\n-----------${title}------------\n`);
-        } else if (typeof text == "object") {
-            console.log(`\n-----------${title}------------\n`);
-            console.log($.toStr(text));
-            console.log(`\n-----------${title}------------\n`);
-        }
-    }
-}
+
 //把json 转为以 ‘&’ 连接的字符串
 function toParams(body) {
     var params = Object.keys(body).map(function (key) {
