@@ -12,7 +12,7 @@
 频道：https://t.me/IPAs_share
 -----------------------------------------------
 ==============
-|Quantumult x |
+|Quantumult x|
 ==============
 
 手动添加定时任务
@@ -23,7 +23,7 @@
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 -----------------------------------------------
 ==============
-|   Surge    |
+|    Surge   |
 ==============
 模块
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
