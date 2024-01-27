@@ -11,27 +11,6 @@
 2.打开boxjs->我的->数据查看器->在数据键输入czfajlb_data,点击VIEW->在数据内容输入抓取到的Authorization，点击保存。
 3.若有多账号，用@分割，如Authorization@Authorization
 
-------------------------------------------
-Loon
-------------------------------------------
-[Script]
-cron "1 0 * * *" script-path=czfajlb.js, timeout=300, tag=纯甄粉爱俱乐部签到
-^https:\/\/ucode-openapi\.aax6\.cn\/mnzz\/quanyu\/memberPoint script-path=czfajlb.js, timeout=10, tag=纯甄粉爱俱乐部获取token
-
-[MITM]
-hostname =ucode-openapi.aax6.cn
-
-------------------------------------------
-QuantumultX
-------------------------------------------
-[rewrite_local]
-^https:\/\/ucode-openapi\.aax6\.cn\/mnzz\/quanyu\/memberPoint url script-request-header czfajlb.js
-
-[task_local]
-1 0 * * * czfajlb.js, tag=纯甄粉爱俱乐部签到, enabled=true
-
-[mitm]
-hostname = ucode-openapi.aax6.cn
 ====================================
 ⚠️【免责声明】
 ------------------------------------------
