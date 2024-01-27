@@ -23,7 +23,7 @@
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 -----------------------------------------------
 ==============
-|   Surge   |
+|   Surge    |
 ==============
 模块
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
