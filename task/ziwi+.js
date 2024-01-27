@@ -2,6 +2,8 @@
 @Author：@anyeyey
 @Date：2024-01-27
 
+适用于微信小程序WIZI+签到分享任务脚本
+
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
 -----------------------------------------------
@@ -70,7 +72,13 @@ async function main() {
             //ck未过期，开始执行任务
             // DoubleLog(`🔷账号${user.index} >> Start work`)
             console.log(`随机延迟${user.getRandomTime()}ms`);
+            //签到
             taskall.push(await user.signin());
+            //分享
+            for (let i = 0; i < 10; i++) {
+                taskall.push(await user.fx());
+            }
+            
             await $.wait(user.getRandomTime());
         } else {
             //将ck过期消息存入消息数组
@@ -78,6 +86,9 @@ async function main() {
         }
     }
 }
+
+
+
 
 class UserInfo {
     constructor(str) {
@@ -89,6 +100,10 @@ class UserInfo {
     getRandomTime() {
         return randomInt(1000, 3000)
     }
+
+
+
+    
     //签到函数
     async signin() {
         try {
@@ -118,6 +133,45 @@ class UserInfo {
         }
     }
 }
+
+
+
+ //分享函数
+    async fx() {
+        try {
+            const options = {
+                //分享任务调用签到接口
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=SubmitCrmTrackLog`,
+                //请求头, 所有接口通用
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization":this.token,
+                    "serialId":''
+                },
+                body: `{"id": 1706351980399,"jsonrpc": "2.0","method": "SubmitCrmTrackLog","params": {"event": "shareThread","params": {"path": "\/pages\/UserPosters\/UserPosters?threadId=517655648280117248","threadId": "517655648280117248"}}}`
+            };
+            //post方法
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
+                DoubleLog(`✅分享成功！`)
+            } else {
+                DoubleLog(`❌分享失败!${result?.emsg}`)
+                //console.log(result);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+
+
+
+
+
+
 //获取Cookie
 async function getCookie() {
     if ($request && $request.method != 'OPTIONS') {
