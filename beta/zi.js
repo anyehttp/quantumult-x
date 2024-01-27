@@ -77,6 +77,10 @@ async function main() {
             for (let i = 0; i < 10; i++) {
                 taskall.push(await user.fx());
             }
+            // 评论
+            for (let i = 0; i < 5; i++) {
+                taskall.push(await user.pl());
+            }
             await $.wait(user.getRandomTime());
         } else {
             // 将ck过期消息存入消息数组
@@ -185,6 +189,43 @@ class UserInfo {
             console.log(e);
         }
     }
+
+
+
+    // 评论函数
+    async pl() {
+        try {
+            if (this.threadList.length === 0) {
+                // 如果帖子列表为空，调用this.list()获取并保存 不能重复爬列表
+                this.threadList = await this.list();
+            }
+
+            const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
+
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=CommentThread`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706363458651,"jsonrpc": "2.0","method": "CommentThread","params": {"content": "5555555","level": "info","threadId": "${randomThreadId}","threadCommentId": 0}}`
+            };
+
+            let result = await httpRequest(options);
+            console.log(result);
+
+            if (!result?.ecode) {
+                DoubleLog(`✅分享成功！`);
+            } else {
+                DoubleLog(`❌分享失败!${result?.emsg}`);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
 }
 
 
