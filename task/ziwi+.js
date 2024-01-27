@@ -84,7 +84,7 @@ async function main() {
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
         }
     }
-};
+}
 
 
 
@@ -96,14 +96,12 @@ class UserInfo {
         this.ckStatus = true;
         this.drawStatus = true;
     }
+
     getRandomTime() {
         return randomInt(1000, 3000)
-    };
+    }
 
-
-
-    
-    //签到函数
+    // 签到函数
     async signin() {
         try {
             const options = {
@@ -111,10 +109,7 @@ class UserInfo {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=DoCheckin`,
                 //请求头, 所有接口通用
                 headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
+                    // ...
                 },
                 body: `{"id": 1706073615337,"jsonrpc": "2.0","method": "DoCheckin","params": {"activityId": "1"}}`
             };
@@ -125,17 +120,13 @@ class UserInfo {
                 DoubleLog(`✅签到成功！`)
             } else {
                 DoubleLog(`❌签到失败!${result?.emsg}`)
-                //console.log(result);
             }
         } catch (e) {
             console.log(e);
         }
     }
-};
 
-
-
- //分享函数
+    // 分享函数
     async fx() {
         try {
             const options = {
@@ -143,10 +134,7 @@ class UserInfo {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=SubmitCrmTrackLog`,
                 //请求头, 所有接口通用
                 headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
+                    // ...
                 },
                 body: `{"id": 1706351980399,"jsonrpc": "2.0","method": "SubmitCrmTrackLog","params": {"event": "shareThread","params": {"path": "\/pages\/UserPosters\/UserPosters?threadId=517655648280117248","threadId": "517655648280117248"}}}`
             };
@@ -157,13 +145,12 @@ class UserInfo {
                 DoubleLog(`✅分享成功！`)
             } else {
                 DoubleLog(`❌分享失败!${result?.emsg}`)
-                //console.log(result);
             }
         } catch (e) {
             console.log(e);
         }
     }
-};
+}
 
 
 
