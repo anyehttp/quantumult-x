@@ -171,11 +171,16 @@ class UserInfo {
                   const options = {
                       url: `https://ziwixcx.escase.cn/json-rpc?__method=SubmitCrmTrackLog`,
                       headers: {
-                          // 添加请求头信息
+                            "Content-Type": "application/json",
+                            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                            "Authorization":this.token,
+                            "serialId":''
                       },
                       body: `{"id": 1706351980399,"jsonrpc": "2.0","method": "SubmitCrmTrackLog","params": {"event": "shareThread","params": {"path": "\/pages\/UserPosters\/UserPosters?threadId=${threadId}","threadId": "${threadId}"}}}`
                   };
-      
+                  // 打印分享的帖子ID
+                  console.log(`分享帖子ID: ${threadId}`);
+                  
                   let result = await httpRequest(options);
                   console.log(result);
       
