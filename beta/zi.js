@@ -270,6 +270,13 @@ class UserInfo {
    // 点赞函数
     async dz() {
         try {
+            if (this.threadList.length === 0) {
+                // 如果帖子列表为空，调用this.list()获取并保存 不能重复爬列表
+                this.threadList = await this.list();
+            }
+
+            const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
+            
             const options = {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=LikeThread`,
                 headers: {
