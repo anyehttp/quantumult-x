@@ -109,7 +109,10 @@ class UserInfo {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=DoCheckin`,
                 //请求头, 所有接口通用
                 headers: {
-                    // ...
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization":this.token,
+                    "serialId":''
                 },
                 body: `{"id": 1706073615337,"jsonrpc": "2.0","method": "DoCheckin","params": {"activityId": "1"}}`
             };
@@ -134,7 +137,10 @@ class UserInfo {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=SubmitCrmTrackLog`,
                 //请求头, 所有接口通用
                 headers: {
-                    // ...
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization":this.token,
+                    "serialId":''
                 },
                 body: `{"id": 1706351980399,"jsonrpc": "2.0","method": "SubmitCrmTrackLog","params": {"event": "shareThread","params": {"path": "\/pages\/UserPosters\/UserPosters?threadId=517655648280117248","threadId": "517655648280117248"}}}`
             };
