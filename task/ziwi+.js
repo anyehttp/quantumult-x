@@ -1,17 +1,7 @@
 /**************************************
-@Name：纯甄粉爱俱乐部 连续签到 10天送腾讯视频会员月卡*1，20天送腾讯视频会员季卡*1
-@Author：Sliverkiss
-@Date：2023-10-14 22:20:11
+@Author：@anyeyey
+@Date：2024-01-27
 
-活动时间：2023.10.14-2023.11.30 
-
-脚本兼容：Surge、QuantumultX、Loon、Shadowrocket、Node.js
-只测试过QuantumultX、loon和青龙，其它环境请自行尝试
-
-青龙：
-1.抓包www.iios.fun域名下的Authorization，填写到iios_data,多账号用@分割
-
-Surge、QuantumultX、Loon、Shadowrocket：
 单账号：
 1.将签到脚本拉取到本地
 2.打开网站，随便逛逛，提示获取cookie成功则可以使用该脚本
@@ -55,7 +45,7 @@ hostname = ucode-openapi.aax6.cn
 ******************************************/
 
 // env.js 全局
-const $ = new Env("纯甄粉爱俱乐部");
+const $ = new Env("微信小程序ZIWI+");
 const ckName = "czfajlb_data";
 //-------------------- 一般不动变量区域 -------------------------------------
 const Notify = 1;//0为关闭通知,1为打开通知,默认为1
