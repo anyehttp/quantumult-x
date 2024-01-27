@@ -81,6 +81,12 @@ async function main() {
             for (let i = 0; i < 5; i++) {
                 taskall.push(await user.pl());
             }
+            //发帖
+            taskall.push(await user.ft());
+
+
+
+            
             await $.wait(user.getRandomTime());
         } else {
             // 将ck过期消息存入消息数组
@@ -225,6 +231,39 @@ class UserInfo {
             console.log(e);
         }
     }
+
+
+
+
+    // 发帖函数
+    async ft() {
+        try {
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=AddThread`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706364249449,"jsonrpc": "2.0","method": "AddThread","params": {"mediaFiles": [{"path": "https:\/\/ziwixcxcos.escase.cn\/2024\/01\/27\/45656b48f25e682c58e9c25495bfa88f.jpg","size": 0,"thumb": "https:\/\/ziwixcxcos.escase.cn\/2024\/01\/27\/45656b48f25e682c58e9c25495bfa88f.jpg","type": "image"}],"title": "用户帖子","content": "暗夜的猫好tm可爱喜欢吗","level": "info"}}`
+            };
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
+                DoubleLog(`✅发帖成功！`)
+            } else {
+                DoubleLog(`❌发帖失败!${result?.emsg}`)
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+
+
+    
 
 }
 
