@@ -63,33 +63,27 @@ $.notifyMsg = [];
 $.barkKey = ($.isNode() ? process.env["bark_key"] : $.getdata("bark_key")) || '';
 //---------------------- 自定义变量区域 -----------------------------------
 
-//脚本入口函数main()
+// 脚本入口函数main()
 async function main() {
     console.log('\n================== 任务 ==================\n');
     let taskall = [];
     for (let user of userList) {
         if (user.ckStatus) {
-            //ck未过期，开始执行任务
-            // DoubleLog(`🔷账号${user.index} >> Start work`)
+            // ck未过期，开始执行任务
             console.log(`随机延迟${user.getRandomTime()}ms`);
-            //抓取列表
-            taskall.push(await user.list());
-            //签到
+            // 签到
             taskall.push(await user.signin());
-            //分享
+            // 分享
             for (let i = 0; i < 10; i++) {
                 taskall.push(await user.fx());
             }
             await $.wait(user.getRandomTime());
         } else {
-            //将ck过期消息存入消息数组
+            // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
         }
     }
 }
-
-
-
 
 class UserInfo {
     constructor(str) {
@@ -97,59 +91,26 @@ class UserInfo {
         this.token = str;
         this.ckStatus = true;
         this.drawStatus = true;
+        this.threadList = []; // 保存帖子列表的属性
     }
 
     getRandomTime() {
         return randomInt(1000, 3000)
     }
 
-
-  
-
-      // 列表函数
-      async list() {
-          try {
-              const options = {
-                  url: "https://ziwixcx.escase.cn/json-rpc?__method=GetZIWIThreadList",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
-                },
-                  body: `{"id":1706357937106,"jsonrpc":"2.0","method":"GetZIWIThreadList","params":{"type":"ziwi","pageSize":10,"currentPage":1}}`
-              };
-              let result = await httpRequest(options);
-      
-              // 响应体结构
-              const threadList = result?.result?.list || [];
-              const threadIds = threadList.map(thread => thread.threadId).slice(0, 10);
-      
-              return threadIds;
-          } catch (e) {
-              console.log(e);
-              return [];
-          }
-      }
-
-
-  
     // 签到函数
     async signin() {
         try {
             const options = {
-                //签到任务调用签到接口
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=DoCheckin`,
-                //请求头, 所有接口通用
                 headers: {
                     "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
                 },
                 body: `{"id": 1706073615337,"jsonrpc": "2.0","method": "DoCheckin","params": {"activityId": "1"}}`
             };
-            //post方法
             let result = await httpRequest(options);
             console.log(result)
             if (!result?.ecode) {
@@ -162,43 +123,70 @@ class UserInfo {
         }
     }
 
-          //分享函数
-      async fx() {
-          try {
-              // 获取随机选择的帖子列表
-              const threadIds = await this.list();
-      
-              for (let threadId of threadIds) {
-                  const options = {
-                      url: `https://ziwixcx.escase.cn/json-rpc?__method=SubmitCrmTrackLog`,
-                      headers: {
-                            "Content-Type": "application/json",
-                            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                            "Authorization":this.token,
-                            "serialId":''
-                      },
-                      body: `{"id": 1706351980399,"jsonrpc": "2.0","method": "SubmitCrmTrackLog","params": {"event": "shareThread","params": {"path": "\/pages\/UserPosters\/UserPosters?threadId=${threadId}","threadId": "${threadId}"}}}`
-                  };
-                  // 打印分享的帖子ID
-                  console.log(`分享帖子ID: ${threadId}`);
-                  
-                  let result = await httpRequest(options);
-                  console.log(result);
-      
-                  if (!result?.ecode) {
-                      DoubleLog(`✅分享成功！`);
-                  } else {
-                      DoubleLog(`❌分享失败!${result?.emsg}`);
-                  }
-              }
-          } catch (e) {
-              console.log(e);
-          }
-      }
+    // 获取帖子列表函数
+    async list() {
+        try {
+            const options = {
+                url: "https://ziwixcx.escase.cn/json-rpc?__method=GetZIWIThreadList",
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706357937106,"jsonrpc":"2.0","method":"GetZIWIThreadList","params":{"type":"ziwi","pageSize":10,"currentPage":1}}`
+            };
+            let result = await httpRequest(options);
+            const threadList = result?.result?.list || [];
+            const threadIds = threadList.map(thread => thread.threadId).slice(0, 10);
+            // 保存帖子列表到属性
+            // 保存帖子列表到属性
+            // 保存帖子列表到属性
+            // 保存帖子列表到属性
+            // 一定要保存
+            this.threadList = threadIds; 
+            return threadIds;
+        } catch (e) {
+            console.log(e);
+            return [];
+        }
+    }
 
+    // 分享函数
+    async fx() {
+        try {
+            if (this.threadList.length === 0) {
+                // 如果帖子列表为空，调用this.list()获取并保存 不能重复爬列表
+                this.threadList = await this.list();
+            }
 
-  
+            const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
+
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=SubmitCrmTrackLog`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706351980399,"jsonrpc": "2.0","method": "SubmitCrmTrackLog","params": {"event": "shareThread","params": {"path": "/pages/UserPosters/UserPosters?threadId=${randomThreadId}","threadId": "${randomThreadId}"}}}`
+            };
+
+            let result = await httpRequest(options);
+            console.log(result);
+
+            if (!result?.ecode) {
+                DoubleLog(`✅分享成功！`);
+            } else {
+                DoubleLog(`❌分享失败!${result?.emsg}`);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }
+
 
 
 
