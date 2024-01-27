@@ -2,6 +2,9 @@
 @Author：@anyeyey
 @Date：2024-01-27
 
+群组：https://t.me/IPAs_Dd
+频道：https://t.me/IPAs_share
+
 单账号：
 1.将签到脚本拉取到本地
 2.打开网站，随便逛逛，提示获取cookie成功则可以使用该脚本
