@@ -4,10 +4,11 @@
 
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
+-----------------------------------------------
+==============
+|Quantumult x |
+==============
 
------------------------------------------------
-Quantumult x
------------------------------------------------
 手动添加定时任务
 [task_local]
 10 0 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
@@ -15,11 +16,12 @@ Quantumult x
 重写获取Cookie
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 -----------------------------------------------
-Surge
------------------------------------------------
+==============
+|   Surge   |
+==============
 模块
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
------------------------------------------------
+
 -----------------------------------------------
 单账号：
 1.将签到脚本拉取到本地
