@@ -6,8 +6,9 @@
 
 适用于微信小程序WIZI+ 签到 和 任务
 
-樱花佬频道 @sliverkiss
+樱花佬频道 https://t.me/sliverkiss
 
+反馈群
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
 
