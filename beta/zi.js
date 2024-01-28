@@ -277,8 +277,8 @@ async AddThread() {
 
         if (!error) {
             $.log(`✅发贴成功！`);
-           // 获取发帖成功后返回的 id
-            const AddThreadID = result?.threadId;
+            // 获取发帖成功后返回的 id
+            const AddThreadID = result?.params?.threadId;
             if (AddThreadID) {
                 // 删除帖子
                 const deleteOptions = {
