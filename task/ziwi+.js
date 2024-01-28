@@ -11,7 +11,7 @@
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
 
-脚本默认 晚上12点 早上6点 中午12点执行
+脚本默认 晚上12点 早上6点 中午12点执行 如有需求自行更改
 -----------------------------------------------
 ==============
 |Quantumult x|
@@ -31,20 +31,42 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 ==============
 |   LanceX   |
 ==============
-远程-模块
+远程-模块(包括获取Cookie和定时任务)
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
+
+本地-Script定时任务
+[Script]
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改corn表达式）
+ziwi签到 = type=cron, cronexp="0 0,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
 -----------------------------------------------
 ==============
 |    loon    |
 ==============
-远程-插件
+远程-插件(包括获取Cookie和定时任务)
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plugin
+
+本地-Script定时任务
+[Script]
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改corn表达式）
+cron "0 0,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
 -----------------------------------------------
 ==============
 |   stash    |
 ==============
-远程-覆写
+远程-覆写(包括获取Cookie和定时任务)
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.stoverride
+
+本地-cron定时任务
+cron:
+  script:
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改corn表达式）
+    - name: "ziwi签到_6"
+      cron: "0 0,6,12 * * *"
+
+script-providers:
+  "ziwi签到_6":
+    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+    interval: 86400
 -----------------------------------------------
 
 单账号：
