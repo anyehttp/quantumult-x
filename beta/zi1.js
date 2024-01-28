@@ -120,8 +120,10 @@ async function main() {
             console.log(`随机延迟${user.getRandomTime()}ms`);
             //获取帖子列表
             let threadIds = await user.GetZIWIThreadList();
-            //发贴删帖
+            //发贴
             await user.AddThread();
+            //删帖
+            await user.DeleteMyThread();
             //日常任务
             for (let thread of threadIds) {
                 // 分享
@@ -132,7 +134,7 @@ async function main() {
                 await user.LikeThread(thread);
             }
             let { total, valid, expired } = await user.GetUserCreditStats();
-            DoubleLog(`签到:${$.signMsg}\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})`);
+            DoubleLog(`签到:${$.signMsg}\n积分: 总共(${total}) 有效(${valid}) 过期(${expired}) 发帖成功(${message})`);
         } else {
             // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -147,6 +149,7 @@ class UserInfo {
         this.ckStatus = true;
         this.drawStatus = true;
         this.threadList = []; // 保存帖子列表的属性
+        this.AddThreadID = []; //保存的帖子id
     }
 
     getRandomTime() {
@@ -194,7 +197,7 @@ class UserInfo {
             //debug(result,"获取帖子列表")
             const threadList = result?.result?.list || [];
             const threadIds = threadList.map(thread => thread.threadId).slice(0, 10);
-            //save list
+            //保存
             this.threadList = threadIds;
             return threadIds;
         } catch (e) {
@@ -274,16 +277,58 @@ class UserInfo {
             };
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "发贴")
+            
+            //获取帖子id
+            const AddThreadID = result?.params?.threadId;
+            //存起来
+            this.AddThreadID = AddThreadID;
+            
+          
             if (!error) {
                 $.log(`✅发贴成功！`);
             } else {
                 $.log(`❌发贴失败!${error?.message}`);
             }
+            return AddThreadID;
         } catch (e) {
             console.log(e);
         }
     }
 
+
+
+      // 删帖函数
+    async DeleteMyThread() {
+        try {
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${AddThreadID}"}}`
+            };
+            let { result, error } = await httpRequest(options) ?? {};
+            let { message } = result;
+            debug(error || result, "删贴")
+
+            if (!error) {
+                $.log(`✅删贴成功！`);
+            } else {
+                $.log(`❌删贴失败!${error?.message}`);
+            }
+          
+            return { message }
+          
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+  
 
 
     // 点赞函数
@@ -297,7 +342,7 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706365735309,"jsonrpc": "2.0","method": "LikeThread","params": {"threadId": "${threadId}"}}`
+                body: `{"id": 1706365735309,"jsonrpc": "2.0","method": "LikeThread","params": {"threadId": "${this.AddThreadID}"}}`
             };
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "点赞")
