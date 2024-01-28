@@ -276,8 +276,11 @@ async AddThread() {
         debug(error || result, "发帖");
         if (!error) {
             $.log(`✅发贴成功！`);
-            // 获取发帖成功后返回的 id
+            //打印响应体
+            console.log("发帖响应体:", result);
+            //获取发帖成功后返回的 id
             const AddThreadID = result?.params?.threadId;
+            //打印id
             console.log("帖子 ID:", AddThreadID);
             if (AddThreadID) {
                 // 删除帖子
@@ -300,6 +303,7 @@ async AddThread() {
                 }
             } else {
                 $.log(`❌未获取到帖子 ID`);
+                console.log("帖子 ID:", AddThreadID);
             }
         } else {
             $.log(`❌发贴失败!${error?.message}`);
