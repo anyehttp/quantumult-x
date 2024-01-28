@@ -122,7 +122,7 @@ async function main() {
             //发贴
             await user.AddThread();
             //删帖
-            await user.DeleteMyThread()
+            await user.DeleteMyThread();
             //日常任务
             for (let thread of threadIds) {
                 // 分享
