@@ -259,60 +259,30 @@ class UserInfo {
     }
 
   
-// 发帖删帖函数
-async AddThread() {
-    try {
-        const options = {
-            url: `https://ziwixcx.escase.cn/json-rpc?__method=AddThread`,
-            headers: {
-                "Content-Type": "application/json",
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                "Authorization": this.token,
-                "serialId": ''
-            },
-            body: `{"id": 1706364249449,"jsonrpc": "2.0","method": "AddThread","params": {"mediaFiles": [{"path": "https:\/\/ziwixcxcos.escase.cn\/2024\/01\/27\/45656b48f25e682c58e9c25495bfa88f.jpg","size": 0,"thumb": "https:\/\/ziwixcxcos.escase.cn\/2024\/01\/27\/45656b48f25e682c58e9c25495bfa88f.jpg","type": "image"}],"title": "用户帖子","content": "暗夜的猫好tm可爱喜欢吗","level": "info"}}`
-        };
-        let { result, error } = await httpRequest(options) ?? {};
-        debug(error || result, "发帖");
-        if (!error) {
-            $.log(`✅发贴成功！`);
-            //打印响应体
-            console.log("发帖响应体:", result);
-            //获取发帖成功后返回的 id
-            const AddThreadID = result?.params?.threadId;
-            //打印id
-            console.log("帖子 ID:", AddThreadID);
-            if (AddThreadID) {
-                // 删除帖子
-                const deleteOptions = {
-                    url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
-                    headers: {
-                        "Content-Type": "application/json",
-                        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                        "Authorization": this.token,
-                        "serialId": ''
-                    },
-                    body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${AddThreadID}"}}`
-                };
-                let deleteResult = await httpRequest(deleteOptions) ?? {};
-                debug(deleteResult.error || deleteResult.result, "删除帖子");
-                if (!deleteResult.error) {
-                    $.log(`✅帖子删除成功！`);
-                } else {
-                    $.log(`❌帖子删除失败!${deleteResult.error?.message}`);
-                }
+    // 发帖函数
+    async AddThread() {
+        try {
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=AddThread`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706364249449,"jsonrpc": "2.0","method": "AddThread","params": {"mediaFiles": [{"path": "https:\/\/ziwixcxcos.escase.cn\/2024\/01\/27\/45656b48f25e682c58e9c25495bfa88f.jpg","size": 0,"thumb": "https:\/\/ziwixcxcos.escase.cn\/2024\/01\/27\/45656b48f25e682c58e9c25495bfa88f.jpg","type": "image"}],"title": "用户帖子","content": "暗夜的猫好tm可爱喜欢吗","level": "info"}}`
+            };
+            let { result, error } = await httpRequest(options) ?? {};
+            debug(error || result, "发贴")
+            if (!error) {
+                $.log(`✅发贴成功！`);
             } else {
-                $.log(`❌未获取到帖子 ID`);
-                console.log("帖子 ID:", AddThreadID);
+                $.log(`❌发贴失败!${error?.message}`);
             }
-        } else {
-            $.log(`❌发贴失败!${error?.message}`);
+        } catch (e) {
+            console.log(e);
         }
-    } catch (e) {
-        console.log(e);
     }
-}
-
 
 
 
