@@ -16,7 +16,6 @@
 ==============
 |Quantumult x|
 ==============
-
 本地-手动添加定时任务
 [task_local]
 0 0,6,12 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
