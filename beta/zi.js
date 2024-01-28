@@ -1,30 +1,73 @@
 /**************************************
-@Author：@anyeyey
-@Date：2024-01-27
+@anyeyey
+感谢樱花大佬的脚本框架 修改脚本和指点
+@sliverkiss
+@Date：2024-01-28
 
-适用于微信小程序WIZI+签到分享任务脚本
+适用于微信小程序WIZI+ 签到 和 任务
+
+樱花佬频道 @sliverkiss
 
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
+
+脚本默认 晚上12点 早上6点 中午12点执行 如有需求自行更改
 -----------------------------------------------
 ==============
-|Quantumult x |
+|Quantumult x|
 ==============
-
-手动添加定时任务
+本地-手动添加定时任务
 [task_local]
-10 0 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
+0 0,6,12 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
 
-重写获取Cookie
+远程-重写获取Cookie
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 -----------------------------------------------
+============== 
+|    Surge   |
 ==============
-|   Surge   |
+|    小火箭   |
 ==============
-模块
+|   LanceX   |
+==============
+远程-模块(包括获取Cookie和定时任务)
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
 
+本地-Script定时任务
+[Script]
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+ziwi签到 = type=cron, cronexp="0 0,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
 -----------------------------------------------
+==============
+|    loon    |
+==============
+远程-插件(包括获取Cookie和定时任务)
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plugin
+
+本地-Script定时任务
+[Script]
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+cron "0 0,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
+-----------------------------------------------
+==============
+|   stash    |
+==============
+远程-覆写(包括获取Cookie和定时任务)
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.stoverride
+
+本地-cron定时任务
+cron:
+  script:
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+    - name: "ziwi签到_6"
+      cron: "0 0,6,12 * * *"
+
+script-providers:
+  "ziwi签到_6":
+    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+    interval: 86400
+-----------------------------------------------
+
 单账号：
 1.将签到脚本拉取到本地
 2.打开网站，随便逛逛，提示获取cookie成功则可以使用该脚本
@@ -144,7 +187,7 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706357937106,"jsonrpc":"2.0","method":"GetZIWIThreadList","params":{"type":"ziwi","pageSize":10,"currentPage":1}}`
+                body: `{"id": 1706357937106,"jsonrpc":"2.0","method":"GetZIWIThreadList","params":{"type":"recommend","pageSize":10,"currentPage":1}}`
             };
             let result = await httpRequest(options);
             //debug(result,"获取帖子列表")
@@ -412,7 +455,6 @@ async function SendMsg(message) {
         console.log(message)
     }
 }
-
 
 /** ---------------------------------固定不动区域----------------------------------------- */
 // prettier-ignore
