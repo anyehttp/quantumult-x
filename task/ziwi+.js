@@ -35,7 +35,7 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgm
 
 本地-Script定时任务
 [Script]
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改corn表达式）
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
 ziwi签到 = type=cron, cronexp="0 0,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
 -----------------------------------------------
 ==============
@@ -46,7 +46,7 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plug
 
 本地-Script定时任务
 [Script]
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改corn表达式）
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
 cron "0 0,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
 -----------------------------------------------
 ==============
@@ -58,7 +58,7 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.sto
 本地-cron定时任务
 cron:
   script:
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改corn表达式）
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
     - name: "ziwi签到_6"
       cron: "0 0,6,12 * * *"
 
