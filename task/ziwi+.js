@@ -17,11 +17,11 @@
 |Quantumult x|
 ==============
 
-手动添加定时任务
+本地-手动添加定时任务
 [task_local]
 0 0,6,12 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
 
-重写获取Cookie
+远程-重写获取Cookie
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 -----------------------------------------------
 ============== 
@@ -31,19 +31,19 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 ==============
 |   LanceX   |
 ==============
-模块
+远程-模块
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
 -----------------------------------------------
 ==============
 |    loon    |
 ==============
-插件
+远程-插件
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plugin
 -----------------------------------------------
 ==============
 |   stash    |
 ==============
-覆写
+远程-覆写
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.stoverride
 -----------------------------------------------
 
