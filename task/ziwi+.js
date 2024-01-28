@@ -22,13 +22,30 @@
 重写获取Cookie
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 -----------------------------------------------
-==============
+============== 
 |    Surge   |
+==============
+|    小火箭   |
 ==============
 模块
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
 
 -----------------------------------------------
+==============
+|    loon    |
+==============
+插件
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plugin
+
+-----------------------------------------------
+==============
+|   stash    |
+==============
+覆写
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.stoverride
+
+-----------------------------------------------
+
 单账号：
 1.将签到脚本拉取到本地
 2.打开网站，随便逛逛，提示获取cookie成功则可以使用该脚本
