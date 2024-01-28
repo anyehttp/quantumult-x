@@ -13,7 +13,7 @@
 #!7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
 
 [Script]
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改corn表达式）
+# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
 cron "0 0,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
 
 # 获取Cookie
