@@ -27,23 +27,22 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 ==============
 |    小火箭   |
 ==============
+|   LanceX   |
+==============
 模块
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
-
 -----------------------------------------------
 ==============
 |    loon    |
 ==============
 插件
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plugin
-
 -----------------------------------------------
 ==============
 |   stash    |
 ==============
 覆写
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.stoverride
-
 -----------------------------------------------
 
 单账号：
