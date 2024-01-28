@@ -187,7 +187,7 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706357937106,"jsonrpc":"2.0","method":"GetZIWIThreadList","params":{"type":"ziwi","pageSize":10,"currentPage":1}}`
+                body: `{"id": 1706357937106,"jsonrpc":"2.0","method":"GetZIWIThreadList","params":{"type":"recommend","pageSize":10,"currentPage":1}}`
             };
             let result = await httpRequest(options);
             //debug(result,"获取帖子列表")
