@@ -2,8 +2,7 @@
 @anyeyey
 感谢樱花大佬的脚本框架 修改脚本和指点
 @sliverkiss
-@Date：2024-01-27完成脚本
-@Date：2024-01-28更新获取帖子列表接口&增加删帖
+@Date：2024-01-28
 
 适用于微信小程序WIZI+ 签到 和 任务
 
@@ -123,7 +122,7 @@ async function main() {
             //发贴
             await user.AddThread();
             //删帖
-            await user.DeleteMyThread();
+            await user.DeleteMyThread()
             //日常任务
             for (let thread of threadIds) {
                 // 分享
@@ -134,7 +133,7 @@ async function main() {
                 await user.LikeThread(thread);
             }
             let { total, valid, expired } = await user.GetUserCreditStats();
-            DoubleLog(`签到:${$.signMsg}\n积分: 总共(${total}) 有效(${valid}) 过期(${expired}) 发帖成功(${message})`);
+            DoubleLog(`签到:${$.signMsg}\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})`);
         } else {
             // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -149,7 +148,7 @@ class UserInfo {
         this.ckStatus = true;
         this.drawStatus = true;
         this.threadList = []; // 保存帖子列表的属性
-        this.AddThreadID = []; //保存的帖子id
+        this.lastThreadId = null; // 添加 lastThreadId 属性
     }
 
     getRandomTime() {
@@ -197,7 +196,7 @@ class UserInfo {
             //debug(result,"获取帖子列表")
             const threadList = result?.result?.list || [];
             const threadIds = threadList.map(thread => thread.threadId).slice(0, 10);
-            //保存
+            //save list
             this.threadList = threadIds;
             return threadIds;
         } catch (e) {
@@ -277,24 +276,16 @@ class UserInfo {
             };
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "发贴")
-            
-            //获取帖子id
-            const AddThreadID = result?.params?.threadId;
-            //存起来
-            this.AddThreadID = AddThreadID;
-            
-          
             if (!error) {
+                this.lastThreadId = result?.params?.threadId || result?.result?.threadId;
                 $.log(`✅发贴成功！`);
             } else {
                 $.log(`❌发贴失败!${error?.message}`);
             }
-            return AddThreadID;
         } catch (e) {
             console.log(e);
         }
     }
-
 
 
       // 删帖函数
@@ -308,27 +299,20 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${AddThreadID}"}}`
+                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${this.lastThreadId}"}}`
             };
             let { result, error } = await httpRequest(options) ?? {};
-            let { message } = result;
             debug(error || result, "删贴")
-
             if (!error) {
                 $.log(`✅删贴成功！`);
             } else {
                 $.log(`❌删贴失败!${error?.message}`);
             }
-          
-            return { message }
-          
         } catch (e) {
             console.log(e);
         }
     }
 
-
-  
 
 
     // 点赞函数
@@ -342,7 +326,7 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706365735309,"jsonrpc": "2.0","method": "LikeThread","params": {"threadId": "${this.AddThreadID}"}}`
+                body: `{"id": 1706365735309,"jsonrpc": "2.0","method": "LikeThread","params": {"threadId": "${threadId}"}}`
             };
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "点赞")
