@@ -274,11 +274,11 @@ async AddThread() {
         };
         let { result, error } = await httpRequest(options) ?? {};
         debug(error || result, "发帖");
-
         if (!error) {
             $.log(`✅发贴成功！`);
             // 获取发帖成功后返回的 id
             const AddThreadID = result?.params?.threadId;
+            console.log("帖子 ID:", AddThreadID);
             if (AddThreadID) {
                 // 删除帖子
                 const deleteOptions = {
