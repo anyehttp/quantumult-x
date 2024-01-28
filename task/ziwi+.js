@@ -121,6 +121,8 @@ async function main() {
             let threadIds = await user.GetZIWIThreadList();
             //发贴
             await user.AddThread();
+            //删帖
+            await user.DeleteMyThread()
             //日常任务
             for (let thread of threadIds) {
                 // 分享
@@ -146,6 +148,7 @@ class UserInfo {
         this.ckStatus = true;
         this.drawStatus = true;
         this.threadList = []; // 保存帖子列表的属性
+        this.lastThreadId = null; //保存帖子id
     }
 
     getRandomTime() {
@@ -256,6 +259,8 @@ class UserInfo {
             console.log(e);
         }
     }
+
+  
     // 发帖函数
     async AddThread() {
         try {
@@ -272,9 +277,37 @@ class UserInfo {
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "发贴")
             if (!error) {
+                //获取id
+                this.lastThreadId = result?.params?.threadId || result?.result?.threadId;
                 $.log(`✅发贴成功！`);
             } else {
                 $.log(`❌发贴失败!${error?.message}`);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+      // 删帖函数
+    async DeleteMyThread() {
+        try {
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${this.lastThreadId}"}}`
+            };
+            let { result, error } = await httpRequest(options) ?? {};
+            debug(error || result, "删贴")
+            if (!error) {
+                $.log(`✅删贴成功！`);
+            } else {
+                $.log(`❌删贴失败!${error?.message}`);
             }
         } catch (e) {
             console.log(e);
@@ -455,6 +488,7 @@ async function SendMsg(message) {
         console.log(message)
     }
 }
+
 
 /** ---------------------------------固定不动区域----------------------------------------- */
 // prettier-ignore
