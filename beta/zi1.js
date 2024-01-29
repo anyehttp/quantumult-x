@@ -2,12 +2,17 @@
 @anyeyey
 感谢樱花大佬的脚本框架 修改脚本和指点
 @sliverkiss
-@Date：2024-01-28
+
+@Date:2024-01-27完成脚本
+      2024-01-28修复接口bug
+      2024-01-29增加删除帖子
+
 
 适用于微信小程序WIZI+ 签到 和 任务
 
-樱花佬频道 @sliverkiss
+樱花佬频道 https://t.me/sliverkiss
 
+反馈群
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
 
@@ -121,8 +126,12 @@ async function main() {
             let threadIds = await user.GetZIWIThreadList();
             //发贴
             await user.AddThread();
+            //用户ID
+            await user.getUserId();
+            //查询用户帖子id
+            await user.getUserThreads()
             //删帖
-            await user.DeleteMyThread()
+            await user.DeleteMyThread();
             //日常任务
             for (let thread of threadIds) {
                 // 分享
@@ -148,7 +157,8 @@ class UserInfo {
         this.ckStatus = true;
         this.drawStatus = true;
         this.threadList = []; // 保存帖子列表的属性
-        this.lastThreadId = null; // 添加 lastThreadId 属性
+        this.userId = null; //用户id
+        this.tzid = []; //帖子id
     }
 
     getRandomTime() {
@@ -204,6 +214,10 @@ class UserInfo {
             return [];
         }
     }
+
+
+
+  
 
     // 分享函数
     async SubmitCrmTrackLog(threadId) {
@@ -277,7 +291,6 @@ class UserInfo {
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "发贴")
             if (!error) {
-                this.lastThreadId = result?.params?.threadId || result?.result?.threadId;
                 $.log(`✅发贴成功！`);
             } else {
                 $.log(`❌发贴失败!${error?.message}`);
@@ -288,30 +301,89 @@ class UserInfo {
     }
 
 
-      // 删帖函数
-    async DeleteMyThread() {
+
+//查询用户id函数
+async getUserId() {
         try {
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=GetZiwiMyInfo`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${this.lastThreadId}"}}`
+                body: '{"id": 1706487976025,"jsonrpc": "2.0","method": "GetZiwiMyInfo","params": {}}'
             };
             let { result, error } = await httpRequest(options) ?? {};
-            debug(error || result, "删贴")
             if (!error) {
-                $.log(`✅删贴成功！`);
+                this.userId = result?.userId;
+                console.log(`用户 ID: ${this.userId}`);
             } else {
-                $.log(`❌删贴失败!${error?.message}`);
+                this.ckStatus = false;
             }
         } catch (e) {
             console.log(e);
         }
     }
+
+
+// 查帖子id函数
+async getUserThreads() {
+    try {
+        const options = {
+            url: `https://ziwixcx.escase.cn/json-rpc?__method=GetUserThreadList`,
+            headers: {
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                "Authorization": this.token,
+                "serialId": ''
+            },
+            body: `{"id": 1706441114877,"jsonrpc": "2.0","method": "GetUserThreadList","params": {"pageSize": 10,"userId": ${this.userId},"currentPage": 1}}`
+        };
+        let { result, error } = await httpRequest(options) ?? {};
+        if (!error) {
+            this.tzid = result?.list?.map(thread => thread.threadId) || [];
+            console.log(`帖子 ID: ${this.tzid}`);
+            if (this.tzid.length === 0) {
+                console.log(`帖子id查询成功`);
+            }
+        } else {
+            console.log(`获取用户帖子失败! ${error?.message}`);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+// 删帖函数
+async DeleteMyThread() {
+    try {
+        const options = {
+            url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
+            headers: {
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                "Authorization": this.token,
+                "serialId": ''
+            },
+            body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": ${this.tzid}}`
+        };
+        let { result, error } = await httpRequest(options) ?? {};
+        debug(error || result, "删贴")
+        if (!error) {
+            $.log(`✅删贴成功！`);
+        } else {
+            $.log(`❌删贴失败!${error?.message}`);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+  
+  
 
 
 
@@ -487,6 +559,7 @@ async function SendMsg(message) {
         console.log(message)
     }
 }
+
 
 /** ---------------------------------固定不动区域----------------------------------------- */
 // prettier-ignore
