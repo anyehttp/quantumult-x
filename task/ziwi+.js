@@ -127,7 +127,7 @@ async function main() {
             //发贴
             await user.AddThread();
             //删帖
-            await user.DeleteMyThread();
+            //await user.DeleteMyThread();
             //日常任务
             for (let thread of threadIds) {
                 // 分享
@@ -281,8 +281,6 @@ class UserInfo {
             };
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "发贴")
-            const lastThreadId = result?.result?.threadId;
-            return lastThreadId;
             if (!error) {
                 $.log(`✅发贴成功！`);
             } else {
@@ -293,7 +291,7 @@ class UserInfo {
         }
     }
 
-
+/*
       // 删帖函数
     async DeleteMyThread() {
         try {
@@ -318,7 +316,7 @@ class UserInfo {
             console.log(e);
         }
     }
-
+*/
 
 
     // 点赞函数
