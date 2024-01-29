@@ -126,8 +126,12 @@ async function main() {
             let threadIds = await user.GetZIWIThreadList();
             //发贴
             await user.AddThread();
+            //用户ID
+            await user.getUserId();
+            //查询用户帖子id
+            await user.getUserThreads()
             //删帖
-            //await user.DeleteMyThread();
+            await user.DeleteMyThread();
             //日常任务
             for (let thread of threadIds) {
                 // 分享
@@ -153,7 +157,8 @@ class UserInfo {
         this.ckStatus = true;
         this.drawStatus = true;
         this.threadList = []; // 保存帖子列表的属性
-        this.lastThreadId = null; //保存帖子id
+        this.userId = null; //用户id
+        this.tzid = []; //帖子id
     }
 
     getRandomTime() {
@@ -209,6 +214,10 @@ class UserInfo {
             return [];
         }
     }
+
+
+
+  
 
     // 分享函数
     async SubmitCrmTrackLog(threadId) {
@@ -291,10 +300,68 @@ class UserInfo {
         }
     }
 
-/*
-      // 删帖函数
-    async DeleteMyThread() {
+
+
+//查询用户id函数
+async getUserId() {
         try {
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=GetZiwiMyInfo`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: '{"id": 1706487976025,"jsonrpc": "2.0","method": "GetZiwiMyInfo","params": {}}'
+            };
+            let { result, error } = await httpRequest(options) ?? {};
+            if (!error) {
+                this.userId = result?.userId;
+                console.log(`用户 ID: ${this.userId}`);
+            } else {
+                this.ckStatus = false;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+// 查帖子id函数
+async getUserThreads() {
+    try {
+        const options = {
+            url: `https://ziwixcx.escase.cn/json-rpc?__method=GetUserThreadList`,
+            headers: {
+                "Content-Type": "application/json",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                "Authorization": this.token,
+                "serialId": ''
+            },
+            body: `{"id": 1706441114877,"jsonrpc": "2.0","method": "GetUserThreadList","params": {"pageSize": 10,"userId": ${this.userId},"currentPage": 1}}`
+        };
+        let { result, error } = await httpRequest(options) ?? {};
+        if (!error) {
+            this.tzid = result?.list?.map(thread => thread.threadId) || [];
+            console.log(`帖子 ID: ${this.tzid}`);
+            if (this.tzid.length === 0) {
+                console.log(`帖子id查询成功`);
+            }
+        } else {
+            console.log(`获取用户帖子失败! ${error?.message}`);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+      
+
+// 删帖函数
+async DeleteMyThread() {
+    try {
+        for (let threadId of this.tzid) {
             const options = {
                 url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
                 headers: {
@@ -303,7 +370,7 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${lastThreadId}"}}`
+                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${threadId}"}}`
             };
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "删贴")
@@ -312,11 +379,16 @@ class UserInfo {
             } else {
                 $.log(`❌删贴失败!${error?.message}`);
             }
-        } catch (e) {
-            console.log(e);
         }
+    } catch (e) {
+        console.log(e);
     }
-*/
+}
+
+
+  
+  
+
 
 
     // 点赞函数
