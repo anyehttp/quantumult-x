@@ -349,7 +349,7 @@ async getUserThreads() {
                 console.log(`帖子id查询成功`);
             }
         } else {
-            console.log(`获取用户帖子失败! ${error?.message}`);
+            console.log(`获取用户帖子失败! 没有帖子不是报错${error?.message}`);
         }
     } catch (e) {
         console.log(e);
@@ -377,7 +377,7 @@ async DeleteMyThread() {
             if (!error) {
                 $.log(`✅删贴成功！`);
             } else {
-                $.log(`❌删贴失败!${error?.message}`);
+                $.log(`❌删贴失败! 没有帖子不是报错${error?.message}`);
             }
         }
     } catch (e) {
