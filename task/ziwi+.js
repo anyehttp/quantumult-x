@@ -21,14 +21,14 @@
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
 
-脚本默认 晚上12点 早上6点 中午12点执行 如有需求自行更改
+脚本默认 凌晨1点 早上6点 中午12点执行 如有需求自行更改
 -----------------------------------------------
 ==============
 |Quantumult x|
 ==============
 本地-手动添加定时任务
 [task_local]
-0 0,6,12 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
+0 1,6,12 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
 
 远程-重写获取Cookie
 https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
@@ -45,8 +45,8 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgm
 
 本地-Script定时任务
 [Script]
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
-ziwi签到 = type=cron, cronexp="0 0,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+ziwi签到 = type=cron, cronexp="0 1,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
 -----------------------------------------------
 ==============
 |    loon    |
@@ -56,8 +56,8 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plug
 
 本地-Script定时任务
 [Script]
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
-cron "0 0,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
+# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+cron "0 1,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
 -----------------------------------------------
 ==============
 |   stash    |
@@ -68,9 +68,9 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.sto
 本地-cron定时任务
 cron:
   script:
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
     - name: "ziwi签到_6"
-      cron: "0 0,6,12 * * *"
+      cron: "0 1,6,12 * * *"
 
 script-providers:
   "ziwi签到_6":
