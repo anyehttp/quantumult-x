@@ -32,9 +32,9 @@ http:
 
 cron:
   script:
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
     - name: "ziwi签到_6"
-      cron: "0 0,6,12 * * *"
+      cron: "0 1,6,12 * * *"
 
 script-providers:
   "ziwi签到_6":
