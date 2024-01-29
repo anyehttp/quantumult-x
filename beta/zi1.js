@@ -356,25 +356,29 @@ async getUserThreads() {
     }
 }
 
+      
+
 // 删帖函数
 async DeleteMyThread() {
     try {
-        const options = {
-            url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
-            headers: {
-                "Content-Type": "application/json",
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                "Authorization": this.token,
-                "serialId": ''
-            },
-            body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": ${this.tzid}}`
-        };
-        let { result, error } = await httpRequest(options) ?? {};
-        debug(error || result, "删贴")
-        if (!error) {
-            $.log(`✅删贴成功！`);
-        } else {
-            $.log(`❌删贴失败!${error?.message}`);
+        for (let threadId of this.tzid) {
+            const options = {
+                url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization": this.token,
+                    "serialId": ''
+                },
+                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${threadId}"}}`
+            };
+            let { result, error } = await httpRequest(options) ?? {};
+            debug(error || result, "删贴")
+            if (!error) {
+                $.log(`✅删贴成功！`);
+            } else {
+                $.log(`❌删贴失败!${error?.message}`);
+            }
         }
     } catch (e) {
         console.log(e);
