@@ -281,9 +281,9 @@ class UserInfo {
             };
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "发贴")
+            const lastThreadId = result?.result?.threadId;
+            return lastThreadId;
             if (!error) {
-                //获取id
-                this.lastThreadId = result?.params?.threadId || result?.result?.threadId;
                 $.log(`✅发贴成功！`);
             } else {
                 $.log(`❌发贴失败!${error?.message}`);
@@ -305,7 +305,7 @@ class UserInfo {
                     "Authorization": this.token,
                     "serialId": ''
                 },
-                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${this.lastThreadId}"}}`
+                body: `{"id": 1706441251237,"jsonrpc": "2.0","method": "DeleteMyThread","params": {"threadId": "${lastThreadId}"}}`
             };
             let { result, error } = await httpRequest(options) ?? {};
             debug(error || result, "删贴")
