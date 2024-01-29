@@ -185,6 +185,7 @@ class UserInfo {
             };
             let { result, error } = await httpRequest(options) ?? {};
             if (!error) {
+                $.log(`✅签到成功！`);
                 $.signMsg = `${result?.__showToast?.title}`;
             } else {
                 this.ckStatus = false;
