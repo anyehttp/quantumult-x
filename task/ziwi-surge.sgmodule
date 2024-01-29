@@ -18,8 +18,8 @@
 #!3.关闭获取cookie脚本，防止产生不必要的mitm
 
 [Script]
-# （默认晚上12点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
-ziwi签到 = type=cron, cronexp="0 0,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+ziwi签到 = type=cron, cronexp="0 1,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
 
 # 获取Cookie
 获取Cookie = type=http-request, pattern=^https:\/\/ziwixcx\.escase\.cn\/json-rpc\?__method=GetTaskList, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
