@@ -1,0 +1,26 @@
+name: |-
+  欧莱雅会员俱乐部签到
+desc: |-
+  微信公众号搜索欧莱雅会员俱乐部小程序 自动完成签到任务
+
+http:
+
+  mitm:
+    - "membercenter.lorealparis.com.cn"
+
+  script:
+# 获取Cookie
+    - match: ^https:\/\/membercenter\.lorealparis\.com\.cn\/api\/member-portal\/store\/lrl\/
+      name: "欧莱雅会员俱乐部签到_20"
+      type: request
+
+cron:
+  script:
+# （默认凌晨12点 执行，如需更改请自行修改cron表达式）
+    - name: "欧莱雅会员俱乐部签到_20"
+      cron: "0 0 * * *"
+
+script-providers:
+  "欧莱雅会员俱乐部签到_20":
+    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js
+    interval: 86400
