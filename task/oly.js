@@ -25,10 +25,10 @@
 ==============
 本地-手动添加定时任务
 [task_local]
-0 1,6,12 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
+0 0 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js, tag=欧莱雅会员俱乐部签到, enabled=true
 
 远程-重写获取Cookie
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-qx.conf
 -----------------------------------------------
 ============== 
 |    Surge   |
@@ -43,35 +43,35 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-surge.sgmo
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-ziwi签到 = type=cron, cronexp="0 1,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js
+欧莱雅会员俱乐部签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js
 -----------------------------------------------
 ==============
 |    loon    |
 ==============
 远程-插件(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plugin
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-loon.plugin
 
 本地-Script定时任务
 [Script]
-# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
-cron "0 1,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
+# （默认凌晨12点 执行，如需更改请自行修改cron表达式）
+cron "0 1,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js, tag=欧莱雅会员俱乐部签到
 -----------------------------------------------
 ==============
 |   stash    |
 ==============
 远程-覆写(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.stoverride
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-stash.stoverride
 
 本地-cron定时任务
 cron:
   script:
-# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
-    - name: "ziwi签到_6"
+# （默认凌晨12点 执行，如需更改请自行修改cron表达式）
+    - name: "欧莱雅会员俱乐部签到_6"
       cron: "0 1,6,12 * * *"
 
 script-providers:
-  "ziwi签到_6":
-    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+  "欧莱雅会员俱乐部签到_6":
+    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js
     interval: 86400
 -----------------------------------------------
 
