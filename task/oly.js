@@ -1,3 +1,106 @@
+/**************************************
+@anyeyey
+感谢樱花大佬的脚本框架 修改脚本和指点
+@sliverkiss
+
+@Date:2024-01-27完成脚本
+      2024-01-28修复接口bug
+      2024-01-29增加删除帖子 可以删除全部帖子
+      2024-01-30更改定时任务
+
+
+适用于微信小程序WIZI+ 签到 和 任务
+
+使用方法:
+1.将签到脚本拉取到本地
+2.打开小程序-我的页面 提示获取cookie成功则可以使用该脚本
+3.关闭获取cookie脚本，防止产生不必要的mitm
+
+樱花佬频道 https://t.me/sliverkiss
+
+反馈群
+群组：https://t.me/IPAs_Dd
+频道：https://t.me/IPAs_share
+
+脚本默认 凌晨1点 早上6点 中午12点执行 如有需求自行更改
+-----------------------------------------------
+==============
+|Quantumult x|
+==============
+本地-手动添加定时任务
+[task_local]
+0 1,6,12 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
+
+远程-重写获取Cookie
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
+-----------------------------------------------
+============== 
+|    Surge   |
+==============
+|    小火箭   |
+==============
+|   LanceX   |
+==============
+远程-模块(包括获取Cookie和定时任务)
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
+
+本地-Script定时任务
+[Script]
+# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+ziwi签到 = type=cron, cronexp="0 1,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+-----------------------------------------------
+==============
+|    loon    |
+==============
+远程-插件(包括获取Cookie和定时任务)
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plugin
+
+本地-Script定时任务
+[Script]
+# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+cron "0 1,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
+-----------------------------------------------
+==============
+|   stash    |
+==============
+远程-覆写(包括获取Cookie和定时任务)
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.stoverride
+
+本地-cron定时任务
+cron:
+  script:
+# （默认凌晨1点 早上6点 中午12点 执行，如需更改请自行修改cron表达式）
+    - name: "ziwi签到_6"
+      cron: "0 1,6,12 * * *"
+
+script-providers:
+  "ziwi签到_6":
+    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+    interval: 86400
+-----------------------------------------------
+
+单账号：
+1.将签到脚本拉取到本地
+2.打开网站，随便逛逛，提示获取cookie成功则可以使用该脚本
+3.关闭获取cookie脚本，防止产生不必要的mitm
+多账号：
+1.抓包ziwixcx.escase.cn域名下的Authorization
+2.打开boxjs->我的->数据查看器->在数据键输入ziwi_data,点击VIEW->在数据内容输入抓取到的Authorization，点击保存。
+3.若有多账号，用@分割，如Authorization@Authorization
+
+====================================
+⚠️【免责声明】
+------------------------------------------
+1、此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，本人对此不承担任何保证责任。
+2、由于此脚本仅用于学习研究，您必须在下载后 24 小时内将所有内容从您的计算机或手机或任何存储设备中完全删除，若违反规定引起任何事件本人对此均不负责。
+3、请勿将此脚本用于任何商业或非法目的，若违反规定请自行对此负责。
+4、此脚本涉及应用与本人无关，本人对因此引起的任何隐私泄漏或其他后果不承担任何责任。
+5、本人对任何脚本引发的问题概不负责，包括但不限于由脚本错误引起的任何损失和损害。
+6、如果任何单位或个人认为此脚本可能涉嫌侵犯其权利，应及时通知并提供身份证明，所有权证明，我们将在收到认证文件确认后删除此脚本。
+7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
+******************************************/
+
+
 // env.js 全局
 const $ = new Env("欧莱雅会员俱乐部签到");
 const ckName = "oly_data";
