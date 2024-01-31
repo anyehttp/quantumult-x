@@ -122,9 +122,9 @@ async function main() {
             //ck未过期，开始执行任务
             // DoubleLog(`🔷账号${user.index} >> Start work`)
             console.log(`随机延迟${user.getRandomTime()}ms`);
-            await user.signin());
-            await user.sp());
-            await user.cx());
+            await user.signin();
+            await user.sp();
+            await user.cx();
             Doublelo(`签到:${$.signMsg}\n 视频任务:${$.spp}\n 积分:${$.cxx}`);
         } else {
             //将ck过期消息存入消息数组
