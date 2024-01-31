@@ -227,7 +227,7 @@ class UserInfo {
             //console.log(result)
             if (!result?.ecode) {
                 $.log(`✅查询成功 拥有积分！${result?.result?.points} 个`)
-                $.cxx = `${result?.result?.points}`;
+                $.cxx = `${result?.data?.points}`;
             } else {
                 $.log(`❌查询失败!${result?.msg}`)
                 //console.log(result);
