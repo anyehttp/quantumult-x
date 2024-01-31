@@ -125,6 +125,7 @@ async function main() {
             await user.signin();
             await user.sp();
             await user.cx();
+            let { points } = await user.cx();
             DoubleLog(`签到:${$.signMsg}\n视频任务:${$.spp}\n积分:${$.cxx}`);
         } else {
             //将ck过期消息存入消息数组
@@ -224,10 +225,12 @@ class UserInfo {
             };
             //post方法
             let result = await httpRequest(options);
+            let { points } = result;
             //console.log(result)
             if (!result?.ecode) {
                 $.log(`✅查询成功 拥有积分！${result?.result?.points} 个`)
-                $.cxx = `${result?.data?.points}`;
+                //$.cxx = `${result?.data?.points}`;
+                return { points }
             } else {
                 $.log(`❌查询失败!${result?.msg}`)
                 //console.log(result);
