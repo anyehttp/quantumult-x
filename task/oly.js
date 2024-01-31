@@ -81,7 +81,7 @@ script-providers:
 2.打开网站，随便逛逛，提示获取cookie成功则可以使用该脚本
 3.关闭获取cookie脚本，防止产生不必要的mitm
 多账号：
-1.抓包ziwixcx.escase.cn域名下的Authorization
+1.抓包membercenter.lorealparis.com.cn域名下的Authorization
 2.打开boxjs->我的->数据查看器->在数据键输入oly_data,点击VIEW->在数据内容输入抓取到的Authorization，点击保存。
 3.若有多账号，用@分割，如Authorization@Authorization
 
