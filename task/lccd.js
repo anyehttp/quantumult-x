@@ -125,7 +125,7 @@ async function main() {
             await user.signin();
             await user.sp();
             await user.cx();
-            DoubleLog(`签到:${$.signMsg}\n 视频任务:${$.spp}\n 积分:${$.cxx}`);
+            DoubleLog(`签到:${$.signMsg}\n视频任务:${$.spp}\n积分:${$.cxx}`);
         } else {
             //将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
