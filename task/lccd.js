@@ -97,7 +97,7 @@ script-providers:
 
 
 // env.js 全局
-const $ = new Env("莱充充电");
+const $ = new Env("莱充充电签到");
 const ckName = "lccd_data";
 //-------------------- 一般不动变量区域 -------------------------------------
 const Notify = 1;//0为关闭通知,1为打开通知,默认为1
