@@ -71,7 +71,9 @@ script-providers:
     url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js
     interval: 86400
 -----------------------------------------------
-
+*************************
+【 签到脚本使用教程 】:
+*************************
 单账号：
 1.将签到脚本拉取到本地
 2.打开网站，随便逛逛，提示获取cookie成功则可以使用该脚本
