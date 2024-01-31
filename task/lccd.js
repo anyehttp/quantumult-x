@@ -64,7 +64,7 @@ cron:
   script:
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
     - name: "莱充充电签到_6"
-      cron: "0 1,6,12 * * *"
+      cron: "0 0 * * *"
 
 script-providers:
   "莱充充电签到_6":
