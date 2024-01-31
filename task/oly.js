@@ -51,7 +51,7 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-loon.plugi
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-cron "0 1,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js, tag=欧莱雅会员俱乐部签到
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js, tag=欧莱雅会员俱乐部签到
 -----------------------------------------------
 ==============
 |   stash    |
@@ -64,7 +64,7 @@ cron:
   script:
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
     - name: "欧莱雅会员俱乐部签到_6"
-      cron: "0 1,6,12 * * *"
+      cron: "0 0 * * *"
 
 script-providers:
   "欧莱雅会员俱乐部签到_6":
