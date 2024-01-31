@@ -22,10 +22,10 @@ by-
 ==============
 本地-手动添加定时任务
 [task_local]
-0 0 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js, tag=欧莱雅会员俱乐部签到, enabled=true
+0 0 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js, tag=莱充充电签到, enabled=true
 
 远程-重写获取Cookie
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-qx.conf
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-qx.conf
 -----------------------------------------------
 ============== 
 |    Surge   |
@@ -35,40 +35,40 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-qx.conf
 |   LanceX   |
 ==============
 远程-模块(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-surge.sgmodule
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-surge.sgmodule
 
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-欧莱雅会员俱乐部签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js
+莱充充电签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js
 -----------------------------------------------
 ==============
 |    loon    |
 ==============
 远程-插件(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-loon.plugin
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-loon.plugin
 
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-cron "0 1,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js, tag=欧莱雅会员俱乐部签到
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js, tag=莱充充电签到
 -----------------------------------------------
 ==============
 |   stash    |
 ==============
 远程-覆写(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly-stash.stoverride
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-stash.stoverride
 
 本地-cron定时任务
 cron:
   script:
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-    - name: "欧莱雅会员俱乐部签到_6"
+    - name: "莱充充电签到_6"
       cron: "0 1,6,12 * * *"
 
 script-providers:
-  "欧莱雅会员俱乐部签到_6":
-    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/oly.js
+  "莱充充电签到_6":
+    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js
     interval: 86400
 -----------------------------------------------
 *************************
