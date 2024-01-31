@@ -124,8 +124,8 @@ async function main() {
             console.log(`随机延迟${user.getRandomTime()}ms`);
             await user.signin();
             await user.sp();
-            await user.cx();
-            DoubleLog(`签到:${$.signMsg}\n视频任务:${$.spp}\n积分:${$.cxx}`);
+            await user.cx();  //\n视频任务:${$.spp}\n
+            DoubleLog(`签到:${$.signMsg}-积分:${$.cxx}`);
         } else {
             //将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -226,7 +226,7 @@ class UserInfo {
             let result = await httpRequest(options);
             //console.log(result)
             if (!result?.ecode) {
-                $.log(`✅查询成功 拥有积分！${result?.data?.points} 个`)
+                $.log(`✅查询成功 拥有积分 ${result?.data?.points} 个!`)
                 $.cxx = `${result?.data?.points}`;
             } else {
                 $.log(`❌查询失败!${result?.msg}`)
