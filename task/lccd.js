@@ -226,7 +226,7 @@ class UserInfo {
                     "Authorization":this.token,
                     "serialId":''
                 },
-                body: `task_id=4`
+                body: `{task_id=4}`
             };
             //post方法
             let result = await httpRequest(options);
@@ -258,7 +258,7 @@ class UserInfo {
                     "Authorization":this.token,
                     "serialId":''
                 },
-                body: `task_id=3`
+                body: `{task_id=3}`
             };
             //post方法
             let result = await httpRequest(options);
