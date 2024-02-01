@@ -124,7 +124,7 @@ async function main() {
             // DoubleLog(`🔷账号${user.index} >> Start work`)
             console.log(`随机延迟${user.getRandomTime()}ms`);
             await user.signin();
-            await user.list();
+            //await user.list();
             await user.sp();
             await user.sp2();
             await user.cx();
@@ -176,7 +176,7 @@ class UserInfo {
         }
     }
 
-
+/*
   //任务列表函数
     async list() {
         try {
@@ -206,7 +206,7 @@ class UserInfo {
             console.log(e);
         }
     }
-
+*/
 
 
 
@@ -226,7 +226,7 @@ class UserInfo {
                     "Authorization":this.token,
                     "serialId":''
                 },
-                body: `{task_id=4}`
+                body: `'task_id=4'`
             };
             //post方法
             let result = await httpRequest(options);
@@ -258,7 +258,7 @@ class UserInfo {
                     "Authorization":this.token,
                     "serialId":''
                 },
-                body: `{task_id=3}`
+                body: `'task_id=4'`
             };
             //post方法
             let result = await httpRequest(options);
