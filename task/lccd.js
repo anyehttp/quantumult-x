@@ -223,7 +223,7 @@ class UserInfo {
                 url: `https://shop.laichon.com/api/v1/task/taskComplete`,
                 //请求头, 所有接口通用
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    "content-type": "application/x-www-form-urlencoded",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
                     "Authorization":this.token,
                     "serialId":''
@@ -251,13 +251,13 @@ class UserInfo {
     async sp2() {
         try {
             const data = new URLSearchParams();
-            data.append('task_id', '4');
+            data.append('task_id', '3');
             const options = {
                 //签到任务调用签到接口
                 url: `https://shop.laichon.com/api/v1/task/taskComplete`,
                 //请求头, 所有接口通用
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    "content-type": "application/x-www-form-urlencoded",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
                     "Authorization":this.token,
                     "serialId":''
