@@ -124,6 +124,7 @@ async function main() {
             // DoubleLog(`🔷账号${user.index} >> Start work`)
             console.log(`随机延迟${user.getRandomTime()}ms`);
             await user.signin();
+            await user.list();
             await user.sp();
             await user.sp2();
             await user.cx();
@@ -174,6 +175,41 @@ class UserInfo {
             console.log(e);
         }
     }
+
+
+  //任务列表函数
+    async list() {
+        try {
+            const options = {
+                //签到任务调用签到接口
+                url: `https://shop.laichon.com/api/v1/task/getTaskList`,
+                //请求头, 所有接口通用
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization":this.token,
+                    "serialId":''
+                },
+                //body: `task_id=4`
+            };
+            //post方法
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
+                $.log(`✅领取成功！${result?.msg}`);
+                $.spp = `${result?.msg}`;
+            } else {
+                $.log(`❌领取失败!${result?.msg}`);
+                //console.log(result);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+
+
 
 
 
