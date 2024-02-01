@@ -124,8 +124,9 @@ async function main() {
             console.log(`随机延迟${user.getRandomTime()}ms`);
             await user.signin();
             await user.sp();
-            await user.cx();  //\n视频任务:${$.spp}\n
-            DoubleLog(`签到:${$.signMsg}-积分:${$.cxx}`);
+            await user.sp2();
+            await user.cx();
+            DoubleLog(`签到:${$.signMsg}-任务:${$.spp}-积分:${$.cxx}`);
         } else {
             //将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -204,6 +205,39 @@ class UserInfo {
             console.log(e);
         }
     }
+
+
+
+  //签到奖励翻倍任务函数
+    async sp2() {
+        try {
+            const options = {
+                //签到任务调用签到接口
+                url: `https://shop.laichon.com/api/v1/task/taskComplete`,
+                //请求头, 所有接口通用
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization":this.token,
+                    "serialId":''
+                },
+                body: `task_id=3`
+            };
+            //post方法
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
+                $.log(`✅领取成功！${result?.msg}`);
+            } else {
+                $.log(`❌领取失败!${result?.msg}`);
+                //console.log(result);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
 
 
 
