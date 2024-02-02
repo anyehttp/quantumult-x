@@ -98,7 +98,7 @@ script-providers:
 
 
 // env.js 全局
-const $ = new Env("莱充充电签到");
+const $ = new Env("莱充充电小程序签到");
 const ckName = "lccd_data";
 //-------------------- 一般不动变量区域 -------------------------------------
 const Notify = 1;//0为关闭通知,1为打开通知,默认为1
@@ -108,6 +108,8 @@ let userCookie = ($.isNode() ? process.env[ckName] : $.getdata(ckName)) || '';
 let userList = [];
 let userIdx = 0;
 let userCount = 0;
+//调试
+$.is_debug = ($.isNode() ? process.env.IS_DEDUG : $.getdata('is_debug')) || 'false';
 // 为通知准备的空数组
 $.notifyMsg = [];
 //bark推送
@@ -116,19 +118,26 @@ $.barkKey = ($.isNode() ? process.env["bark_key"] : $.getdata("bark_key")) || ''
 
 //脚本入口函数main()
 async function main() {
+    await getNotice()
     console.log('\n================== 任务 ==================\n');
-    let taskall = [];
     for (let user of userList) {
+        console.log(`🔷账号${user.index} >> Start work`)
+        console.log(`随机延迟${user.getRandomTime()}ms`);
+        //执行签到
+        await user.signComplete();
         if (user.ckStatus) {
-            //ck未过期，开始执行任务
-            // DoubleLog(`🔷账号${user.index} >> Start work`)
-            console.log(`随机延迟${user.getRandomTime()}ms`);
-            await user.signin();
-            //await user.list();
-            await user.sp();
-            await user.sp2();
-            await user.cx();
-            DoubleLog(`签到:${$.signMsg}-任务:${$.spp}-积分:${$.cxx}`);
+            //任务列表
+            const task = { "Power": 3, "Video": 4 };
+            //签到翻倍
+            let doubleMsg = await user.pointsDouble();
+            //充电任务
+            let powerMsg = await user.taskComplete(task.Power);
+            //视频任务
+            let videoMsg = await user.taskComplete(task.Video);
+            //查询用户信息
+            let pointRes = await user.userInfo();
+            //打印通知
+            DoubleLog(`当前用户:${pointRes.user}\n今日签到:${$.signMsg}\n签到翻倍:${doubleMsg}\n充电任务:${powerMsg}\n视频任务:${videoMsg}\n总共积分:${pointRes.points || pointRes.msg}`);
         } else {
             //将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -140,186 +149,96 @@ class UserInfo {
     constructor(str) {
         this.index = ++userIdx;
         this.token = str;
-        this.ckStatus = true;
-        this.drawStatus = true;
+        this.ckStatus = true
+        this.headers = {
+            'Authorization': this.token,
+            'User-Agent': "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN"
+        }
     }
     getRandomTime() {
         return randomInt(1000, 3000)
     }
-    //签到函数
-    async signin() {
+    //请求二次封装
+    Request(options, method) {
+        typeof (method) === 'undefined' ? ('body' in options ? method = 'post' : method = 'get') : method = method;
+        return new Promise((resolve, reject) => {
+            $.http[method.toLowerCase()](options)
+                .then((response) => {
+                    let res = response.body;
+                    res = $.toObj(res) || res;
+                    resolve(res);
+                })
+                .catch((err) => reject(err));
+        });
+    };
+    //签到
+    async signComplete() {
         try {
             const options = {
-                //签到任务调用签到接口
                 url: `https://shop.laichon.com/api/v1/task/signComplete`,
-                //请求头, 所有接口通用
-                headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
-                },
-                //body: `{"channelId": "wa"}`
+                headers: this.headers,
             };
             //post方法
-            let result = await httpRequest(options);
-            console.log(result)
-            if (!result?.ecode) {
-                $.log(`✅签到成功！${result?.msg}`);
-                $.signMsg = `${result?.msg}`;
+            let res = await this.Request(options);
+            debug(res,"签到");
+            if (res?.code_key == "token_error") {
+                this.ckStatus = false;
             } else {
-                $.log(`❌签到失败!${result?.msg}`);
-                //console.log(result);
+                $.signMsg = res?.code == 1 ? '已完成' : res?.msg;
             }
         } catch (e) {
-            console.log(e);
+            throw e;
         }
     }
-
-/*
-  //任务列表函数
-    async list() {
+    //签到翻倍
+    async pointsDouble() {
         try {
             const options = {
-                //签到任务调用签到接口
-                url: `https://shop.laichon.com/api/v1/task/getTaskList`,
-                //请求头, 所有接口通用
-                headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
-                },
-                //body: `task_id=4`
+                url: `https://shop.laichon.com/api/v1/task/pointsDouble`,
+                headers: this.headers,
             };
             //post方法
-            let result = await httpRequest(options);
-            console.log(result)
-            if (!result?.ecode) {
-                $.log(`✅领取成功！${result?.msg}`);
-                $.spp = `${result?.msg}`;
-            } else {
-                $.log(`❌领取失败!${result?.msg}`);
-                //console.log(result);
-            }
+            let res = await this.Request(options);
+            debug(res,"签到翻倍");
+            return res?.code == 1 ? '已完成' : res?.msg;
         } catch (e) {
-            console.log(e);
+            throw e;
         }
     }
-*/
-
-
-
-
-
-
-  //视频任务函数
-    async sp() {
+    //完成任务
+    async taskComplete(taskId) {
         try {
-            const data = new URLSearchParams();
-            data.append('task_id', '4');
             const options = {
-                //签到任务调用签到接口
                 url: `https://shop.laichon.com/api/v1/task/taskComplete`,
-                //请求头, 所有接口通用
-                headers: {
-                    "content-type": "application/x-www-form-urlencoded",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
-                },
-                body: data
+                headers: this.headers,
+                body: `task_id=${taskId}`
             };
             //post方法
-            let result = await httpRequest(options);
-            console.log(result)
-            if (!result?.ecode) {
-                $.log(`✅领取成功！${result?.msg}`);
-                $.spp = `${result?.msg}`;
-            } else {
-                $.log(`❌领取失败!${result?.msg}`);
-                //console.log(result);
-            }
+            let res = await this.Request(options);
+            debug(res,`完成任务:${taskId==3?'充电任务':'视频任务'}`);
+            return res?.code == 1 ? '已完成' : res?.msg;
         } catch (e) {
-            console.log(e);
+            throw e;
         }
     }
-
-
-
-  //签到奖励翻倍任务函数
-    async sp2() {
-        try {
-            const data = new URLSearchParams();
-            data.append('task_id', '3');
-            const options = {
-                //签到任务调用签到接口
-                url: `https://shop.laichon.com/api/v1/task/taskComplete`,
-                //请求头, 所有接口通用
-                headers: {
-                    "content-type": "application/x-www-form-urlencoded",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
-                },
-                body: data
-            };
-            //post方法
-            let result = await httpRequest(options);
-            console.log(result)
-            if (!result?.ecode) {
-                $.log(`✅领取成功！${result?.msg}`);
-            } else {
-                $.log(`❌领取失败!${result?.msg}`);
-                //console.log(result);
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-
-
-
-
-  //查询积分函数
-    async cx() {
+    //查询积分
+    async userInfo() {
         try {
             const options = {
-                //签到任务调用签到接口
                 url: `https://shop.laichon.com/api/v1/member/userinfo`,
-                //请求头, 所有接口通用
-                headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                    "serialId":''
-                },
-                //body: `task_id=4`
+                headers: this.headers,
             };
             //post方法
-            let result = await httpRequest(options);
-            //console.log(result)
-            if (!result?.ecode) {
-                $.log(`✅查询成功 拥有积分 ${result?.data?.points} 个!`)
-                $.cxx = `${result?.data?.points}`;
-            } else {
-                $.log(`❌查询失败!${result?.msg}`)
-                //console.log(result);
-            }
+            let res = await this.Request(options);
+            debug(res,"查询积分");
+            return res?.code == 1 ?
+                { user: phone_num(res?.data?.mobile), points: res?.data?.points } :
+                { msg: res?.msg };
         } catch (e) {
-            console.log(e);
+            throw e;
         }
     }
-
-
-  
 }
-
-
-
-
-
 
 
 //获取Cookie
@@ -330,11 +249,29 @@ async function getCookie() {
             $.setdata(tokenValue, ckName);
             $.msg($.name, "", "获取签到Cookie成功🎉");
         } else {
-            $.msg($.name, "", "错误获取签到Cookie失败");
+            $.msg($.name, "", "❌获取签到Cookie失败");
         }
     }
 }
 
+
+async function getNotice() {
+    try {
+        const urls = ["https://raw.githubusercontent.com/Sliverkiss/GoodNight/main/notice.json", "https://raw.githubusercontent.com/Sliverkiss/GoodNight/main/tip.json"];
+        for (const url of urls) {
+            const options = {
+                url,
+                headers: {
+                    "User-Agent": ""
+                },
+            }
+            const result = await httpRequest(options);
+            if (result) console.log(result.notice);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 //主程序执行入口
 !(async () => {
@@ -348,12 +285,12 @@ async function getCookie() {
     if (userList.length > 0) {
         await main();
     }
-    if ($.barkKey) { //如果已填写Bark Key
-        await BarkNotify($, $.barkKey, $.name, $.notifyMsg.join('\n')); //推送Bark通知
-    };
 })()
     .catch((e) => $.notifyMsg.push(e.message || e))//捕获登录函数等抛出的异常, 并把原因添加到全局变量(通知)
     .finally(async () => {
+        if ($.barkKey) { //如果已填写Bark Key
+            await BarkNotify($, $.barkKey, $.name, $.notifyMsg.join('\n')); //推送Bark通知
+        };
         await SendMsg($.notifyMsg.join('\n'))//带上总结推送通知
         $.done(); //调用Surge、QX内部特有的函数, 用于退出脚本执行
     });
@@ -373,18 +310,25 @@ function DoubleLog(data) {
     }
 }
 
-//把json 转为以 ‘&’ 连接的字符串
-function toParams(body) {
-    var params = Object.keys(body).map(function (key) {
-        return encodeURIComponent(key) + "=" + encodeURIComponent(body[key]);
-    }).join("&");
-    return params;
+// DEBUG
+function debug(text, title = 'debug') {
+    if ($.is_debug === 'true') {
+        if (typeof text == "string") {
+            console.log(`\n-----------${title}------------\n`);
+            console.log(text);
+            console.log(`\n-----------${title}------------\n`);
+        } else if (typeof text == "object") {
+            console.log(`\n-----------${title}------------\n`);
+            console.log($.toStr(text));
+            console.log(`\n-----------${title}------------\n`);
+        }
+    }
 }
+
 
 //检查变量
 async function checkEnv() {
     if (userCookie) {
-        // console.log(userCookie);
         let e = envSplitor[0];
         for (let o of envSplitor)
             if (userCookie.indexOf(o) > -1) {
@@ -400,6 +344,17 @@ async function checkEnv() {
     return console.log(`共找到${userCount}个账号`), true;//true == !0
 }
 
+/**
+ * 手机号中间遮挡
+ */
+function phone_num(phone_num) {
+    if (phone_num.length == 11) {
+        let data = phone_num.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
+        return data;
+    } else {
+        return phone_num;
+    }
+}
 /**
  * 随机整数生成
  */
@@ -422,7 +377,6 @@ async function SendMsg(message) {
 
 /** ---------------------------------固定不动区域----------------------------------------- */
 // prettier-ignore
-
 //请求函数函数二次封装
 function httpRequest(options, method) { typeof (method) === 'undefined' ? ('body' in options ? method = 'post' : method = 'get') : method = method; return new Promise((resolve) => { $[method](options, (err, resp, data) => { try { if (err) { console.log(`${method}请求失败`); $.logErr(err) } else { if (data) { typeof JSON.parse(data) == 'object' ? data = JSON.parse(data) : data = data; resolve(data) } else { console.log(`请求api返回数据为空，请检查自身原因`) } } } catch (e) { $.logErr(e, resp) } finally { resolve() } }) }) }
 //Bark APP notify
