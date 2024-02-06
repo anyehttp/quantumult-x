@@ -1,3 +1,7 @@
+#频道:https://t.me/IPAs_share
+#群组:https://t.me/IPAs_Dd
+#更新时间:2024-02-06
+
 proxy-providers: {节点-填入自己的订阅链接: {benchmark-timeout: 5, benchmark-url: 'http://www.gstatic.com/generate_204', interval: 0, url: 'https://nachoneko.azurefd.net'}}
 proxy-groups:
   - name: 国外手动
