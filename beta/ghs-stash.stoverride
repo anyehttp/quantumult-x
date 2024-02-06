@@ -1,0 +1,24 @@
+name: |-
+  av杀手看简介内脚本注释
+desc: |-
+   https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js
+icon: |-
+  https://github.com/Toperlock/Quantumult/raw/main/icon/Doraemon/Doraemon-1095.png
+
+http:
+
+  script:
+    - match: https?:\/\/.*\.*\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8
+      name: "ghs_59"
+      type: request
+      timeout: 60
+
+    - match: https?:\/\/.*\.*\.cn\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8
+      name: "ghs_59"
+      type: request
+      timeout: 60
+
+script-providers:
+  "ghs_59":
+    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js
+    interval: 86400
