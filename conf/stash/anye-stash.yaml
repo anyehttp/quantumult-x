@@ -1,0 +1,60 @@
+proxy-providers: {节点-填入自己的订阅链接: {benchmark-timeout: 5, benchmark-url: 'http://www.gstatic.com/generate_204', interval: 0, url: 'https://nachoneko.azurefd.net'}}
+proxy-groups:
+  - name: 国外手动
+    proxies:
+      - 国外Speedtest
+    type: select
+    use:
+      - 节点-填入自己的订阅链接
+    filter: 台湾|香港|台灣|新加坡|美国|HK|Aws|JP|SG|KR|Fr|Oracle
+  - name: 国内手动
+    proxies:
+      - DIRECT
+      - 国内Speedtest
+    type: select
+    use:
+      - 节点-填入自己的订阅链接
+    filter: 移动|联通|电信|China|🇨🇳|china|中国
+  - name: 国内Speedtest
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png
+    type: url-test
+    proxies: null
+    include-all: true
+    filter: 移动|联通|电信|China|🇨🇳|china|中国
+    interval: 10
+    use:
+      - 节点-填入自己的订阅链接
+  - name: 国外Speedtest
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png
+    type: url-test
+    proxies: null
+    filter: 台湾|香港|台灣|新加坡|美国|HK|Aws|JP|SG|KR|Fr|Oracle
+    include-all: true
+    interval: 10
+    use:
+      - 节点-填入自己的订阅链接
+rules:
+  - GEOIP,LAN,国外手动
+  - GEOIP,CN,国内手动
+  - MATCH,国外手动
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
+dns:
+  default-nameserver:
+    - 114.114.115.115
+    - 119.28.28.28
+    - 223.6.6.6
+    - system
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
+mixed-port: 7890                     # 混合端口，HTTP和SOCKS5用一个端口
+allow-lan: true                      # 允许局域网的连接（共享代理）
+bind-address: "*"                    # 监听IP白名单，可绑定单个IPv4和v6地址，"*" 为绑定所有IP地址，仅在将allow-lan设置为true时适用
+ipv6: false                           # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
+external-controller: 127.0.0.1:9090  # 外部控制器监听地址，可以使用 RESTful API 来控制你的 clash 内核
+log-level: warning
+mode: rule                           # 规则模式：rule（规则） / global（全局代理）/ direct（全局直连）/ script (脚本)
+rule-providers: {}
