@@ -1,0 +1,8 @@
+#!name=av杀手-看脚本内注释
+#!desc=ghs
+#!icon=https://github.com/Toperlock/Quantumult/raw/main/icon/Doraemon/Doraemon-1080.png
+#打开频道看如何使用https://t.me/IPAs_share/100
+[Script]
+ghs = type=http-request, pattern=https?:\/\/.*\.*\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js, timeout=60
+
+ghs = type=http-request, pattern=https?:\/\/.*\.*\.cn\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js, timeout=60
