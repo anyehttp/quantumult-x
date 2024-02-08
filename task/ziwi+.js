@@ -174,7 +174,7 @@ class UserInfo {
     async signin() {
         try {
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=DoCheckin`,
+                url: `https://ziwi.gzcrm.cn/json-rpc?__method=DoCheckin`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -199,7 +199,7 @@ class UserInfo {
     async GetZIWIThreadList() {
         try {
             const options = {
-                url: "https://ziwixcx.escase.cn/json-rpc?__method=GetZIWIThreadList",
+                url: "https://ziwi.gzcrm.cn/json-rpc?__method=GetZIWIThreadList",
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -232,7 +232,7 @@ class UserInfo {
             //   const randomThreadId = this.threadList[Math.floor(Math.random() * this.threadList.length)];
 
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=SubmitCrmTrackLog`,
+                url: `https://ziwi.gzcrm.cn/json-rpc?__method=SubmitCrmTrackLog`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -259,7 +259,7 @@ class UserInfo {
     async CommentThread(threadId) {
         try {
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=CommentThread`,
+                url: `https://ziwi.gzcrm.cn/json-rpc?__method=CommentThread`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -285,7 +285,7 @@ class UserInfo {
     async AddThread() {
         try {
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=AddThread`,
+                url: `https://ziwi.gzcrm.cn/json-rpc?__method=AddThread`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -312,7 +312,7 @@ class UserInfo {
 async getUserId() {
         try {
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=GetZiwiMyInfo`,
+                url: `https://ziwi.gzcrm.cn/json-rpc?__method=GetZiwiMyInfo`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -338,7 +338,7 @@ async getUserId() {
 async getUserThreads() {
     try {
         const options = {
-            url: `https://ziwixcx.escase.cn/json-rpc?__method=GetUserThreadList`,
+            url: `https://ziwi.gzcrm.cn/json-rpc?__method=GetUserThreadList`,
             headers: {
                 "Content-Type": "application/json",
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -369,7 +369,7 @@ async DeleteMyThread() {
     try {
         for (let threadId of this.tzid) {
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=DeleteMyThread`,
+                url: `https://ziwi.gzcrm.cn/json-rpc?__method=DeleteMyThread`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -401,7 +401,7 @@ async DeleteMyThread() {
     async LikeThread(threadId) {
         try {
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=LikeThread`,
+                url: `https://ziwi.gzcrm.cn/json-rpc?__method=LikeThread`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -428,7 +428,7 @@ async DeleteMyThread() {
     async GetUserCreditStats() {
         try {
             const options = {
-                url: `https://ziwixcx.escase.cn/json-rpc?__method=GetUserCreditStats`,
+                url: `https://ziwi.gzcrm.cn/json-rpc?__method=GetUserCreditStats`,
                 headers: {
                     "Content-Type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
