@@ -22,11 +22,11 @@ desc: |-
 http:
 
   mitm:
-    - "ziwixcx.escase.cn"
+    - "ziwi.gzcrm.cn"
 
   script:
 # 获取Cookie
-    - match: ^https:\/\/ziwixcx\.escase\.cn\/json-rpc\?__method=GetTaskList
+    - match: ^https:\/\/ziwixcx\.gzcrm\.cn\/json-rpc\?__method=GetTaskList
       name: "ziwi签到_6"
       type: request
 
