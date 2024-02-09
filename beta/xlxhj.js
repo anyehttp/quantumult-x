@@ -63,6 +63,6 @@
 hostname = %APPEND% *
 
 [Script]
-ghs = type=http-request, pattern=https?:\/\/.*\.*\.com\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js, timeout=60
+ghs = type=http-request, pattern=https?:\/\/.*\.*\.*\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js, timeout=60
 
-ghs = type=http-request, pattern=https?:\/\/.*\.*\.cn\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js, timeout=60
+ghs = type=http-request, pattern=https?:\/\/.*\.*\.*\/.*\/[a-f0-9]+\/[a-f0-9]+\.m3u8, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/beta/ghs.js, timeout=60
