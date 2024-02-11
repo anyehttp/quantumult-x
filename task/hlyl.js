@@ -163,6 +163,7 @@ class UserInfo {
             };
             let { result, error } = await httpRequest(options) ?? {};
             if (!error) {
+                $.log(result);
                 $.log(`✅签到成功！`);
                 $.signMsg = `签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
             } else {
