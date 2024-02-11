@@ -181,32 +181,37 @@ class UserInfo {
   
 
     // 签到函数
-    async signin() {
-        try {
-            const options = {
-                url: `https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign`,
-                headers: {
-                    "content-type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "access-token": this.token,
-                },
-                body: `{}`
-            };
-            let { result, error } = await httpRequest(options) ?? {};
-            $.log(result);
-            if (result?.status === false) {
-                $.log(`❌签到失败！`);
-                $.signMsg = `签到失败: ${result?.error?.msg}`;
+async signin() {
+    try {
+        const options = {
+            url: `https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign`,
+            headers: {
+                "content-type": "application/json",
+                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.44(0x18002c2f) NetType/4G Language/zh_CN",
+                "access-token": this.token,
+            },
+            body: `{}`
+        };
+        let { result, error } = (await httpRequest(options)) || {};
+        
+        if (!error) {
+            if (result && result.status === false) {
+                console.log(`❌签到失败！`);
+                this.signMsg = `签到失败: ${result?.error?.msg}`;
             } else {
-                $.log(`✅签到成功！`);
-                $.signMsg = `签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
+                console.log(`✅签到成功！`);
+                this.signMsg = `签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
             }
-        } catch (e) {
-            console.log(e);
+        } else {
+            this.ckStatus = false;
+            console.error('签到时发生错误:', error);
+            // 根据具体的错误类型提供相应的处理逻辑
         }
+    } catch (e) {
+        console.error('签到时发生异常:', e);
+        // 根据具体的异常类型提供相应的处理逻辑
     }
-
-
+}
 
   /*
     // 查询积分函数
