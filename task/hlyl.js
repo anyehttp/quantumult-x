@@ -154,7 +154,7 @@ async signin() {
         try {
             const options = {
                 //签到任务调用签到接口
-                url: https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign,
+                url: `https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign`,
                 //请求头, 所有接口通用
                 headers: {
                     "content-type": "application/json",
