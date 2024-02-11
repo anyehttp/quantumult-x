@@ -168,7 +168,7 @@ async signin() {
             console.log(result)
             if (!result?.ecode) {
                 $.log(`✅签到成功！`);
-                $.signMsg = `获得${result?.data?.dailySign?.bonusPoint}积分`;
+                $.signMsg = `✅签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
             } else {
                 $.log(`❌签到失败！`);
                 console.log(result);
