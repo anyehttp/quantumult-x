@@ -110,36 +110,6 @@ class UserInfo {
     }
 
 
-/*
-async signin() {
-        try {
-            const options = {
-                //签到任务调用签到接口
-                url: `https://ttdprod-mp.4008618618.com/mallbusiness/ums/common/toSignNow`,
-                //请求头, 所有接口通用
-                headers: {
-                    "content-type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization":this.token,
-                },
-                //body: {}
-            };
-            //post方法
-            let result = await httpRequest(options);
-            console.log(result)
-            if (!result?.ecode) {
-                $.log(`✅签到成功！`);
-                $.signMsg = `✅签到成功已签到${result?.data?.days}天`;
-            } else {
-                $.log(`❌签到失败！`);
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-*/
-
 async signin() {
         try {
             const options = {
