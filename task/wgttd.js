@@ -43,7 +43,7 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/wgttd-surge.sg
 3.关闭获取cookie脚本，防止产生不必要的mitm
 多账号：
 1.抓包ttdprod-mp.4008618618.com域名下的Authorization
-2.打开boxjs->我的->数据查看器->在数据键输入wgttd_data,点击VIEW->在数据内容输入抓取到的access-token，点击保存。
+2.打开boxjs->我的->数据查看器->在数据键输入wgttd_data,点击VIEW->在数据内容输入抓取到的Authorization，点击保存。
 3.若有多账号，用@分割，如Authorization@Authorization
 
 ====================================
