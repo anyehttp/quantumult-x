@@ -123,12 +123,11 @@ async function main() {
     for (let user of userList) {
         console.log(`🔷账号${user.index} >> Start work`)
         console.log(`随机延迟${user.getRandomTime()}ms`);
-        //await user.signin();
+        await user.signin();
         if (user.ckStatus) {
             // ck未过期，开始执行任务
             //console.log(`随机延迟${user.getRandomTime()}ms`);
             //let { total, valid, expired } = await user.GetUserCreditStats();
-            await user.signin();
             DoubleLog(`${$.signMsg}`); //\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})
         } else {
             // 将ck过期消息存入消息数组
@@ -149,94 +148,35 @@ class UserInfo {
         return randomInt(1000, 3000)
     }
 
-  /*
 
-   // 签到函数
-    async signin() {
+
+async signin() {
         try {
             const options = {
-                url: `https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign`,
+                //签到任务调用签到接口
+                url: https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign,
+                //请求头, 所有接口通用
                 headers: {
                     "content-type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "access-token": this.token,
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "access-token":this.token,
                 },
-                body: `{}`
+                body: {}
             };
-            let { result, error } = await httpRequest(options) ?? {};
-            if (!error) {
-                $.log(result);
+            //post方法
+            let result = await httpRequest(options);
+            console.log(result)
+            if (!result?.ecode) {
                 $.log(`✅签到成功！`);
-                $.signMsg = `签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
+                $.signMsg = `获得${result?.data?.dailySign?.bonusPoint}积分`;
             } else {
-                this.ckStatus = false;
+                DoubleLog(`❌签到失败!${result?.emsg}`)
+                console.log(result);
             }
         } catch (e) {
             console.log(e);
         }
     }
-
-*/
-
-  
-
-    // 签到函数
-async signin() {
-    try {
-        const options = {
-            url: `https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign`,
-            headers: {
-                "content-type": "application/json",
-                "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.44(0x18002c2f) NetType/4G Language/zh_CN",
-                "access-token": this.token,
-            },
-            body: `{}`
-        };
-        let { result, error } = (await httpRequest(options)) || {};
-        
-        if (!error) {
-            if (result && result.status === false) {
-                console.log(`❌签到失败！`);
-                this.signMsg = `签到失败: ${result?.error?.msg}`;
-            } else {
-                console.log(`✅签到成功！`);
-                this.signMsg = `签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
-            }
-        } else {
-            this.ckStatus = false;
-            console.error('签到时发生错误:', error);
-            // 根据具体的错误类型提供相应的处理逻辑
-        }
-    } catch (e) {
-        console.error('签到时发生异常:', e);
-        // 根据具体的异常类型提供相应的处理逻辑
-    }
-}
-
-  /*
-    // 查询积分函数
-    async GetUserCreditStats() {
-        try {
-            const options = {
-                url: `https://ziwi.gzcrm.cn/json-rpc?__method=GetUserCreditStats`,
-                headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization": this.token,
-                    "serialId": ''
-                },
-                body: `{"id": 1706366568453,"jsonrpc": "2.0","method": "GetUserCreditStats","params": {"currency": "Z_Point"}}`
-            };
-            let { error, result } = await httpRequest(options) ?? {};
-            let { total, valid, expired } = result;
-            debug(error || result, "积分")
-            return { total, valid, expired }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-*/
 
 
 
