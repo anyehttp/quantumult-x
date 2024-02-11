@@ -149,17 +149,43 @@ class UserInfo {
     }
 
 
+   // 签到函数
+    async signin() {
+        try {
+            const options = {
+                url: `https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign`,
+                headers: {
+                    "content-type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "access-token": this.token,
+                },
+                body: `{}`
+            };
+            let { result, error } = await httpRequest(options) ?? {};
+            if (!error) {
+                $.log(`✅签到成功！`);
+                $.signMsg = `签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
+            } else {
+                this.ckStatus = false;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
+
+
+  
+/*
     // 签到函数
     async signin() {
         try {
             const options = {
                 url: `https://msmarket.msx.digitalyili.com/gateway/api/member/daily/sign`,
                 headers: {
-                    "Content-Type": "application/json",
+                    "content-type": "application/json",
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "Authorization": this.token,
-                    "serialId": ''
+                    "access-token": this.token,
                 },
                 body: `{}`
             };
@@ -178,7 +204,7 @@ class UserInfo {
     }
 
 
-
+*/
 
   
     // 查询积分函数
