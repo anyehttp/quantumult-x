@@ -186,7 +186,7 @@ class UserInfo {
                     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
                     "access-token": this.token,
                 },
-                body: `{}`
+                //body: `{}`
             };
             let { result, error } = await httpRequest(options) ?? {};
             $.log(result);
