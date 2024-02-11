@@ -88,7 +88,7 @@ async function main() {
         await user.signin();
         if (user.ckStatus) {
             await user.point();
-            DoubleLog(`${$.signMsg}`); //\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})
+            DoubleLog(`${$.signMsg} \n ${$.pointMsg}`); //\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})
         } else {
             // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -163,10 +163,10 @@ async point() {
             console.log(result)
             if (result?.status === true) {
                     $.log(`✅查询成功！`);
-                    $.signMsg = `✅积分:${result?.data}个`;
+                    $.pointMsg = `✅积分:${result?.data}个`;
             } else {
                 $.log(`❌查询失败！`);
-                $.signMsg = `❌查询失败${result?.error?.msg}`;
+                $.pointMsg = `❌查询失败${result?.error?.msg}`;
             }
         } catch (e) {
             console.log(e);
