@@ -117,14 +117,18 @@ $.barkKey = ($.isNode() ? process.env["bark_key"] : $.getdata("bark_key")) || ''
 
 // 脚本入口函数main()
 async function main() {
+    await getNotice()
     console.log('\n================== 任务 ==================\n');
     // 签到
     for (let user of userList) {
-        await user.signin();
+        console.log(`🔷账号${user.index} >> Start work`)
+        console.log(`随机延迟${user.getRandomTime()}ms`);
+        //await user.signin();
         if (user.ckStatus) {
             // ck未过期，开始执行任务
-            console.log(`随机延迟${user.getRandomTime()}ms`);
+            //console.log(`随机延迟${user.getRandomTime()}ms`);
             //let { total, valid, expired } = await user.GetUserCreditStats();
+            await user.signin();
             DoubleLog(`${$.signMsg}`); //\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})
         } else {
             // 将ck过期消息存入消息数组
@@ -204,7 +208,7 @@ class UserInfo {
 
 
 
-  
+  /*
     // 查询积分函数
     async GetUserCreditStats() {
         try {
@@ -227,7 +231,7 @@ class UserInfo {
         }
     }
 
-
+*/
 
 
 
@@ -252,6 +256,30 @@ async function getCookie() {
         }
     }
 }
+
+
+//免责声明
+async function getNotice() {
+    try {
+        const urls = ["https://raw.githubusercontent.com/anyehttp/quantumult-x/main/miscellaneous/exegesis/tips-group.json", "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/miscellaneous/exegesis/tips-disclaimer.json"];
+        for (const url of urls) {
+            const options = {
+                url,
+                headers: {
+                    "User-Agent": ""
+                },
+            }
+            const result = await httpRequest(options);
+            if (result) console.log(result.notice);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+
+
 
 
 //主程序执行入口
