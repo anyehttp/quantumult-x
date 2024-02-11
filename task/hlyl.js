@@ -127,7 +127,7 @@ async signin() {
             //post方法
             let result = await httpRequest(options);
             console.log(result)
-            if (result?.error === null) {
+            if (result?.status === true) {
                 if(result?.data?.dailySign === null){
                     $.log(`✅❌重复签到！`);
                     $.signMsg = `✅❌重复签到${result?.data?.dailySign}`;
