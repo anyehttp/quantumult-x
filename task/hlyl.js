@@ -87,9 +87,7 @@ async function main() {
         console.log(`随机延迟${user.getRandomTime()}ms`);
         await user.signin();
         if (user.ckStatus) {
-            // ck未过期，开始执行任务
-            //console.log(`随机延迟${user.getRandomTime()}ms`);
-            //let { total, valid, expired } = await user.GetUserCreditStats();
+            await user.point();
             DoubleLog(`${$.signMsg}`); //\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})
         } else {
             // 将ck过期消息存入消息数组
@@ -111,7 +109,7 @@ class UserInfo {
     }
 
 
-
+//签到
 async signin() {
         try {
             const options = {
@@ -144,6 +142,38 @@ async signin() {
             console.log(e);
         }
     }
+
+
+//积分查询
+async point() {
+        try {
+            const options = {
+                //签到任务调用签到接口
+                url: `https://msmarket.msx.digitalyili.com/gateway/api/member/point`,
+                //请求头, 所有接口通用
+                headers: {
+                    "content-type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "access-token":this.token,
+                },
+                //body: {}
+            };
+            //post方法
+            let result = await httpRequest(options);
+            console.log(result)
+            if (result?.status === true) {
+                    $.log(`✅查询成功！`);
+                    $.signMsg = `✅积分:${result?.data}个`;
+            } else {
+                $.log(`❌查询失败！`);
+                $.signMsg = `❌查询失败${result?.error?.msg}`;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
 
 
 
