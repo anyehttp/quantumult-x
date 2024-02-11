@@ -127,12 +127,17 @@ async signin() {
             //post方法
             let result = await httpRequest(options);
             console.log(result)
-            if (!result?.ecode) {
-                $.log(`✅签到成功！`);
-                $.signMsg = `✅签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
+            if (result?.error === null) {
+                if(result?.data?.dailySign === null){
+                    $.log(`✅❌重复签到！`);
+                    $.signMsg = `✅❌重复签到${result?.data?.dailySign}`;
+                } else{
+                    $.log(`✅签到成功！`);
+                    $.signMsg = `✅签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
+                }
             } else {
                 $.log(`❌签到失败！`);
-                console.log(result);
+                $.signMsg = `❌签到失败${result?.error?.msg}`;
             }
         } catch (e) {
             console.log(e);
