@@ -36,12 +36,12 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
 |   LanceX   |
 ==============
 远程-模块(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-surge.sgmodule
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl-surge.sgmodule
 
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-ziwi签到 = type=cron, cronexp="0 1,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+ziwi签到 = type=cron, cronexp="0 1,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl+.js
 -----------------------------------------------
 ==============
 |    loon    |
@@ -170,7 +170,7 @@ async signin() {
                 $.log(`✅签到成功！`);
                 $.signMsg = `获得${result?.data?.dailySign?.bonusPoint}积分`;
             } else {
-                DoubleLog(`❌签到失败!${result?.emsg}`)
+                $.log(`❌签到失败！`);
                 console.log(result);
             }
         } catch (e) {
