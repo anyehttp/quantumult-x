@@ -194,12 +194,12 @@ class UserInfo {
             };
             let { result, error } = await httpRequest(options) ?? {};
             $.log(result);
-            if (error == null) {
+            if (result?.status === false) {
+                $.log(`❌签到失败！`);
+                $.signMsg = `签到失败: ${result?.error?.msg}`;
+            } else {
                 $.log(`✅签到成功！`);
                 $.signMsg = `签到成功获得${result?.data?.dailySign?.bonusPoint}积分`;
-            } else {
-                $.log(`❌签到失败！`);
-                $.signMsg = `签到失败${result?.error?.msg}`;
             }
         } catch (e) {
             console.log(e);
