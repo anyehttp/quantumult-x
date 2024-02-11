@@ -23,10 +23,10 @@ by-
 ==============
 本地-手动添加定时任务
 [task_local]
-0 1,6,12 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=微信小程序ziwi签到, enabled=true
+0 0 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js, tag=莱充充电签到, enabled=true
 
 远程-重写获取Cookie
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-qx.conf
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-qx.conf
 -----------------------------------------------
 ============== 
 |    Surge   |
@@ -41,35 +41,35 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl-surge.sgm
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-ziwi签到 = type=cron, cronexp="0 1,6,12 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl+.js
+莱充充电签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl.js
 -----------------------------------------------
 ==============
 |    loon    |
 ==============
 远程-插件(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-loon.plugin
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-loon.plugin
 
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-cron "0 1,6,12 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js, tag=ziwi签到
+cron "0 0 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js, tag=莱充充电签到
 -----------------------------------------------
 ==============
 |   stash    |
 ==============
 远程-覆写(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi-stash.stoverride
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-stash.stoverride
 
 本地-cron定时任务
 cron:
   script:
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-    - name: "ziwi签到_6"
-      cron: "0 1,6,12 * * *"
+    - name: "莱充充电签到_6"
+      cron: "0 0 * * *"
 
 script-providers:
-  "ziwi签到_6":
-    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/ziwi+.js
+  "莱充充电签到_6":
+    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js
     interval: 86400
 -----------------------------------------------
 *************************
