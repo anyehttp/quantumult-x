@@ -120,6 +120,7 @@ $.barkKey = ($.isNode() ? process.env["bark_key"] : $.getdata("bark_key")) || ''
 
 // 脚本入口函数main()
 async function main() {
+    await getNotice()
     console.log('\n================== 任务 ==================\n');
     // 签到
     for (let user of userList) {
@@ -471,6 +472,29 @@ async function getCookie() {
         }
     }
 }
+
+
+//免责声明
+async function getNotice() {
+    try {
+        const urls = ["https://raw.githubusercontent.com/anyehttp/quantumult-x/main/miscellaneous/exegesis/tips-group.json", "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/miscellaneous/exegesis/tips-disclaimer.json"];
+        for (const url of urls) {
+            const options = {
+                url,
+                headers: {
+                    "User-Agent": ""
+                },
+            }
+            const result = await httpRequest(options);
+            if (result) console.log(result.notice);
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+
 
 
 //主程序执行入口
