@@ -88,7 +88,7 @@ async function main() {
         await user.signin();
         if (user.ckStatus) {
             await user.point();
-            DoubleLog(`${$.signMsg} \n ${$.pointMsg}`); //\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})
+            DoubleLog(`${$.signMsg} \n ${$.pointMsg}`);
         } else {
             // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
