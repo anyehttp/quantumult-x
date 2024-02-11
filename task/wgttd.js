@@ -87,10 +87,8 @@ async function main() {
         console.log(`随机延迟${user.getRandomTime()}ms`);
         await user.signin();
         if (user.ckStatus) {
-            // ck未过期，开始执行任务
-            //console.log(`随机延迟${user.getRandomTime()}ms`);
-            //let { total, valid, expired } = await user.GetUserCreditStats();
-            DoubleLog(`${$.signMsg}`); //\n积分: 总共(${total}) 有效(${valid}) 过期(${expired})
+            await user.getMemberInfo();
+            DoubleLog(`${$.signMsg} \n ${$.getMemberInfoMsg}`);
         } else {
             // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -110,7 +108,7 @@ class UserInfo {
         return randomInt(1000, 3000)
     }
 
-
+//签到
 async signin() {
         try {
             const options = {
@@ -140,6 +138,34 @@ async signin() {
     }
 
 
+//查询
+async getMemberInfo() {
+        try {
+            const options = {
+                //签到任务调用签到接口
+                url: `https://ttdprod-mp.4008618618.com/mallbusiness/ums/common/getMemberInfo`,
+                //请求头, 所有接口通用
+                headers: {
+                    "content-type": "application/json",
+                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
+                    "Authorization":this.token,
+                },
+                //body: {}
+            };
+            //post方法
+            let result = await httpRequest(options);
+            console.log(result)
+            if (result?.code === 0) {
+                $.log(`✅查询成功！`);
+                $.getMemberInfoMsg = `✅积分:${result?.data?.integration}个`;
+            } else {
+                $.log(`❌查询失败！`);
+                $.getMemberInfoMsg = `❌查询失败${result?.msg}`;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 
 }
