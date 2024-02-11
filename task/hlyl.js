@@ -139,15 +139,13 @@ class UserInfo {
         this.token = str;
         this.ckStatus = true;
         this.drawStatus = true;
-        this.threadList = []; //帖子列表id
-        this.userId = null; //用户id
-        this.tzid = []; //用户帖子id
     }
 
     getRandomTime() {
         return randomInt(1000, 3000)
     }
 
+  /*
 
    // 签到函数
     async signin() {
@@ -174,10 +172,10 @@ class UserInfo {
         }
     }
 
-
+*/
 
   
-/*
+
     // 签到函数
     async signin() {
         try {
@@ -205,7 +203,6 @@ class UserInfo {
     }
 
 
-*/
 
   
     // 查询积分函数
