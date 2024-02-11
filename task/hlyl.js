@@ -18,21 +18,6 @@ by-
 
 脚本默认 凌晨12点
 -----------------------------------------------
-
-
-未适配qx loon stash自行转换
-
-
-==============
-|Quantumult x|
-==============
-本地-手动添加定时任务
-[task_local]
-0 0 * * * https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js, tag=莱充充电签到, enabled=true
-
-远程-重写获取Cookie
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-qx.conf
------------------------------------------------
 ============== 
 |    Surge   |
 ==============
@@ -47,35 +32,6 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl-surge.sgm
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
 莱充充电签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl.js
------------------------------------------------
-==============
-|    loon    |
-==============
-远程-插件(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-loon.plugin
-
-本地-Script定时任务
-[Script]
-# （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-cron "0 0 * * *" script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js, tag=莱充充电签到
------------------------------------------------
-==============
-|   stash    |
-==============
-远程-覆写(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd-stash.stoverride
-
-本地-cron定时任务
-cron:
-  script:
-# （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-    - name: "莱充充电签到_6"
-      cron: "0 0 * * *"
-
-script-providers:
-  "莱充充电签到_6":
-    url: https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/lccd.js
-    interval: 86400
 -----------------------------------------------
 *************************
 【 签到脚本使用教程 】:
