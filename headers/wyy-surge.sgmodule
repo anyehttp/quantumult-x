@@ -40,9 +40,5 @@ wyy = type=http-request, pattern=^https?:\/\/interface3?\.music\.163\.com\/eapi\
 
 wyy = type=http-request, pattern=^https?:\/\/interface3?\.music\.163\.com\/eapi\/vipauth\/app\/auth\/(soundquality\/)?query, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/headers/wyy.js, timeout=60
 
-
-
-
-
 [MITM]
 hostname = %APPEND% *.music.163.com
