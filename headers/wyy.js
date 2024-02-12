@@ -11,9 +11,9 @@ if (isQuanX) {
   header["User-Agent"] = User;
   header["Cookie"] = cookie;
 } else {
-  headers["mconfig-info"] = MConfig;
-  headers["user-agent"] = User;
-  headers["cookie"] = cookie;
+  header["mconfig-info"] = MConfig;
+  header["user-agent"] = User;
+  header["cookie"] = cookie;
 }
 
 $done({ headers: header });
