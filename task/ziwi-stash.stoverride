@@ -26,7 +26,7 @@ http:
 
   script:
 # 获取Cookie
-    - match: ^https:\/\/ziwixcx\.gzcrm\.cn\/json-rpc\?__method=GetTaskList
+    - match: ^https:\/\/ziwi\.gzcrm\.cn\/json-rpc
       name: "ziwi签到_6"
       type: request
 
