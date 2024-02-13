@@ -12,9 +12,9 @@
 hostname = lifeserver.clifes.cn
 *************************************/
 var anye = JSON.parse($response.body);
-    anye.data = {
+anye.data = {
     "flag": true,
     "vVip": true,
     "buy": true
   }
-$done({ body: JSON.stringify(anye) });
+$done({body : JSON.stringify(anye)});;
