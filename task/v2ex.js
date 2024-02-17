@@ -161,8 +161,6 @@ async signin() {
             $.signMsg = `❤️签到成功`;
         }else{
             console.log("签到失败");
-            console.log("签到ID:",id);
-            console.log("签到链接🔗:",fullUrl);
             $.signMsg = `签到失败`;
         }
       } else {
