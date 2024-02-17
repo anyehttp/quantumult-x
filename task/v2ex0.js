@@ -101,7 +101,6 @@ class UserInfo {
         this.token = str;
         this.ckStatus = true;
         this.drawStatus = true;
-        this.id = null;
     }
 
     getRandomTime() {
