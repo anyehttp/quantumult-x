@@ -113,7 +113,9 @@ class UserInfo {
 
 //积分查询
 async fetchSignInOnce() {
+  console.log(`用户 ${this.index} 正在获取签到 ID...`);
   try {
+    console.log('正在向 V2EX 任务页面发送 GET 请求...');
     const response = await axios.get('https://www.v2ex.com/mission/daily', {
       headers: {
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
@@ -121,28 +123,35 @@ async fetchSignInOnce() {
       }
     });
 
+    console.log(`响应状态码: ${response.status}`);
     if (response.status !== 200) {
-      throw new Error(`无法获取 V2EX 任务id: ${response.status}`);
+      throw new Error(`获取 V2EX 任务 ID 失败, 响应状态码: ${response.status}`);
     }
 
+    console.log('正在解析响应数据提取 once ID...');
     const $ = cheerio.load(response.data);
     const onclickAttr = $('input.super.normal.button[value^="领取 X 铜币"]').attr('onclick');
+
+    if (onclickAttr) {
+      console.log(`按钮 ONCLICK 属性: ${onclickAttr}`);
+    } else {
+      console.error('未找到包含 ONCLICK 属性的按钮。');
+      return;
+    }
 
     const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
     const match = onceRegex.exec(onclickAttr);
 
     if (match && match[1]) {
-      this.id = match[1]; // 将提取的once值赋给this.id属性
-      console.log(`User ${this.index} once ID: ${this.id}`);
+      this.id = match[1]; // 将提取的 once 值赋给 this.id 属性
+      console.log(`用户 ${this.index} once ID: ${this.id}`);
     } else {
-      console.error(`User ${this.index} failed to fetch once ID.`);
+      console.error(`用户 ${this.index} 获取 once ID 失败。`);
     }
   } catch (e) {
-    console.log(e);
+    console.error(`用户 ${this.index} 获取签到 ID 时出错：`, e);
   }
 }
-
-
 
 
 
