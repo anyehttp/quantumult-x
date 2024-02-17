@@ -110,79 +110,48 @@ class UserInfo {
 
 
 
-
-//积分查询
 async fetchSignInOnce() {
   console.log(`用户 ${this.index} 正在获取签到 ID...`);
   try {
-    console.log('正在向 V2EX 任务页面发送 GET 请求...');
-    const response = await axios.get('https://www.v2ex.com/mission/daily', {
+    const options = {
+      url: 'https://www.v2ex.com/mission/daily',
       headers: {
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-        "Cookie": this.token,
+        "User-Agent": "Mozilla...",
+        "Cookie": this.token
       }
-    });
-
-    console.log(`响应状态码: ${response.status}`);
-    if (response.status !== 200) {
-      throw new Error(`获取 V2EX 任务 ID 失败, 响应状态码: ${response.status}`);
+    };
+    console.log('正在向 V2EX 任务页面发送 GET 请求...');
+    const response = await httpRequest(options);
+    
+    // 确保response不是空的
+    if (!response) {
+      console.error('没有从 V2EX 任务页面获取到响应。');
+      return;
     }
 
     console.log('正在解析响应数据提取 once ID...');
-    const $ = cheerio.load(response.data);
+    // 这里使用了 cheerio 来解析 HTML 和提取 once ID
+    const $ = cheerio.load(response); // 注意: 这里假设response已经是响应体的数据
     const onclickAttr = $('input.super.normal.button[value^="领取 X 铜币"]').attr('onclick');
 
     if (onclickAttr) {
       console.log(`按钮 ONCLICK 属性: ${onclickAttr}`);
+      const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
+      const match = onceRegex.exec(onclickAttr);
+      if (match && match[1]) {
+        this.id = match[1]; // 将提取的 once 值赋给 this.id 属性
+        console.log(`用户 ${this.index} once ID: ${this.id}`);
+      } else {
+        console.error(`用户 ${this.index} 获取 once ID 失败。`);
+      }
     } else {
       console.error('未找到包含 ONCLICK 属性的按钮。');
-      return;
-    }
-
-    const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
-    const match = onceRegex.exec(onclickAttr);
-
-    if (match && match[1]) {
-      this.id = match[1]; // 将提取的 once 值赋给 this.id 属性
-      console.log(`用户 ${this.index} once ID: ${this.id}`);
-    } else {
-      console.error(`用户 ${this.index} 获取 once ID 失败。`);
     }
   } catch (e) {
     console.error(`用户 ${this.index} 获取签到 ID 时出错：`, e);
   }
 }
 
-
-
-//积分查询
-async point() {
-        try {
-            const options = {
-                //签到任务调用签到接口
-                url: `https://msmarket.msx.digitalyili.com/gateway/api/member/point`,
-                //请求头, 所有接口通用
-                headers: {
-                    "content-type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "access-token":this.token,
-                },
-                //body: {}
-            };
-            //post方法
-            let result = await httpRequest(options);
-            console.log(result)
-            if (result?.status === true) {
-                    $.log(`✅查询成功！`);
-                    $.pointMsg = `✅积分:${result?.data}个`;
-            } else {
-                $.log(`❌查询失败！`);
-                $.pointMsg = `❌查询失败${result?.error?.msg}`;
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
 
 
