@@ -146,40 +146,42 @@ async fetchSignInOnce() {
 
 
 async fetchSignInOnce() {
-  console.log(`用户 ${this.index} 正在获取签到 ID...`);
-  try {
-    console.log('正在向 V2EX 任务页面发送 GET 请求...');
-    const options = {
-      url: 'https://www.v2ex.com/mission/daily',
-      headers: {
-        "user-agent": "(Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Mobile/15E148 Safari/604.1",
-        "cookie": this.token
-      }
-    };
+    console.log(`用户 ${this.index} 正在获取签到 ID...`);
+    try {
+        const options = {
+            url: 'https://www.v2ex.com/mission/daily',
+            headers: {
+                "user-agent": "(Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Mobile/15E148 Safari/604.1",
+                "cookie": this.token // 确保你的 token 是有效的
+            }
+        };
 
-    const data = await httpRequest(options); // data 应为 HTML 字符串
-    console.log('完成 GET 请求, 开始解析 HTML.');
-    
-    if (!data) {
-      console.error('没有从 V2EX 获取响应');
-      return;
+        console.log('正在向 V2EX 任务页面发送 GET 请求...');
+        const data = await httpRequest(options); // data 应为 HTML 字符串
+        console.log('完成 GET 请求, 打印部分数据进行检查');
+        console.log(data);
+        
+        console.log('完成 GET 请求, 开始解析 HTML.');
+
+        if (!data) {
+            console.error('没有从 V2EX 获取响应');
+            return;
+        }
+
+        console.log('HTML内容：', data.slice(0, 500)); // 输出一部分HTML以供检查
+
+        const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
+        const match = data.match(onceRegex);
+
+        if (match && match[1]) {
+            this.id = match[1];
+            console.log(`找到 once ID: ${this.id}`);
+        } else {
+            console.error('未能在页面响应中找到 once ID');
+        }
+    } catch (error) {
+        console.error(`在获取签到 ID 时发生错误:`, error);
     }
-
-    console.log('HTML内容：', data.slice(0, 500)); // 输出一部分HTML以供检查
-
-    console.log('正在解析响应数据...');
-    const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
-    const match = data.match(onceRegex);
-    
-    if (match && match[1]) {
-      this.id = match[1];
-      console.log(`找到 once ID: ${this.id}`);
-    } else {
-      console.error('未能在页面响应中找到 once ID');
-    }
-  } catch (error) {
-    console.error(`在获取签到 ID 时发生错误:`, error);
-  }
 }
 
 
