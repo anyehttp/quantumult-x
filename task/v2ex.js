@@ -38,12 +38,12 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl-surge.sgm
 *************************
 单账号：
 1.将签到脚本拉取到本地
-2.打开网站，随便逛逛，提示获取cookie成功则可以使用该脚本
+2.打开v2ex网站，随便逛逛，提示获取cookie成功则可以使用该脚本
 3.关闭获取cookie脚本，防止产生不必要的mitm
 多账号：
-1.抓包msmarker.msx.digitalyili.com域名下的access-token
-2.打开boxjs->我的->数据查看器->在数据键输入hlyl_data,点击VIEW->在数据内容输入抓取到的access-token，点击保存。
-3.若有多账号，用@分割，如access-token@access-token
+1.抓包v2ex.com域名下的cookie
+2.打开boxjs->我的->数据查看器->在数据键输入v2ex_data,点击VIEW->在数据内容输入抓取到的cookie，点击保存。
+3.若有多账号，用@分割，如cookie@cookie
 
 ====================================
 ⚠️【免责声明】
