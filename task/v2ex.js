@@ -78,13 +78,13 @@ $.barkKey = ($.isNode() ? process.env["bark_key"] : $.getdata("bark_key")) || ''
 
 // 脚本入口函数main()
 async function main() {
-    await getNotice()
     console.log('\n================== 任务 ==================\n');
     // 签到
     for (let user of userList) {
         console.log(`🔷账号${user.index} >> Start work`)
         console.log(`随机延迟${user.getRandomTime()}ms`);
         if (user.ckStatus) {
+            await getNotice();
             await user.fetchSignInOnce();
             await user.signin();
             DoubleLog(`${$.signMsg}`);
