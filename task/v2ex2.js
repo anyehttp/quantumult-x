@@ -122,9 +122,8 @@ async fetchSignInOnce() {
       }
     };
     const data = await httpRequest(options);
-    // 将返回的 HTML 数据转换为字符串并存储为持久数据
-    const htmlString = JSON.stringify(data); // 转换为字符串
-    $.setdata(htmlString, "v2ex_html"); // 存储为持久数据
+    const htmlString = JSON.stringify(data); 
+    $.setdata(htmlString, "v2ex_html"); 
   } catch (error) {
     console.error(error);
   }
@@ -152,7 +151,8 @@ async signin() {
           }
         };
         const data = await httpRequest(options);
-        // 处理返回的数据
+        const htmlString = JSON.stringify(data);
+        $.setdata(htmlString, "v2ex_html"); 
       } else {
         console.log("未能提取到ID");
       }
