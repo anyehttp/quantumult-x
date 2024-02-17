@@ -110,47 +110,49 @@ class UserInfo {
 
 
 
+
+
+
 async fetchSignInOnce() {
-  console.log(`用户 ${this.index} 正在获取签到 ID...`);
-  try {
-    console.log('正在向 V2EX 任务页面发送 GET 请求...');
-    const options = {
-      url: 'https://www.v2ex.com/mission/daily',
-      headers: {
-        "user-agent": "(Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Mobile/15E148 Safari/604.1",
-        "cookie": this.token
-      }
-    };
+    console.log(`用户 ${this.index} 正在获取签到 ID...`);
+    try {
+        console.log('正在向 V2EX 任务页面发送 GET 请求...');
+        const options = {
+            url: 'https://www.v2ex.com/mission/daily',
+            headers: {
+                "user-agent": "(Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Mobile/15E148 Safari/604.1",
+                "cookie": this.token
+            }
+        };
 
-    const data = await httpRequest(options); // data 应为 HTML 字符串
+        const data = await httpRequest(options);
 
-    if (!data) {
-      console.error('未能从 V2EX 获取响应');
-      return;
+        if (!data) {
+            console.error('未能从 V2EX 获取响应');
+            return;
+        }
+
+        console.log('正在搜索 once ID...');
+        const startIndex = data.indexOf("'/mission/daily/redeem?once=");
+        if (startIndex === -1) {
+            console.error('未能在页面响应中找到 once ID');
+            return;
+        }
+
+        const fromIndex = startIndex + "'/mission/daily/redeem?once=".length;
+        const endIndex = data.indexOf("';", fromIndex);
+        if (endIndex === -1) {
+            console.error('未能在页面响应中找到 once ID的结束位置');
+            return;
+        }
+
+        this.id = data.substring(fromIndex, endIndex);
+        console.log(`找到 once ID: ${this.id}`);
+    } catch (error) {
+        console.error(`在获取签到 ID 时发生错误:`, error);
     }
-    console.log('打印HTML');
-    console.log(data);
-    console.log('正在搜索 once ID...');
-    const searchString = '/mission/daily/redeem?once=';
-    const startIndex = data.indexOf(searchString);
-    if (startIndex === -1) {
-      console.error('未找到 once 字符串');
-      return;
-    }
-
-    // +1 是为了跳过开始的 ‘=’ 字符
-    const endIndex = data.indexOf("'", startIndex + searchString.length + 1);
-    if (endIndex === -1) {
-      console.error('未找到 once 字符串的结束位置');
-      return;
-    }
-
-    this.id = data.substring(startIndex + searchString.length, endIndex);
-    console.log(`找到 once ID: ${this.id}`);
-  } catch (error) {
-    console.error(`在获取签到 ID 时发生错误:`, error);
-  }
 }
+
 
 
 
