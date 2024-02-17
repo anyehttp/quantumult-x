@@ -109,9 +109,7 @@ class UserInfo {
     }
 
 
-了解，如果您希望将 HTML 数据以字符串的形式存储为持久数据，您可以将其转换为字符串并使用 `$.setdata` 方法进行存储。下面是相应的代码更新：
 
-```javascript
 async fetchSignInOnce() {
   console.log(`正在获取签到 ID...`);
   try {
