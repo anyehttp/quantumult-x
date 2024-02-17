@@ -128,6 +128,7 @@ async fetchSignInOnce() {
       console.error('未能从 V2EX 获取响应');
       return;
     }
+    console.log('打印HTML');
     console.log(data);
     console.log('正在搜索 once ID...');
     const searchString = '/mission/daily/redeem?once=';
