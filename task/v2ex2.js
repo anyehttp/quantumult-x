@@ -110,6 +110,7 @@ class UserInfo {
 
 
 
+
 async fetchSignInOnce() {
   console.log(`正在获取签到 ID...`);
   try {
