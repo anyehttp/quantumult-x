@@ -87,7 +87,7 @@ async function main() {
         if (user.ckStatus) {
             await user.fetchSignInOnce();
             await user.signin();
-            //DoubleLog(`${$.signMsg} \n ${$.pointMsg}`);
+            DoubleLog(`${$.signMsg}`);
         } else {
             // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -137,7 +137,7 @@ async signin() {
     // 检查持久数据中是否包含特定字符串
     const persistedHtml = $.getdata("v2ex_html");
     if (persistedHtml.includes("每日登录奖励已领取")) {
-      console.log(1);
+      $.signMsg = `每日登录奖励已领取`;
     } else {
       const redeemPathRegex = /\/mission\/daily\/redeem\?once=(\d+)/;  // 使用正则表达式提取路径和ID
       const match = persistedHtml.match(redeemPathRegex);
@@ -154,11 +154,11 @@ async signin() {
         const data = await httpRequest(options);
         // 处理返回的数据
       } else {
-        console.error("未能提取到ID");
+        console.log("未能提取到ID");
       }
     }
   } catch (error) {
-    console.error("签到操作出错:", error);
+    console.log("签到操作出错:", error);
   }
 }
 
