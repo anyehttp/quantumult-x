@@ -113,42 +113,39 @@ class UserInfo {
 async fetchSignInOnce() {
   console.log(`用户 ${this.index} 正在获取签到 ID...`);
   try {
+    console.log('正在向 V2EX 任务页面发送 GET 请求...');
     const options = {
       url: 'https://www.v2ex.com/mission/daily',
       headers: {
-        "User-Agent": "Mozilla...",
-        "Cookie": this.token
+        "User-Agent": "...",
+        "Cookie": this.token // 确保你的 token 是有效的
       }
     };
-    console.log('正在向 V2EX 任务页面发送 GET 请求...');
-    const response = await httpRequest(options);
-    
-    // 确保response不是空的
+
+    const response = await httpRequest(options); // 确保函数已返回原始HTML字符串
     if (!response) {
-      console.error('没有从 V2EX 任务页面获取到响应。');
+      console.error('未能从 V2EX 获取响应');
       return;
     }
 
-    console.log('正在解析响应数据提取 once ID...');
-    // 这里使用了 cheerio 来解析 HTML 和提取 once ID
-    const $ = cheerio.load(response); // 注意: 这里假设response已经是响应体的数据
+    console.log('正在解析响应数据...'); // 不再使用 response.status，因为我们处理的是HTML
+    const $ = cheerio.load(response); // cheerio 解析 HTML
     const onclickAttr = $('input.super.normal.button[value^="领取 X 铜币"]').attr('onclick');
-
     if (onclickAttr) {
-      console.log(`按钮 ONCLICK 属性: ${onclickAttr}`);
+      // 提取 once 参数
       const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
       const match = onceRegex.exec(onclickAttr);
       if (match && match[1]) {
-        this.id = match[1]; // 将提取的 once 值赋给 this.id 属性
-        console.log(`用户 ${this.index} once ID: ${this.id}`);
+        this.id = match[1];
+        console.log(`找到 once ID: ${this.id}`);
       } else {
-        console.error(`用户 ${this.index} 获取 once ID 失败。`);
+        console.error('未能从 ONCLICK 属性中提取 once ID');
       }
     } else {
-      console.error('未找到包含 ONCLICK 属性的按钮。');
+      console.error('页面上未找到指定的按钮');
     }
-  } catch (e) {
-    console.error(`用户 ${this.index} 获取签到 ID 时出错：`, e);
+  } catch (error) {
+    console.error(`在获取签到 ID 时发生错误:`, error);
   }
 }
 
@@ -306,7 +303,38 @@ async function SendMsg(message) {
 // prettier-ignore
 
 //请求函数函数二次封装
-function httpRequest(options, method) { typeof (method) === 'undefined' ? ('body' in options ? method = 'post' : method = 'get') : method = method; return new Promise((resolve) => { $[method](options, (err, resp, data) => { try { if (err) { console.log(`${method}请求失败`); $.logErr(err) } else { if (data) { typeof JSON.parse(data) == 'object' ? data = JSON.parse(data) : data = data; resolve(data) } else { console.log(`请求api返回数据为空，请检查自身原因`) } } } catch (e) { $.logErr(e, resp) } finally { resolve() } }) }) }
+
+function httpRequest(options, method) {
+  return new Promise((resolve, reject) => {
+    if (typeof method === 'undefined') {
+      method = ('body' in options) ? 'post' : 'get';
+    }
+    $[method](options, (err, resp, data) => {
+      if (err) {
+        console.error(`${method.toUpperCase()}请求失败`);
+        $.logErr(err);
+        reject(err);
+      } else {
+        // 解析JSON之前检查Content-Type
+        if (resp && /application\/json/.test(resp.headers['Content-Type'])) {
+          try {
+            const parsedData = JSON.parse(data);
+            resolve(parsedData);
+          } catch (e) {
+            console.error('JSON解析失败', e);
+            reject(e);
+          }
+        } else {
+          // 如果不是JSON，直接返回原始数据
+          resolve(data);
+        }
+      }
+    });
+  });
+}
+
+
+//function httpRequest(options, method) { typeof (method) === 'undefined' ? ('body' in options ? method = 'post' : method = 'get') : method = method; return new Promise((resolve) => { $[method](options, (err, resp, data) => { try { if (err) { console.log(`${method}请求失败`); $.logErr(err) } else { if (data) { typeof JSON.parse(data) == 'object' ? data = JSON.parse(data) : data = data; resolve(data) } else { console.log(`请求api返回数据为空，请检查自身原因`) } } } catch (e) { $.logErr(e, resp) } finally { resolve() } }) }) }
 //Bark APP notify
 async function BarkNotify(c, k, t, b) { for (let i = 0; i < 3; i++) { console.log(`🔷Bark notify >> Start push (${i + 1})`); const s = await new Promise((n) => { c.post({ url: 'https://api.day.app/push', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: t, body: b, device_key: k, ext_params: { group: t } }) }, (e, r, d) => r && r.status == 200 ? n(1) : n(d || e)) }); if (s === 1) { console.log('✅Push success!'); break } else { console.log(`❌Push failed! >> ${s.message || s}`) } } };
 //From chavyleung's Env.js
