@@ -87,7 +87,7 @@ async function main() {
         if (user.ckStatus) {
             await user.fetchSignInOnce();
             //await user.signin();
-            DoubleLog(`${$.signMsg} \n ${$.pointMsg}`);
+            //DoubleLog(`${$.signMsg} \n ${$.pointMsg}`);
         } else {
             // 将ck过期消息存入消息数组
             $.notifyMsg.push(`❌账号${user.index} >> Check ck error!`)
@@ -126,7 +126,7 @@ async fetchSignInOnce() {
     }
 
     const $ = cheerio.load(response.data);
-    const onclickAttr = $('input.super.normal.button[value^="领取"]').attr('onclick');
+    const onclickAttr = $('input.super.normal.button[value^="领取 X 铜币"]').attr('onclick');
 
     const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
     const match = onceRegex.exec(onclickAttr);
