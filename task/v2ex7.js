@@ -145,6 +145,44 @@ async fetchSignInOnce() {
 
 
 
+async fetchSignInOnce() {
+  console.log(`用户 ${this.index} 正在获取签到 ID...`);
+  try {
+    console.log('正在向 V2EX 任务页面发送 GET 请求...');
+    const options = {
+      url: 'https://www.v2ex.com/mission/daily',
+      headers: {
+        "user-agent": "(Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Mobile/15E148 Safari/604.1",
+        "cookie": this.token
+      }
+    };
+
+    const data = await httpRequest(options); // data 应为 HTML 字符串
+    console.log('完成 GET 请求, 开始解析 HTML.');
+    
+    if (!data) {
+      console.error('没有从 V2EX 获取响应');
+      return;
+    }
+
+    console.log('HTML内容：', data.slice(0, 500)); // 输出一部分HTML以供检查
+
+    console.log('正在解析响应数据...');
+    const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
+    const match = data.match(onceRegex);
+    
+    if (match && match[1]) {
+      this.id = match[1];
+      console.log(`找到 once ID: ${this.id}`);
+    } else {
+      console.error('未能在页面响应中找到 once ID');
+    }
+  } catch (error) {
+    console.error(`在获取签到 ID 时发生错误:`, error);
+  }
+}
+
+
 
 
 }
@@ -296,38 +334,7 @@ async function SendMsg(message) {
 // prettier-ignore
 
 //请求函数函数二次封装
-
-function httpRequest(options, method) {
-  return new Promise((resolve, reject) => {
-    if (typeof method === 'undefined') {
-      method = ('body' in options) ? 'post' : 'get';
-    }
-    $[method](options, (err, resp, data) => {
-      if (err) {
-        console.error(`${method.toUpperCase()}请求失败`);
-        $.logErr(err);
-        reject(err);
-      } else {
-        // 解析JSON之前检查Content-Type
-        if (resp && /application\/json/.test(resp.headers['Content-Type'])) {
-          try {
-            const parsedData = JSON.parse(data);
-            resolve(parsedData);
-          } catch (e) {
-            console.error('JSON解析失败', e);
-            reject(e);
-          }
-        } else {
-          // 如果不是JSON，直接返回原始数据
-          resolve(data);
-        }
-      }
-    });
-  });
-}
-
-
-//function httpRequest(options, method) { typeof (method) === 'undefined' ? ('body' in options ? method = 'post' : method = 'get') : method = method; return new Promise((resolve) => { $[method](options, (err, resp, data) => { try { if (err) { console.log(`${method}请求失败`); $.logErr(err) } else { if (data) { typeof JSON.parse(data) == 'object' ? data = JSON.parse(data) : data = data; resolve(data) } else { console.log(`请求api返回数据为空，请检查自身原因`) } } } catch (e) { $.logErr(e, resp) } finally { resolve() } }) }) }
+function httpRequest(options, method) { typeof (method) === 'undefined' ? ('body' in options ? method = 'post' : method = 'get') : method = method; return new Promise((resolve) => { $[method](options, (err, resp, data) => { try { if (err) { console.log(`${method}请求失败`); $.logErr(err) } else { if (data) { typeof JSON.parse(data) == 'object' ? data = JSON.parse(data) : data = data; resolve(data) } else { console.log(`请求api返回数据为空，请检查自身原因`) } } } catch (e) { $.logErr(e, resp) } finally { resolve() } }) }) }
 //Bark APP notify
 async function BarkNotify(c, k, t, b) { for (let i = 0; i < 3; i++) { console.log(`🔷Bark notify >> Start push (${i + 1})`); const s = await new Promise((n) => { c.post({ url: 'https://api.day.app/push', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: t, body: b, device_key: k, ext_params: { group: t } }) }, (e, r, d) => r && r.status == 200 ? n(1) : n(d || e)) }); if (s === 1) { console.log('✅Push success!'); break } else { console.log(`❌Push failed! >> ${s.message || s}`) } } };
 //From chavyleung's Env.js
