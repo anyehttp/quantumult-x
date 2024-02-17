@@ -86,7 +86,7 @@ async function main() {
         console.log(`随机延迟${user.getRandomTime()}ms`);
         if (user.ckStatus) {
             await user.fetchSignInOnce();
-            //await user.signin();
+            await user.signin();
             //DoubleLog(`${$.signMsg} \n ${$.pointMsg}`);
         } else {
             // 将ck过期消息存入消息数组
@@ -121,17 +121,46 @@ async fetchSignInOnce() {
         "cookie": this.token
       }
     };
-
     const data = await httpRequest(options);
     // 将返回的 HTML 数据转换为字符串并存储为持久数据
     const htmlString = JSON.stringify(data); // 转换为字符串
     $.setdata(htmlString, "v2ex_html"); // 存储为持久数据
   } catch (error) {
-    console.error("获取签到 ID 出错:", error);
+    console.error(error);
   }
 }
 
 
+
+async signin() {
+  try {
+    // 检查持久数据中是否包含特定字符串
+    const persistedHtml = $.getdata("v2ex_html");
+    if (persistedHtml.includes("每日登录奖励已领取")) {
+      console.log(1);
+    } else {
+      const redeemPathRegex = /\/mission\/daily\/redeem\?once=(\d+)/;  // 使用正则表达式提取路径和ID
+      const match = persistedHtml.match(redeemPathRegex);
+      if (match && match[1]) {
+        const id = match[1];
+        const fullUrl = `https://www.v2ex.com/mission/daily/redeem?once=${id}`; // 使用匹配到的ID拼接完整URL
+        const options = {
+          url: fullUrl,
+          headers: {
+            "user-agent": "(Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Mobile/15E148 Safari/604.1",
+            "cookie": this.token
+          }
+        };
+        const data = await httpRequest(options);
+        // 处理返回的数据
+      } else {
+        console.error("未能提取到ID");
+      }
+    }
+  } catch (error) {
+    console.error("签到操作出错:", error);
+  }
+}
 
 
 }
