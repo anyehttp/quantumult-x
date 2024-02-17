@@ -112,7 +112,7 @@ class UserInfo {
 
 
 //积分查询
-async function fetchSignInOnce() {
+async fetchSignInOnce() {
   try {
     const response = await axios.get('https://www.v2ex.com/mission/daily', {
       headers: {
