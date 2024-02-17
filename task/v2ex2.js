@@ -109,8 +109,11 @@ class UserInfo {
     }
 
 
+了解，如果您希望将 HTML 数据以字符串的形式存储为持久数据，您可以将其转换为字符串并使用 `$.setdata` 方法进行存储。下面是相应的代码更新：
+
+```javascript
 async fetchSignInOnce() {
-  console.log(`用户 ${this.index} 正在获取签到 ID...`);
+  console.log(`正在获取签到 ID...`);
   try {
     const options = {
       url: 'https://www.v2ex.com/mission/daily',
@@ -121,48 +124,13 @@ async fetchSignInOnce() {
     };
 
     const data = await httpRequest(options);
-    if (!data) {
-      console.error('未能从 V2EX 获取响应');
-      return;
-    }
-
-    // 查找onclick字符串
-    const searchString = "onclick=\"location.href = '/mission/daily/redeem?once=";
-    const startIndexOfOnclick = data.indexOf(searchString);
-    if (startIndexOfOnclick === -1) {
-      console.error('未找到 onclick 字符串');
-      return;
-    }
-
-    // 从onclick字符串起始位置决定起始搜索位置
-    const startSearchPosition = startIndexOfOnclick + searchString.length;
-    const endSearchString = "';";
-    const endIndexOfOnclick = data.indexOf(endSearchString, startSearchPosition);
-
-    // 如果没有找到结束位置
-    if (endIndexOfOnclick === -1) {
-      console.error('未找到结束的单引号字符');
-      return;
-    }
-    
-    // 提取once值
-    const onceValue = data.substring(startSearchPosition, endIndexOfOnclick);
-    if (!onceValue) {
-      console.error('未能提取到 once 值');
-      return;
-    } 
-
-    // 成功找到once值
-    console.log(`找到 once ID: ${onceValue}`);
-    this.id = onceValue;
-
+    // 将返回的 HTML 数据转换为字符串并存储为持久数据
+    const htmlString = JSON.stringify(data); // 转换为字符串
+    $.setdata(htmlString, "v2ex_html"); // 存储为持久数据
   } catch (error) {
-    console.error(`在获取签到 ID 时发生错误:`, error);
+    console.error("获取签到 ID 出错:", error);
   }
 }
-
-
-
 
 
 
