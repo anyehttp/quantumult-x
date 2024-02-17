@@ -134,9 +134,13 @@ async fetchSignInOnce() {
 async signin() {
   try {
     const persistedHtml = $.getdata("v2ex_html");
+    console.log("检测ck");
     if (persistedHtml.includes("注册")) {
+      console.log("检测ck ok");
       $.signMsg = `🙁ck失效`;
     } else {
+      console.log("检测ck ok");
+      console.log("开始签到");
       const redeemPathRegex = /\/mission\/daily\/redeem\?once=(\d+)/;
       const match = persistedHtml.match(redeemPathRegex);
       if (match && match[1]) {
@@ -152,6 +156,7 @@ async signin() {
         const data = await httpRequest(options);
         const htmlString = JSON.stringify(data);
         $.setdata(htmlString, "v2ex_html");
+        console.log("判断是否签到");
         if(persistedHtml.includes("每日登录奖励已领取")){
             $.signMsg = `❤️签到成功`;
         }
