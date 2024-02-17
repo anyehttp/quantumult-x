@@ -117,32 +117,25 @@ async fetchSignInOnce() {
     const options = {
       url: 'https://www.v2ex.com/mission/daily',
       headers: {
-        "User-Agent": "...",
-        "Cookie": this.token // 确保你的 token 是有效的
+        "user-agent": "(Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Mobile/15E148 Safari/604.1",
+        "cookie": this.token // 确保你的 token 是有效的
       }
     };
 
-    const response = await httpRequest(options); // 确保函数已返回原始HTML字符串
-    if (!response) {
+    const data = await httpRequest(options); // data 应为 HTML 字符串
+    if (!data) {
       console.error('未能从 V2EX 获取响应');
       return;
     }
 
-    console.log('正在解析响应数据...'); // 不再使用 response.status，因为我们处理的是HTML
-    const $ = cheerio.load(response); // cheerio 解析 HTML
-    const onclickAttr = $('input.super.normal.button[value^="领取 X 铜币"]').attr('onclick');
-    if (onclickAttr) {
-      // 提取 once 参数
-      const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
-      const match = onceRegex.exec(onclickAttr);
-      if (match && match[1]) {
-        this.id = match[1];
-        console.log(`找到 once ID: ${this.id}`);
-      } else {
-        console.error('未能从 ONCLICK 属性中提取 once ID');
-      }
+    console.log('正在解析响应数据...');
+    const onceRegex = /mission\/daily\/redeem\?once=(\d+)/;
+    const match = data.match(onceRegex);
+    if (match && match[1]) {
+      this.id = match[1];
+      console.log(`找到 once ID: ${this.id}`);
     } else {
-      console.error('页面上未找到指定的按钮');
+      console.error('未能在页面响应中找到 once ID');
     }
   } catch (error) {
     console.error(`在获取签到 ID 时发生错误:`, error);
