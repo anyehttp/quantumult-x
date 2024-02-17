@@ -133,16 +133,15 @@ async fetchSignInOnce() {
 
 async signin() {
   try {
-    // 检查持久数据中是否包含特定字符串
     const persistedHtml = $.getdata("v2ex_html");
-    if (persistedHtml.includes("每日登录奖励已领取")) {
-      $.signMsg = `每日登录奖励已领取`;
+    if (persistedHtml.includes("注册")) {
+      $.signMsg = `🙁ck失效`;
     } else {
-      const redeemPathRegex = /\/mission\/daily\/redeem\?once=(\d+)/;  // 使用正则表达式提取路径和ID
+      const redeemPathRegex = /\/mission\/daily\/redeem\?once=(\d+)/;
       const match = persistedHtml.match(redeemPathRegex);
       if (match && match[1]) {
         const id = match[1];
-        const fullUrl = `https://www.v2ex.com/mission/daily/redeem?once=${id}`; // 使用匹配到的ID拼接完整URL
+        const fullUrl = `https://www.v2ex.com/mission/daily/redeem?once=${id}`;
         const options = {
           url: fullUrl,
           headers: {
@@ -152,7 +151,10 @@ async signin() {
         };
         const data = await httpRequest(options);
         const htmlString = JSON.stringify(data);
-        $.setdata(htmlString, "v2ex_html"); 
+        $.setdata(htmlString, "v2ex_html");
+        if(persistedHtml.includes("每日登录奖励已领取")){
+            $.signMsg = `❤️签到成功`;
+        }
       } else {
         console.log("未能提取到ID");
       }
