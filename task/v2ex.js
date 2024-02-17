@@ -334,7 +334,6 @@ function httpRequest(options, method) {
         $.logErr(err);
         reject(err);
       } else {
-        // 解析JSON之前检查Content-Type
         if (resp && /application\/json/.test(resp.headers['Content-Type'])) {
           try {
             const parsedData = JSON.parse(data);
