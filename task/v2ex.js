@@ -157,6 +157,7 @@ async signin() {
         const htmlString = JSON.stringify(data);
         $.setdata(htmlString, "v2ex_html");
         console.log("开始判断是否签到");
+        const persistedHtml = $.getdata("v2ex_html");
         if(persistedHtml.includes("每日登录奖励已领取")){
             console.log("✅签到成功");
             $.signMsg = `✅签到成功`;
