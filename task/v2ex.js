@@ -165,8 +165,13 @@ async signin() {
             $.signMsg = `❌签到失败`;
         }
       } else {
-        console.log("❌未能提取到ID");
-        $.signMsg = `❌未能提取到ID 已签到`;
+        if (persistedHtml.includes("每日登录奖励已领取")){
+            console.log("✅❌已签到");
+            $.signMsg = `✅❌已签到`;
+        }else{
+            console.log("❌未能提取到ID");
+            $.signMsg = `❌未能提取到ID`;
+        }
       }
     }
   } catch (error) {
