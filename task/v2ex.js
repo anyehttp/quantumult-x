@@ -4,7 +4,7 @@ by-
 感谢樱花大佬的脚本框架
 @sliverkiss
 
-@Date:2
+@Date:2024.2.18完成脚本
 
 
 适用于v2ex 签到
@@ -26,12 +26,12 @@ by-
 |   LanceX   |
 ==============
 远程-模块(包括获取Cookie和定时任务)
-https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl-surge.sgmodule
+https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex-surge.sgmodule
 
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-莱充充电签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl.js
+莱充充电签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/v2ex.js
 -----------------------------------------------
 *************************
 【 签到脚本使用教程 】:
