@@ -1,4 +1,4 @@
-# quantumult-x
+# 签到 破解 去广告
 频道: https://t.me/IPAs_share
 群组: https://t.me/IPAs_Dd
 ===================================
