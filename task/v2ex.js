@@ -111,7 +111,7 @@ class UserInfo {
 
 
 async fetchSignInOnce() {
-  console.log(`正在获取签到 ID...`);
+  console.log(`正在获取html`);
   try {
     const options = {
       url: 'https://www.v2ex.com/mission/daily',
@@ -123,6 +123,7 @@ async fetchSignInOnce() {
     const data = await httpRequest(options);
     const htmlString = JSON.stringify(data); 
     $.setdata(htmlString, "v2ex_html"); 
+    console.log(`✅获取html完成`);
   } catch (error) {
     console.error(error);
   }
@@ -135,10 +136,10 @@ async signin() {
     const persistedHtml = $.getdata("v2ex_html");
     console.log("开始检测ck");
     if (persistedHtml.includes("注册")) {
-      console.log("ck失效");
-      $.signMsg = `🙁ck失效`;
+      console.log("❌ck失效");
+      $.signMsg = `❌ck失效`;
     } else {
-      console.log("检测ck ok");
+      console.log("检测ck 完成");
       console.log("开始签到");
       const redeemPathRegex = /\/mission\/daily\/redeem\?once=(\d+)/;
       const match = persistedHtml.match(redeemPathRegex);
@@ -157,14 +158,15 @@ async signin() {
         $.setdata(htmlString, "v2ex_html");
         console.log("开始判断是否签到");
         if(persistedHtml.includes("每日登录奖励已领取")){
-            console.log("签到成功");
-            $.signMsg = `❤️签到成功`;
+            console.log("✅签到成功");
+            $.signMsg = `✅签到成功`;
         }else{
-            console.log("签到失败");
-            $.signMsg = `签到失败`;
+            console.log("❌签到失败");
+            $.signMsg = `❌签到失败`;
         }
       } else {
-        console.log("未能提取到ID");
+        console.log("❌未能提取到ID");
+        $.signMsg = `❌未能提取到ID 已签到`;
       }
     }
   } catch (error) {
