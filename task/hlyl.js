@@ -32,7 +32,7 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl-surge.sgm
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-莱充充电签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl.js
+活力伊利签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl.js
 -----------------------------------------------
 *************************
 【 签到脚本使用教程 】:
