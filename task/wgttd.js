@@ -32,7 +32,7 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/wgttd-surge.sg
 本地-Script定时任务
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-莱充充电签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/wgttd.js
+卫岗天天订"签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/wgttd.js
 -----------------------------------------------
 *************************
 【 签到脚本使用教程 】:
