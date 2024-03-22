@@ -144,24 +144,24 @@ async point() {
         try {
             const options = {
                 //签到任务调用签到接口
-                url: `https://msmarket.msx.digitalyili.com/gateway/api/member/point`,
+                url: `https://api22.xiabb.chat/chatapi/member/wallet`,
                 //请求头, 所有接口通用
                 headers: {
                     "content-type": "application/json",
-                    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CNMozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a2a) NetType/WIFI Language/zh_CN",
-                    "access-token":this.token,
+                    "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Mobile/15E148 Safari/604.1",
+                    "authorization":this.token,
                 },
                 //body: {}
             };
             //post方法
             let result = await httpRequest(options);
             console.log(result)
-            if (result?.status === true) {
+            if (result?.code === 200) {
                     $.log(`✅查询成功！`);
-                    $.pointMsg = `✅积分:${result?.data}个`;
+                    $.pointMsg = `✅对话总量剩余:${result?.result?.totalValue}个`;
             } else {
                 $.log(`❌查询失败！`);
-                $.pointMsg = `❌查询失败${result?.error?.msg}`;
+                $.pointMsg = `❌查询失败${result?.result?.message}`;
             }
         } catch (e) {
             console.log(e);
