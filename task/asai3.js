@@ -158,7 +158,7 @@ async point() {
             console.log(result)
             if (result?.code === 200) {
                     $.log(`✅查询成功！`);
-                    $.pointMsg = `✅对话总量剩余:${result?.[4]?.totalValue}个-绘画总量剩余:${result?.[7]?.totalValue}个`;
+                    $.pointMsg = `✅对话总量剩余:${result?.[1]?.totalValue}个-绘画总量剩余:${result?.[2]?.totalValue}个`;
             } else {
                 $.log(`❌查询失败！`);
                 $.pointMsg = `❌查询失败${result?.message}`;
