@@ -1,5 +1,5 @@
 #!name=阿水ai签到
-#!desc=微信公众号搜索活力伊利小程序 自动完成签到任务   群组：https://t.me/IPAs_Dd频道：https://t.me/IPAs_share
+#!desc=适用于阿水ai 签到  https://ai.ashuiai.com   群组：https://t.me/IPAs_Dd频道：https://t.me/IPAs_share
 #!category=暗夜
 #!====================================
 #!⚠️【免责声明】
@@ -13,15 +13,15 @@
 #!7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
 #!使用方法:
 #!1.将签到脚本拉取到本地
-#!2.打开小程序-我的页面 提示获取cookie成功则可以使用该脚本
+#!2.打开网站-个人中心 提示获取cookie成功则可以使用该脚本
 #!3.关闭获取cookie脚本，防止产生不必要的mitm
 
 [Script]
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-活力伊利签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl.js
+阿水ai签到 = type=cron, cronexp="0 0 * * *", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/asai.js
 
-# 获取token
-活力伊利token = type=http-request, pattern=^https:\/\/msmarket\.msx\.digitalyili\.com\/gateway\/api\/auth\/account\/user\/info, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/hlyl.js
+# 获取ck
+阿水ai获取ck = type=http-request, pattern=^https:\/\/api22.xiabb\.chat\/chatapi\/auth\/memberInfo, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/asai.js
 
 [MITM]
-hostname = %APPEND% msmarket.msx.digitalyili.com
+hostname = %APPEND% api22.xiabb.chat
