@@ -60,7 +60,7 @@ https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/asai-surge.sgm
 
 // env.js 全局
 const $ = new Env("阿水ai签到");
-const ckName = "阿水ai_data";
+const ckName = "asai_data";
 //-------------------- 一般不动变量区域 -------------------------------------
 const Notify = 1;//0为关闭通知,1为打开通知,默认为1
 const notify = $.isNode() ? require('./sendNotify') : '';
