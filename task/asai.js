@@ -132,7 +132,7 @@ async signin() {
                } else {
                 $.log(`❌签到失败！`);
                 $.signMsg = `❌签到失败${result?.message}`;
-            {
+            }
         } catch (e) {
             console.log(e);
         }
