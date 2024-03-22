@@ -1,19 +1,20 @@
 /**************************************
 by-   @anyeyey
+
 感谢樱花大佬的脚本框架
 @sliverkiss
 
 @Date:2024-03-22完成脚本
-
-
-适用于阿水ai 签到  https://ai.ashuiai.com
-
 
 樱花佬频道 https://t.me/sliverkiss
 
 反馈群
 群组：https://t.me/IPAs_Dd
 频道：https://t.me/IPAs_share
+
+
+适用于阿水ai 签到  https://ai.ashuiai.com
+
 
 脚本默认 凌晨12点
 -----------------------------------------------
