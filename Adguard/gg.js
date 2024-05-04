@@ -32,8 +32,9 @@ if(vip1.test($request.url)){
     anye.dataInfo.useRedName = 1;
     
 }
-    if(vip2.test($request.url)){
-        
+if(vip2.test($request.url)){
+    anye.dataInfo.totalNum = 3000;
+    anye.dataInfo.applyNum = 0;
 }
 
 $done({body : JSON.stringify(anye)});
