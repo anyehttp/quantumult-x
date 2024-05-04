@@ -19,12 +19,14 @@ var anye = JSON.parse($response.body);
     anye.dataInfo.vipType = 7;
     anye.dataInfo.vipState = true;
     anye.dataInfo.newUser = true;
-	anye.dataInfo.vipExpireTime = 4072440476;
-	anye.dataInfo.setting.redNameSwitch = true;
-	console.log("viptype = " + anye.dataInfo.vipType);
-	console.log("nickName = " + anye.dataInfo.nickName);
+    anye.dataInfo.vipExpireTime = 4072440476;
+	  anye.dataInfo.setting.redNameSwitch = true;
+    anye.dataInfo.vipRefundDays = 9999999;
+    
+	  console.log("viptype = " + anye.dataInfo.vipType);
+	  console.log("nickName = " + anye.dataInfo.nickName);
     console.log("vipState = " + anye.dataInfo.vipState);
-	console.log("newUser = " + anye.dataInfo.newUser);
+	  console.log("newUser = " + anye.dataInfo.newUser);
     console.log("vipExpireTime = " + anye.dataInfo.vipExpireTime);
     console.log("redNameSwitch = " + anye.dataInfo.setting.redNameSwitch);
 
