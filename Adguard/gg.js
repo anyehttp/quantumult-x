@@ -12,10 +12,15 @@
 
 [rewrite_local]
 ^https:\/\/yt-user-api\.beijingcj\.cn\/\?_app url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/gg.js
+^https:\/\/yt-friend-api\.beijingcj\.cn\/get_apply_num url script-response-body https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Adguard/gg.js
+
 [mitm]
 hostname = *.beijingcj.cn
 *************************************/
 var anye = JSON.parse($response.body);
+const vip1 = /^https:\/\/yt-user-api\.beijingcj\.cn\/\?_app/;
+const vip2 = /^https:\/\/yt-friend-api\.beijingcj\.cn\/get_apply_num/;
+if(vip1.test($request.url)){
     anye.dataInfo.vipType = 7;
     anye.dataInfo.vipState = true;
     anye.dataInfo.newUser = true;
@@ -26,11 +31,10 @@ var anye = JSON.parse($response.body);
     anye.dataInfo.useRedName = true;
     anye.dataInfo.useRedName = 1;
     
-	console.log("viptype = " + anye.dataInfo.vipType);
-	console.log("nickName = " + anye.dataInfo.nickName);
-    console.log("vipState = " + anye.dataInfo.vipState);
-	console.log("newUser = " + anye.dataInfo.newUser);
-    console.log("vipExpireTime = " + anye.dataInfo.vipExpireTime);
-    console.log("redNameSwitch = " + anye.dataInfo.setting.redNameSwitch);
+}
+    if(vip2.test($request.url)){
+        
+}
 
+$done({body : JSON.stringify(anye)});
 $done({body: JSON.stringify(anye)});
