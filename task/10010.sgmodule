@@ -1,7 +1,7 @@
 #!name=联通余量(v4.1可编辑参数版)
 #!desc=定时查询 与 Panel 面板,改自一老原脚本：https://github.com/ChinaTelecomOperators/ChinaUnicom/releases/download/Prerelease-Alpha/10010.sgmodule
 #!arguments=定时查询:*/5 * * * *,禁用MITM:hostname
-#!arguments-desc=定时签到：自定义Cron表达式，禁用输入 # 。\n\n禁用获取CK，禁用MITM输入 # 。
+#!arguments-desc=定时查询：自定义Cron表达式，禁用输入 # 。\n\n禁用获取CK，禁用MITM输入 # 。
 [General]
 force-http-engine-hosts = %APPEND% 10010v4.com, m.client.10010.com
 
