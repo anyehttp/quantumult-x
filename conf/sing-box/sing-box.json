@@ -1,0 +1,236 @@
+{
+  "log": {
+    "level": "info",
+    "timestamp": true
+  },
+  "experimental": {
+    "clash_api": {
+      "external_controller": "127.0.0.1:20123",
+      "external_ui": "",
+      "secret": "ID_bmn7tzve",
+      "external_ui_download_url": "",
+      "default_mode": "rule"
+    },
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": false
+    }
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "listen": "::",
+      "listen_port": 20122,
+      "sniff": true,
+      "sniff_override_destination": false,
+      "tcp_fast_open": false,
+      "tcp_multi_path": false,
+      "udp_fragment": false
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "全局",
+      "type": "selector",
+      "outbounds": [
+        "国内",
+        "🐟 漏网之鱼"
+      ]
+    },
+    {
+      "tag": "国内",
+      "type": "selector",
+      "outbounds": [
+        "国内测速",
+        "direct"
+      ]
+    },
+    {
+      "tag": "🐟 漏网之鱼",
+      "type": "selector",
+      "outbounds": [
+        "国外测速",
+        "direct"
+      ]
+    },
+    {
+      "tag": "国外测速",
+      "type": "urltest",
+      "outbounds": [
+        "direct"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "300s",
+      "tolerance": 150
+    },
+    {
+      "tag": "国内测速",
+      "type": "urltest",
+      "outbounds": [
+        "direct"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "300s",
+      "tolerance": 150
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    }
+  ],
+  "route": {
+    "rule_set": [
+      {
+        "tag": "GEOIP-CN",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/cn.srs",
+        "download_detour": "🐟 漏网之鱼"
+      },
+      {
+        "tag": "GEOSITE-CN",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/cn.srs",
+        "download_detour": "🐟 漏网之鱼"
+      },
+      {
+        "tag": "GEOLOCATION-!CN",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/geolocation-!cn.srs",
+        "download_detour": "🎯 全球直连"
+      }
+    ],
+    "rules": [
+      {
+        "protocol": "dns",
+        "port": 53,
+        "outbound": "dns-out"
+      },
+      {
+        "clash_mode": "direct",
+        "outbound": "direct"
+      },
+      {
+        "clash_mode": "global",
+        "outbound": "全局"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "国内"
+      },
+      {
+        "rule_set": "GEOIP-CN",
+        "outbound": "国内"
+      },
+      {
+        "rule_set": "GEOSITE-CN",
+        "outbound": "国内"
+      },
+      {
+        "rule_set": "GEOLOCATION-!CN",
+        "outbound": "国内"
+      }
+    ],
+    "final": "🐟 漏网之鱼",
+    "auto_detect_interface": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "remote-dns",
+        "address": "tls://8.8.8.8",
+        "address_resolver": "remote-resolver-dns"
+      },
+      {
+        "tag": "local-dns",
+        "address": "https://223.5.5.5/dns-query",
+        "address_resolver": "resolver-dns",
+        "detour": "direct"
+      },
+      {
+        "tag": "resolver-dns",
+        "address": "223.5.5.5",
+        "detour": "direct"
+      },
+      {
+        "tag": "remote-resolver-dns",
+        "address": "8.8.8.8"
+      },
+      {
+        "tag": "fakeip-dns",
+        "address": "fakeip"
+      },
+      {
+        "tag": "block",
+        "address": "rcode://success"
+      }
+    ],
+    "rules": [
+      {
+        "outbound": "any",
+        "disable_cache": true,
+        "server": "local-dns"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "domain_suffix": [
+              ".lan",
+              ".localdomain",
+              ".example",
+              ".invalid",
+              ".localhost",
+              ".test",
+              ".local",
+              ".home.arpa",
+              ".msftconnecttest.com",
+              ".msftncsi.com"
+            ],
+            "invert": true
+          },
+          {
+            "query_type": [
+              "A",
+              "AAAA"
+            ]
+          }
+        ],
+        "server": "fakeip-dns"
+      },
+      {
+        "clash_mode": "direct",
+        "server": "local-dns"
+      },
+      {
+        "clash_mode": "global",
+        "server": "remote-dns"
+      },
+      {
+        "rule_set": "GEOSITE-CN",
+        "server": "local-dns"
+      },
+      {
+        "rule_set": "GEOLOCATION-!CN",
+        "server": "remote-dns"
+      }
+    ],
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.1/16",
+      "inet6_range": "fc00::/18"
+    },
+    "final": "remote-dns"
+  }
+}
