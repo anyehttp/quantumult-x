@@ -16,10 +16,10 @@ config.outbounds.map(i => {
   if (['all', 'all-auto'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies))
   }
-  if (['国内', 'hk-auto'].includes(i.tag)) {
+  if (['国内', 'gn-auto'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /China|china|中国/i))
   }
-  if (['国外', 'tw-auto'].includes(i.tag)) {
+  if (['国外', 'gw-auto'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /台|tw|taiwan|🇹🇼|日本|jp|japan|🇯🇵|JP|sg|singapore|🇸🇬|美|us|unitedstates|united states|🇺🇸/i))
   }
 })
