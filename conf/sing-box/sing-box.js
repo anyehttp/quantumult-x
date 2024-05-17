@@ -13,9 +13,6 @@ let proxies = await produceArtifact({
 })
 config.outbounds.push(...proxies)
 config.outbounds.map(i => {
-  if (['all', 'all-auto'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies))
-  }
   if (['国内', 'gn-auto'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /China|china|中国/i))
   }
