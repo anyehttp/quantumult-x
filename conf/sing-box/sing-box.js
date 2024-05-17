@@ -13,16 +13,16 @@ let proxies = await produceArtifact({
 })
 config.outbounds.push(...proxies)
 config.outbounds.map(i => {
-  if (['国内', '国内测速'].includes(i.tag)) {
+  if (['国内测速'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /China|china|中国/i))
   }
-  if (['国内', '国内手动'].includes(i.tag)) {
+  if (['国内手动'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /China|china|中国/i))
   }
-  if (['国外', '国外手动'].includes(i.tag)) {
+  if (['国外手动'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /JP|日本|美国|jp/i))
   }
-  if (['国外', '国外测速'].includes(i.tag)) {
+  if (['国外测速'].includes(i.tag)) {
     i.outbounds.push(...getTags(proxies, /JP|日本|美国|jp/i))
   }
 })
