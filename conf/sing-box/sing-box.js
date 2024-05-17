@@ -20,7 +20,7 @@ config.outbounds.map(i => {
     i.outbounds.push(...getTags(proxies, /China|china|中国/i))
   }
   if (['国外', 'gw-auto'].includes(i.tag)) {
-    i.outbounds.push(...getTags(proxies, /台|tw|taiwan|🇹🇼|日本|jp|japan|🇯🇵|JP|sg|singapore|🇸🇬|美|us|unitedstates|united states|🇺🇸/i))
+    i.outbounds.push(...getTags(proxies, /JP|日本|美国|jp/i))
   }
 })
 config.outbounds.forEach(outbound => {
