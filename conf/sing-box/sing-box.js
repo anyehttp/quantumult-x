@@ -1,7 +1,7 @@
 const { type, name } = $arguments
 const compatible_outbound = {
   tag: 'COMPATIBLE',
-  type: 'cn',
+  type: 'final',
 }
 let compatible
 let config = JSON.parse($files[0])
