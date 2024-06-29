@@ -1,50 +1,52 @@
-// vx植物星球
-// zwxq
-// Author: Mist
-// Date: 2024-06-25
-// cron "30 9 * * *" zwxq.js
-// 注册：https://www.pftp2012.com
-// const zwxq = '账号&密码'; // Surge 环境变量
+/**
+ * Surge Script for vx植物星球
+ * Author: Mist
+ * Date: 2024-06-25
+ */
 
-const zwxq = $persistentStore.read('zwxq'); // 获取 Surge 环境变量
+const env_name = 'zwxq'; // 环境变量名字
+const env = $persistentStore.read(env_name) || ''; // 获取环境变量
 const Notify = 1; // 是否通知, 1通知, 0不通知. 默认通知
 const debug = 0; // 是否调试, 1调试, 0不调试. 默认不调试
 let scriptVersionNow = "1.0.0"; // 脚本版本号
-let msg = "";
+let msg = '';
 
-// ==================================异步顺序==============================================================================
-!(async () => {
-    await getNotice();  // 远程通知
-    await getVersion("yang7758258/ohhh154@main/zwxq.js");
+// 脚本入口函数
+(async () => {
     await main(); // 主函数
-    await SendMsg(msg); // 发送通知
+    if (Notify > 0) {
+        $notification.post('vx植物星球', '', msg);
+    }
+})().catch((e) => console.log(e));
 
-})()
-.catch((e) => console.log(e))
-.finally(() => $done());
-
-// ==================================脚本入口函数main()==============================================================
+// 主函数
 async function main() {
-    if (!zwxq) {
-        console.log(`没有填写变量, 请查看脚本说明: zwxq`);
+    if (env === '') {
+        console.log(`没有填写变量,请查看脚本说明: ${env_name}`);
         return;
     }
-    let user_ck = zwxq.split('\n');
-    console.log(`\n========== 共找到 ${user_ck.length} 个账号 ==========`);
-    let index = 1;
+    let user_ck = env.split('\n');
+    DoubleLog(`\n========== 共找到 ${user_ck.length} 个账号 ==========`);
+    let index = 1; // 用来给账号标记序号, 从1开始
     for (let ck of user_ck) {
-        if (!ck) continue;
-        let [userName, userPwd] = ck.split('&');
-        let user = { index, userName, userPwd };
-        index++;
-        await userTask(user);
-        let rnd_time = Math.floor(Math.random() * 4000) + 1000;
+        if (!ck) continue; // 跳过空行
+        let ck_info = ck.split('&');
+        let userName = ck_info[0];
+        let userPwd = ck_info[1];
+        let user = {
+            index: index,
+            userName,
+            userPwd,
+        };
+        index += 1; // 每次用完序号+1
+        await userTask(user); // 开始账号任务
+        let rnd_time = Math.floor(Math.random() * 4000) + 1000; // 每个账号之间等1~5秒随机时间
         console.log(`账号[${user.index}]随机等待${rnd_time / 1000}秒...`);
-        await wait(rnd_time);
+        await wait(rnd_time / 1000);
     }
 }
 
-// ======================================开始任务=========================================
+// 账号任务
 async function userTask(user) {
     console.log(`\n============= 账号[${user.index}]开始任务 =============`);
     let ck = await Login(user);
@@ -56,108 +58,102 @@ async function userTask(user) {
     await mission(user, '60', ck);
 }
 
-// =============================================================================================================================
 // 登入
 async function Login(user) {
-    return new Promise((resolve, reject) => {
+    try {
         let userPwd = md5(user.userPwd);
-        let options = {
+        let urlObject = {
             url: `https://api.pftp2012.com/api/Member/Login`,
-            method: 'POST',
             headers: {
                 'Host': 'api.pftp2012.com',
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'User-Agent': 'Mozilla/5.0 ...', // 略
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090b11) XWEB/9129',
             },
             body: `userName=${user.userName}&userPwd=${userPwd}&keepAlive=true&channel=10`
         };
-        $httpClient.post(options, (error, response, data) => {
-            if (error) {
-                console.log(error);
-                reject(error);
-            } else {
-                let result = JSON.parse(data);
-                if (result?.Data) {
-                    console.log(`🌸账号[${result.Data.MemberInfo.MemberName}]🕊登入成功-当前[${result.Data.MemberInfo.MemberPollen}]积分🎉`);
-                    resolve(result.Data.MemberInfo.Token);
-                } else {
-                    console.log(`🌸账号[${user.index}]登入-失败:${result.Msg}❌`);
-                    resolve(null);
-                }
-            }
-        });
-    });
+        let result = await httpRequest(urlObject);
+        if (result?.Data) {
+            DoubleLog(`🌸账号[${result.Data.MemberInfo.MemberName}]🕊登入成功-当前[${result.Data.MemberInfo.MemberPollen}]积分🎉`);
+        } else {
+            DoubleLog(`🌸账号[${user.index}]登入-失败:${result.Msg}❌`);
+        }
+        return result.Data.MemberInfo.Token;
+    } catch (e) {
+        console.log('以下是报错输出：');
+        console.log(e);
+    }
 }
 
 // 签到
 async function Sign(user, Token) {
-    return new Promise((resolve, reject) => {
-        let options = {
+    try {
+        let urlObject = {
             url: `https://api.pftp2012.com/api/Member/SignIn?channel=10`,
-            method: 'GET',
             headers: {
                 'Host': 'api.pftp2012.com',
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': `Bearer ${Token}`,
-                'User-Agent': 'Mozilla/5.0 ...', // 略
-            },
-        };
-        $httpClient.get(options, (error, response, data) => {
-            if (error) {
-                console.log(error);
-                reject(error);
-            } else {
-                let result = JSON.parse(data);
-                if (result.Status == 100) {
-                    console.log(`🌸账号[${user.index}]🕊签到成功-获得${result.Data.PollenNum}积分-连续签到${result.Data.ContinuouNum}天🎉`);
-                } else {
-                    console.log(`🌸账号[${user.index}]🕊签到:${result.Msg}❌`);
-                }
-                resolve();
+                'Authorization': 'Bearer ' + Token,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090b11) XWEB/9129',
             }
-        });
-    });
+        };
+        let result = await httpRequest(urlObject);
+        if (result.Status === 100) {
+            DoubleLog(`🌸账号[${user.index}]🕊签到成功-获得${result.Data.PollenNum}积分-连续签到${result.Data.ContinuouNum}天🎉`);
+        } else {
+            DoubleLog(`🌸账号[${user.index}]🕊签到:${result.Msg}❌`);
+        }
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 // 任务
 async function mission(user, id, Token) {
-    return new Promise((resolve, reject) => {
-        let options = {
+    try {
+        let urlObject = {
             url: `https://api.pftp2012.com/api/Member/CompleteMemberMission`,
-            method: 'POST',
             headers: {
                 'Host': 'api.pftp2012.com',
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': `Bearer ${Token}`,
-                'User-Agent': 'Mozilla/5.0 ...', // 略
+                'Authorization': 'Bearer ' + Token,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF WindowsWechat(0x63090b11) XWEB/9129',
             },
             body: `type=${id}&channel=40`
         };
-        $httpClient.post(options, (error, response, data) => {
-            if (error) {
-                console.log(error);
-                reject(error);
+        let result = await httpRequest(urlObject);
+        if (result?.Status === '100') {
+            DoubleLog(`🌸账号[${user.index}]🕊浏览任务id:${id}成功,获得${result.Data}积分🎉`);
+        } else {
+            DoubleLog(`🌸账号[${user.index}]浏览任务失败:${result.Msg}❌`);
+        }
+    } catch (e) {
+        console.log(e.response.data);
+    }
+}
+
+// 网络请求函数
+function httpRequest(options) {
+    return new Promise((resolve) => {
+        $httpClient.post(options, (err, resp, data) => {
+            if (err) {
+                console.log(JSON.stringify(err));
+                resolve(null);
             } else {
-                let result = JSON.parse(data);
-                if (result?.Status == '100') {
-                    console.log(`🌸账号[${user.index}]🕊浏览任务id:${id}成功,获得${result.Data}积分🎉`);
-                } else {
-                    console.log(`🌸账号[${user.index}]浏览任务失败:${result.Msg}❌`);
+                try {
+                    data = JSON.parse(data);
+                } catch (e) {
+                    data = null;
                 }
-                resolve();
+                resolve(data);
             }
         });
     });
 }
 
-// 发送消息
-async function SendMsg(message) {
-    if (!message) return;
-    if (Notify > 0) {
-        $notification.post('vx植物星球', '', message);
-    } else {
-        console.log(message);
-    }
+// 双平台 log 输出
+function DoubleLog(data) {
+    console.log(data);
+    msg += `\n${data}`;
 }
 
 // 等待 X 秒
@@ -165,58 +161,6 @@ function wait(n) {
     return new Promise((resolve) => setTimeout(resolve, n * 1000));
 }
 
-// 随机等待 1-5 秒
-function sjwait() {
-    return new Promise((resolve) => {
-        let waitTime = Math.floor(Math.random() * 4000 + 1000);
-        setTimeout(resolve, waitTime);
-    });
-}
-
-// 13位时间戳
-function getTimestamp() {
-    return new Date().getTime();
-}
-
-// 获取远程通知
-async function getNotice() {
-    const urls = [
-        "https://gitee.com/ohhhooh/jd_haoyangmao/raw/master/Notice.json",
-    ];
-    for (const url of urls) {
-        await new Promise((resolve, reject) => {
-            $httpClient.get({ url }, (error, response, data) => {
-                if (error) {
-                    console.log(error);
-                    reject(error);
-                } else {
-                    let result = JSON.parse(data);
-                    if (result && "notice" in result) {
-                        console.log(result.notice.replace(/\\n/g, "\n"));
-                    }
-                    resolve();
-                }
-            });
-        });
-    }
-}
-
-// 获取远程版本
-function getVersion(scriptUrl) {
-    return new Promise((resolve) => {
-        $httpClient.get({ url: `https://fastly.jsdelivr.net/gh/${scriptUrl}` }, (error, response, data) => {
-            if (error) {
-                console.log(error);
-            } else {
-                const regex = /scriptVersionNow\s*=\s*(["'`])([\d.]+)\1/;
-                const match = data.match(regex);
-                const scriptVersionLatest = match ? match[2] : "";
-                console.log(`\n============= 当前版本：${scriptVersionNow} 🌟 最新版本：${scriptVersionLatest} =============`);
-            }
-            resolve();
-        });
-    });
-}
 
 
 
