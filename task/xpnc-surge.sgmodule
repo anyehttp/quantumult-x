@@ -1,6 +1,6 @@
 #!name=兴攀农场签到
 #!desc=微信公众号搜索兴攀农场订小程序 自动完成签到任务   群组：https://t.me/IPAs_Dd频道：https://t.me/IPAs_share
-#!arguments=定时签到:0 9,21 * * *,禁用MITM:hostname
+#!arguments=定时签到:0 9 * * *,禁用MITM:hostname
 #!arguments-desc=定时签到：自定义Cron表达式，禁用输入 # 。\n\n禁用获取CK，禁用MITM输入 # 。
 #!category=暗夜
 
