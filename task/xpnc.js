@@ -34,7 +34,7 @@ let msg = '';
     if (Notify > 0) {
         $notification.post('兴攀农场', '', msg);
     }
-})()。catch((e) => console.log(e));
+})().catch((e) => console.log(e));
 
 // 账号任务
 async function userTask(user) {
