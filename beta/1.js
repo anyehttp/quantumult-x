@@ -72,7 +72,7 @@ async function Sign(user) {
     if (result?.code === '1000') {
         DoubleLog(`🌸账号[${user.index}]🕊签到成功-获得${result.data.reward.integral}积分🎉`);
     } else {
-        DoubleLog(`🌸账号[${user.index}]签到-失败:${result.message}❌`);
+        DoubleLog(`🌸账号[${user.index}]签到-信息:${result.message},获得${result.data.reward.integral}积分`);
     }
 }
 
@@ -92,7 +92,7 @@ async function Task(user, id) {
     if (result?.code === '1000') {
         console.log(`🌸账号[${user.index}]🕊任务${id}完成[${result.message}]🎉`);
     } else {
-        console.log(`🌸账号[${user.index}]任务${id}完成失败:${result.message}❌`);
+        console.log(`🌸账号[${user.index}]任务${id}完成信息:${result.message},`);
     }
 }
 
@@ -112,7 +112,7 @@ async function Reward(user, id) {
     if (result?.code === '1000') {
         console.log(`🌸账号[${user.index}]🕊任务${id}领取[${result.message}],获得${result.data.reward[0].reward_type_name}${result.data.reward[0].reward}🎉`);
     } else {
-        console.log(`🌸账号[${user.index}]任务${id}领取失败:${result.message}❌`);
+        console.log(`🌸账号[${user.index}]任务${id}领取信息:${result.message},获得${result.data.reward[0].reward_type_name}${result.data.reward[0].reward}`);
     }
 }
 
@@ -132,7 +132,7 @@ async function Fertilizer(user) {
     if (result?.code === '1000') {
         DoubleLog(`🌸账号[${user.index}]🕊施肥成功,总肥力${result.data.fertilizer}🎉`);
     } else {
-        DoubleLog(`🌸账号[${user.index}]施肥失败:${result.message}❌`);
+        DoubleLog(`🌸账号[${user.index}]施肥信息:${result.message},总肥力${result.data.fertilizer}`);
     }
 }
 
@@ -152,7 +152,7 @@ async function Water(user) {
     if (result?.code === '1000') {
         console.log(`🌸账号[${user.index}]🕊浇水成功，剩余💧[${result.data.water_value} ]肥力[${result.data.fertilizer}]🎉`);
     } else {
-        console.log(`🌸账号[${user.index}]浇水失败:${result.message}❌`);
+        console.log(`🌸账号[${user.index}]浇水信息:${result.message},剩余💧[${result.data.water_value} ]肥力[${result.data.fertilizer}]`);
     }
 }
 
@@ -172,7 +172,7 @@ async function HomePage(user) {
     if (result?.code === '1000') {
         DoubleLog(`🌸账号[${user.index}]🕊果树🌳当前状态[${result.data.type_name}]-进度[${result.data.growth_level}]-剩余肥力[${result.data.fertilizer}]-💧[${result.data.water_value}]🎉`);
     } else {
-        DoubleLog(`🌸账号[${user.index}]查询🔍失败:${result.message}❌`);
+        DoubleLog(`🌸账号[${user.index}]查询🔍信息:${result.message},果树🌳当前状态[${result.data.type_name}]-进度[${result.data.growth_level}]-剩余肥力[${result.data.fertilizer}]-💧[${result.data.water_value}]`);
     }
 }
 
