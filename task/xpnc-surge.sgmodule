@@ -21,7 +21,7 @@
 # 2.打开小程序-我的页面 提示获取cookie成功则可以使用该脚本
 # 3.关闭获取cookie脚本，防止产生不必要的mitm
 # （默认凌晨12点 执行，如需更改请自行修改cron表达式）
-兴攀农场签到 = type=cron, cronexp="{{{定时签到}}}", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/xpnc.js
+兴攀农场签到 = type=cron, cronexp="{{{定时签到}}}", script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/xpnc.js,timeout=120,script-update-interval=0
 
 # 获取Cookie
 兴攀农场Cookie = type=http-request, pattern=^https:\/\/p\.xpfarm\.cn\/treemp\/user\.PersonalCenter\/getInfo, script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/xpnc-Cookie.js
