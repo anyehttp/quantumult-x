@@ -152,7 +152,7 @@ async function Water(user) {
     if (result?.code === '1000') {
         console.log(`🌸账号[${user.index}]🕊浇水成功，剩余💧[${result.data.water_value} ]肥力[${result.data.fertilizer}]🎉`);
     } else {
-        console.log(`🌸账号[${user.index}]浇水失败:${result.message}`);
+        console.log(`🌸账号[${user.index}]浇水状态:${result.message}`);
     }
 }
 
