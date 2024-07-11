@@ -5,7 +5,7 @@
  */
 
 const env_name = 'xpnc'; // 环境变量名字
-const env = $persistentStore.read(env_name) || '';
+const env = $getdata(env_name) || '';
 const Notify = 1; // 是否通知, 1通知, 0不通知. 默认通知
 const debug = 0; // 是否调试, 1调试, 0不调试. 默认不调试
 let msg = '';
@@ -179,7 +179,7 @@ async function HomePage(user) {
 // 网络请求函数
 function httpRequest(options) {
     return new Promise((resolve) => {
-        $httpClient.post(options, (err, resp, data) => {
+        $.post(options, (err, resp, data) => {
             if (err) {
                 console.log(JSON.stringify(err));
                 resolve(null);
