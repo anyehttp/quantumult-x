@@ -6,7 +6,7 @@
 #更新说明:2024-07-13修改地图找人次数需使用boxjs修改参数
 
 [MITM]
-hostname =  %APPEND% social.blued.cn,argo.blued.cn,burn-chatfiles.bldimg.com,-blued.irisdt.cn,-120.53.131.149,-live-im.blued.cn,-h*.blued.cn,-95.161.76.101,-101.23.128.20,-129.226.78.144,-112.28.199.148,-120.53.131.149
+hostname =  %APPEND% social.blued.cn,argo.blued.cn,<ip-address>,burn-chatfiles.bldimg.com,-blued.irisdt.cn,-120.53.131.149,-live-im.blued.cn,-h*.blued.cn,-95.161.76.101,-101.23.128.20,-129.226.78.144,-112.28.199.148,-120.53.131.149
 
 
 [Script]
