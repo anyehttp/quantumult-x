@@ -1,0 +1,7 @@
+#!name=VidHub
+#!desc=替换 bili.bili.rip User-Agent 防止被和谐
+
+[Script]
+http-request ^https:\/\/emby\.pilipiliultra\.top/ script-path=https://example.com/changeUA.js, requires-body=false
+[MITM]
+hostname = %APPEND% emby.pilipiliultra.top
