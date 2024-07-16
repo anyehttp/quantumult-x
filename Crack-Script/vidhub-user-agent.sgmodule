@@ -1,7 +1,7 @@
-#!name=VidHub
-#!desc=替换 bili.bili.rip User-Agent 防止被和谐
+#!name=VidHub替换user-agent
+#!desc=
 
 [Script]
-http-request ^https:\/\/emby\.pilipiliultra\.top/ script-path=https://example.com/changeUA.js, requires-body=false
+vidhub-user-agent = script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Crack-Script/vidhub-user-agent.js,requires-body=1,type=http-request,pattern=^https:\/\/emby\.pilipiliultra\.top/,max-size=0,binary-body-mode=0,script-update-interval=0
 [MITM]
 hostname = %APPEND% emby.pilipiliultra.top
