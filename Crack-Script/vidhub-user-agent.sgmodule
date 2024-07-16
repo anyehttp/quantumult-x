@@ -1,9 +1,9 @@
 #!name=VidHub替换user-agent
 #!desc=修改user-agent来进入emby，surge可编辑参数添加其他服
-#!arguments=添加hostname:emby.pilipiliultra.top,添加URL正则:^https:\/\/emby\.pilipiliultra\.top/
+#!arguments=添加hostname:name,添加URL正则:^https://
 #!arguments-desc=可以自定义添加hostname和URL正则，禁用输入#
 
 [Script]
-vidhub-user-agent = script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Crack-Script/vidhub-user-agent.js,requires-body=1,type=http-request,pattern={{{^https:\/\/emby\.pilipiliultra\.top/}}},max-size=0,binary-body-mode=0,script-update-interval=0
+vidhub-user-agent = script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/main/Crack-Script/vidhub-user-agent.js,requires-body=1,type=http-request,pattern={{{^https://}}},max-size=0,binary-body-mode=0,script-update-interval=0
 [MITM]
-hostname = %APPEND% {{{emby.pilipiliultra.top}}}
+hostname = %APPEND% {{{name}}}
