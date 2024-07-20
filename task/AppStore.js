@@ -155,8 +155,8 @@ async function main() {
     if (notice.length) {
         notify(notice.join('\n'));
     } else {
-        notify('所有价格无变化');
-        console.log('所有价格无变化');
+        notify('所有软件价格无变化');
+        console.log('所有软件价格无变化');
     }
 
     writeLocalData(localData);
