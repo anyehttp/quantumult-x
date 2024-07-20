@@ -3,7 +3,7 @@
   "name": "App Store价格查询",
   "author": "@anyeyey",
   "icon": "https://example.com/icon.png",
-  "repo": "https://example.com/repo",
+  "repo": "https://github.com/anyehttp",
   "apps": [
     {
       "id": "appPriceChecker",
