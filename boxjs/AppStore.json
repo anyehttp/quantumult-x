@@ -13,7 +13,7 @@
         {
           "id": "app_data_json",
           "name": "App 数据",
-          "val": "{\"地区\":[""], \"名字\":[""], \"id\":[], \"购买方式\":[""]}",
+          "val": "{\"地区\":[], \"名字\":[], \"id\":[], \"购买方式\":[]}",
           "type": "text",
           "desc": "在这里添加 App 数据的 JSON 字符串"
         }
@@ -21,7 +21,7 @@
       "script": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/AppStore.js",
       "author": "@anyeyey",
       "version": "1.0.0",
-      "desc": "检查 App 价格并发送通知。数格式-地区["us","cn"]  名字["surge","其他"] id[1, 2] 购买方式["内购", "本体"]",
+      "desc": "检查 App 价格并发送通知。数据格式: 地区[\"us\",\"cn\"], 名字[\"surge\",\"其他\"], id[1, 2], 购买方式[\"内购\", \"本体\"]",
       "icons": [
         "https://example.com/icon.png"
       ]
