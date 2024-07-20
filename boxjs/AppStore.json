@@ -1,7 +1,7 @@
 {
   "id": "AppPriceChecker",
-  "name": "App 价格检查器",
-  "author": "你的名字",
+  "name": "App Store价格查询",
+  "author": "@anyeyey",
   "icon": "https://example.com/icon.png",
   "repo": "https://example.com/repo",
   "apps": [
@@ -13,15 +13,15 @@
         {
           "id": "app_data_json",
           "name": "App 数据",
-          "val": "{\"地区\":[], \"名字\":[], \"id\":[], \"购买方式\":[]}",
+          "val": "{\"地区\":[""], \"名字\":[""], \"id\":[""], \"购买方式\":[""]}",
           "type": "text",
           "desc": "在这里添加 App 数据的 JSON 字符串"
         }
       ],
-      "script": "https://example.com/update.js",
-      "author": "你的名字",
+      "script": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/AppStore.js",
+      "author": "@anyeyey",
       "version": "1.0.0",
-      "desc": "检查 App 价格并发送通知。",
+      "desc": "检查 App 价格并发送通知。-数据格式{"地区":["us", "us", "us"], "名字":["code-app", "青龙面板", "surge-5"], "id":[1512938504, 6466607641, 1442620678], "购买方式":["本体", "内购", "内购"]}",
       "icons": [
         "https://example.com/icon.png"
       ]
