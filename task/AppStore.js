@@ -1,3 +1,21 @@
+/*
+AppStore价格查询脚本 @anyeyey
+
+群组：https://t.me/IPAs_Dd频道：https://t.me/IPAs_share
+
+boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/AppStore.json
+
+surge模块：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/AppStore.sgmodule
+
+boxjs使用方式：
+数据格式 AppStore链接：https://apps.apple.com/us/app/surge-5/id1442620678?l=zh-Hans-CN
+此链接中 us 就是国家 surge-5 就是名字 1442620678 是id 软件付费在应用内就是 内购
+完整数据就是：{"地区":["us"], "名字":["surge-5"], "id":[1442620678], "购买方式":["内购"]}
+多软件用英文 , 隔开 比如：{"地区":["us", "cn"], "名字":["surge-5", "code-app"], "id":[1442620678, 1512938504], "购买方式":["内购", "本体"]}
+*/
+
+
+
 
 const $ = new Env('App Price Checker');
 
