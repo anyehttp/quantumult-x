@@ -1,0 +1,30 @@
+{
+  "id": "AppPriceChecker",
+  "name": "App 价格检查器",
+  "author": "你的名字",
+  "icon": "https://example.com/icon.png",
+  "repo": "https://example.com/repo",
+  "apps": [
+    {
+      "id": "appPriceChecker",
+      "name": "App Price Checker",
+      "keys": ["app_data_json"],
+      "settings": [
+        {
+          "id": "app_data_json",
+          "name": "App 数据",
+          "val": "{\"地区\":[], \"名字\":[], \"id\":[], \"购买方式\":[]}",
+          "type": "text",
+          "desc": "在这里添加 App 数据的 JSON 字符串"
+        }
+      ],
+      "script": "https://example.com/update.js",
+      "author": "你的名字",
+      "version": "1.0.0",
+      "desc": "检查 App 价格并发送通知。",
+      "icons": [
+        "https://example.com/icon.png"
+      ]
+    }
+  ]
+}
