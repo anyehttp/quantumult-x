@@ -78,7 +78,9 @@ function writeLocalData(data) {
 
 // 获取 app 数据并解析价格
 async function fetchAppData(region, name, id, purchaseType) {
-    const url = `https://apps.apple.com/${region}/app/${name}/id${id}`;
+    let url = `https://apps.apple.com/${region}/app/${name}/id${id}`;
+    url = encodeURI(url); // 对 URL 进行编码
+
     const html = await requestUrl(url);
 
     if (purchaseType === '本体') {
@@ -153,8 +155,8 @@ async function main() {
     if (notice.length) {
         notify(notice.join('\n'));
     } else {
-        notify('所有软件价格无变化');
-        console.log('所有软件价格无变化');
+        notify('所有价格无变化');
+        console.log('所有价格无变化');
     }
 
     writeLocalData(localData);
