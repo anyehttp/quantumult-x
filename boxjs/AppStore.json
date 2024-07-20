@@ -2,7 +2,7 @@
   "id": "AppPriceChecker",
   "name": "App Store价格查询",
   "author": "@anyeyey",
-  "icon": "https://example.com/icon.png",
+  "icon": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/ico/AppStore.png",
   "repo": "https://github.com/anyehttp",
   "apps": [
     {
