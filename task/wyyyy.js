@@ -1,6 +1,7 @@
 /*
  * 环境变量:
  * - wyyyy_data: 网易云音乐的 Cookie
+ *多账号用&分开
  */
 
 const $ = new Env('网易云音乐启动！');
