@@ -3,7 +3,7 @@ AppStore价格查询脚本 @anyeyey
 
 群组：https://t.me/IPAs_Dd频道：https://t.me/IPAs_share
 
-boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/AppStore.json
+boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/anye_boxjs.json
 
 surge模块：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/AppStore.sgmodule
 
