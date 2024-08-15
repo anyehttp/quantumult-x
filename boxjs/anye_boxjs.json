@@ -29,31 +29,31 @@
     {
       "id": "Steampy",
       "name": "Steampy监控",
-      "keys": ["Steampy_data_json"],
+      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_accessToken"],
       "settings": [
         {
-          "id": "Steampy_data_json",
+          "id": "Steampy_Cookie",
           "name": "Steampy_Cookie",
           "val": "",
           "type": "text",
           "desc": "在这里添加Steampy的Cookie,多个用&分开"
         },
         {
-          "id": "Steampy_data_json",
+          "id": "Steampy_name",
           "name": "Steampy_name",
           "val": "",
           "type": "text",
           "desc": "在这里添加游戏的的名字,多个用&分开"
         },
         {
-          "id": "Steampy_data_json",
+          "id": "Steampy_id",
           "name": "Steampy_id",
           "val": "",
           "type": "text",
           "desc": "在这里添加Steampy的id,多个用&分开"
         },
         {
-          "id": "Steampy_data_json",
+          "id": "Steampy_accessToken",
           "name": "Steampy_accessToken",
           "val": "",
           "type": "text",
