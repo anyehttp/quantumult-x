@@ -10,10 +10,7 @@ boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/anye_
 
 surge模块：https://github.com/anyehttp/quantumult-x/blob/main/task/Steampy-surge.sgmodule
 
-使用方式：！！！！多个id和名字用&隔开
-1.安装完模块后打开 https://steampy.com/tabBar 或者 打开app-我的 抓取cookie
-2.打开https://steampy.com/cdKey/cdKey选择需要的游戏点进去 比如url是：https://steampy.com/cdkDetail?name=cn&gameId=836460989300871168 那么在boxjs里面id就填写836460989300871168
-3.name写游戏名字
+使用方式：安装完模块后打开https://steampy.com/tabBar或者app抓取cookie
 */
 
 
@@ -68,7 +65,7 @@ function writeLocalData(data) {
 
 // 获取游戏数据并处理价格
 async function getList(id, name) {
-    console.log(`{name}开始查询\n`);
+    console.log(`${name}开始查询\n`);
     const url = `https://steampy.com/xboot/steamKeySale/listSale?pageNumber=1&pageSize=20&sort=keyPrice&order=asc&startDate=&endDate=&gameId=${id}`;
     const resp = await requestUrl(url);
     console.log(`${resp}\n`);
