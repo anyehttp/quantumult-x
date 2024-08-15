@@ -29,7 +29,7 @@
     {
       "id": "Steampy",
       "name": "Steampy监控",
-      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_accessToken","Steampy_notice"],
+      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_accessToken","Steampy_user_agent","Steampy_notice"],
       "settings": [
         {
           "id": "Steampy_Cookie",
@@ -58,7 +58,15 @@
           "val": "",
           "type": "text",
           "desc": "在这里添加Steampy的id,多个用&分开"
-        },{
+        },
+        {
+          "id": "Steampy_user_agent"，
+          "name": "Steampy_user_agent",
+          "val": "",
+          "type": "text",
+          "desc": "在这里添加user_agent"
+        },
+        {
             "id": "Steampy_notice",
             "name": "价格无变化是否通知",
             "val": false,
