@@ -60,7 +60,7 @@
           "desc": "在这里添加Steampy的id,多个用&分开"
         },
         {
-          "id": "Steampy_user_agent"，
+          "id": "Steampy_user_agent",
           "name": "Steampy_user_agent",
           "val": "",
           "type": "text",
