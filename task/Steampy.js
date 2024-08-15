@@ -61,7 +61,7 @@ function writeLocalData(data) {
 
 // 获取游戏数据并处理价格
 async function getList(id, name) {
-    console.log(`{name}开始\n`);
+    console.log(`{name}开始查询\n`);
     const url = `https://steampy.com/xboot/steamKeySale/listSale?pageNumber=1&pageSize=20&sort=keyPrice&order=asc&startDate=&endDate=&gameId=${id}`;
     const resp = await requestUrl(url);
     console.log(`${resp}\n`);
