@@ -29,7 +29,7 @@
     {
       "id": "Steampy",
       "name": "Steampy监控",
-      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_accessToken"],
+      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_accessToken","Steampy_notice"],
       "settings": [
         {
           "id": "Steampy_Cookie",
