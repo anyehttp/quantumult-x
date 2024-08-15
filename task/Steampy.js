@@ -10,7 +10,10 @@ boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/anye_
 
 surge模块：https://github.com/anyehttp/quantumult-x/blob/main/task/Steampy-surge.sgmodule
 
-使用方式：安装完模块后打开 https://steampy.com/tabBar 或者 打开app-我的 抓取cookie
+使用方式：
+1.安装完模块后打开 https://steampy.com/tabBar 或者 打开app-我的 抓取cookie
+2.打开https://steampy.com/cdKey/cdKey选择需要的游戏点进去 比如url是：https://steampy.com/cdkDetail?name=cn&gameId=836460989300871168 那么在boxjs里面id就填写836460989300871168
+3.name写游戏名字
 */
 
 
