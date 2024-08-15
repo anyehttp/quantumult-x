@@ -36,34 +36,34 @@
           "name": "Steampy Cookie",
           "val": "",
           "type": "text",
-          "desc": "在这里添加Steampy的Cookie"
+          "desc": "在这里添加Steampy的Cookie,多个用&分开"
         },
         {
           "id": "Steampy_name",
           "name": "Steampy name",
           "val": "",
           "type": "text",
-          "desc": "在这里添加游戏的的名字"
+          "desc": "在这里添加游戏的的名字,多个用&分开"
         },
         {
           "id": "Steampy_id",
           "name": "Steampy id",
           "val": "",
           "type": "text",
-          "desc": "在这里添加Steampy的id"
+          "desc": "在这里添加Steampy的id,多个用&分开"
         },
         {
           "id": "Steampy_accessToken",
           "name": "Steampy accessToken",
           "val": "",
           "type": "text",
-          "desc": "在这里添加Steampy的accessToken"
+          "desc": "在这里添加Steampy的accessToken,多个用&分开"
         }
       ],
       "script": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/AppStore.js",
       "author": "@anyeyey",
       "version": "1.0.0",
-      "desc": "监控 Steampy cdkey并发送通知。",
+      "desc": "监控 Steampy cdkey并发送通知,多个数据用&分开,Cookie accessToken只需要一个就可以",
       "icons": [
         "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/ico/AppStore.png"
       ]
