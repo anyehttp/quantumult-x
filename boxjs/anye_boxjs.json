@@ -58,7 +58,13 @@
           "val": "",
           "type": "text",
           "desc": "在这里添加Steampy的id,多个用&分开"
-        }
+        },{
+            "id": "Steampy_notice",
+            "name": "价格无变化是否通知",
+            "val": false,
+            "type": "boolean",
+            "desc": "默认关闭"
+          }
       ],
       "script": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/AppStore.js",
       "author": "@anyeyey",
