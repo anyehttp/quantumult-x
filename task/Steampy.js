@@ -5,7 +5,7 @@ Steampy cdkey查询脚本 @anyeyey
 
 boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/anye_boxjs.json
 
-surge模块：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/Steampy.sgmodule
+surge模块：https://github.com/anyehttp/quantumult-x/blob/main/task/Steampy-surge.sgmodule
 
 boxjs使用方式：
 */
