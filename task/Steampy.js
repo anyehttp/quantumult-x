@@ -1,5 +1,5 @@
 /*
-Steampy cdkey查询脚本 @anyeyey
+Steampy cdkey监控脚本 @anyeyey
 
 群组：https://t.me/IPAs_Dd频道：https://t.me/IPAs_share
 
