@@ -68,7 +68,7 @@ async function getList(id, name) {
     console.log(`${name}开始查询\n`);
     const url = `https://steampy.com/xboot/steamKeySale/listSale?pageNumber=1&pageSize=20&sort=keyPrice&order=asc&startDate=&endDate=&gameId=${id}`;
     const resp = await requestUrl(url);
-    console.log(`${resp}\n`);
+    $.log(`${name}响应内容: ${JSON.stringify(resp, null, 2)}\n`);
 
     if (!resp.result || !resp.result.content || resp.result.content.length === 0) {
         return `${name} 查询不到 cdkey 信息`;
