@@ -36,7 +36,14 @@
           "name": "Steampy_Cookie",
           "val": "",
           "type": "text",
-          "desc": "在这里添加Steampy的Cookie,多个用&分开"
+          "desc": "在这里添加Steampy的Cookie"
+        }，
+        {
+          "id": "Steampy_accessToken",
+          "name": "Steampy_accessToken",
+          "val": "",
+          "type": "text",
+          "desc": "在这里添加Steampy的accessToken"
         },
         {
           "id": "Steampy_name",
@@ -51,13 +58,6 @@
           "val": "",
           "type": "text",
           "desc": "在这里添加Steampy的id,多个用&分开"
-        },
-        {
-          "id": "Steampy_accessToken",
-          "name": "Steampy_accessToken",
-          "val": "",
-          "type": "text",
-          "desc": "在这里添加Steampy的accessToken,多个用&分开"
         }
       ],
       "script": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/AppStore.js",
