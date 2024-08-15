@@ -20,6 +20,7 @@ const accessToken = $.getdata('Steampy_accessToken');
 const steampyIds = $.getdata('Steampy_id').split('&');
 const steampyNames = $.getdata('Steampy_name').split('&');
 const notice = $.getdata('Steampy_notice') === 'true';
+const user_agent = $.getdata('Steampy_user_agent');
 
 // 模拟浏览器请求的请求头
 const headers = {
@@ -27,7 +28,7 @@ const headers = {
     'Content-Type': 'application/json;charset=UTF-8',
     'Cookie': cookie,
     'APP_TOKEN': 'App',
-    'User-Agent': 'BuniOS/1.2.19 (com.com.bun.www; build:0; iOS 15.3.1) Alamofire/4.9.1',
+    'User-Agent': user_agent,
     'accessToken': accessToken
 };
 
