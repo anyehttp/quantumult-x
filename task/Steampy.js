@@ -7,7 +7,7 @@ boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/anye_
 
 surge模块：https://github.com/anyehttp/quantumult-x/blob/main/task/Steampy-surge.sgmodule
 
-boxjs使用方式：
+使用方式：安装完模块后打开https://steampy.com/tabBar或者app抓取cookie
 */
 
 
