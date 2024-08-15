@@ -33,7 +33,6 @@ const headers = {
 
 // 异步请求 URL 获取 JSON 内容
 async function requestUrl(url) {
-    console.log(`请求 URL: ${url}`);
     return new Promise((resolve, reject) => {
         $.get({ url, headers }, (err, resp, body) => {
             if (err) {
@@ -62,8 +61,10 @@ function writeLocalData(data) {
 
 // 获取游戏数据并处理价格
 async function getList(id, name) {
+    console.log(`{name}开始\n`);
     const url = `https://steampy.com/xboot/steamKeySale/listSale?pageNumber=1&pageSize=20&sort=keyPrice&order=asc&startDate=&endDate=&gameId=${id}`;
     const resp = await requestUrl(url);
+    console.log(`${resp}\n`);
 
     if (!resp.result || !resp.result.content || resp.result.content.length === 0) {
         return `${name} 查询不到 cdkey 信息`;
@@ -95,7 +96,7 @@ async function getList(id, name) {
         } else if (notice) {
             // 价格无变化且通知开启
             return `${name}-id:${id} 无变化`;
-        }
+        } 
     }
 
     return '';
