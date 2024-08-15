@@ -32,29 +32,29 @@
       "keys": ["Steampy_data_json"],
       "settings": [
         {
-          "id": "Steampy_Cookie",
-          "name": "Steampy Cookie",
+          "id": "Steampy_data_json",
+          "name": "Steampy_Cookie",
           "val": "",
           "type": "text",
           "desc": "在这里添加Steampy的Cookie,多个用&分开"
         },
         {
-          "id": "Steampy_name",
-          "name": "Steampy name",
+          "id": "Steampy_data_json",
+          "name": "Steampy_name",
           "val": "",
           "type": "text",
           "desc": "在这里添加游戏的的名字,多个用&分开"
         },
         {
-          "id": "Steampy_id",
-          "name": "Steampy id",
+          "id": "Steampy_data_json",
+          "name": "Steampy_id",
           "val": "",
           "type": "text",
           "desc": "在这里添加Steampy的id,多个用&分开"
         },
         {
-          "id": "Steampy_accessToken",
-          "name": "Steampy accessToken",
+          "id": "Steampy_data_json",
+          "name": "Steampy_accessToken",
           "val": "",
           "type": "text",
           "desc": "在这里添加Steampy的accessToken,多个用&分开"
