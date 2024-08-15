@@ -16,9 +16,9 @@ const $ = new Env("Steampy_Cookie");
         $.setdata(user_agent, "Steampy_user_agent");
     }
 
-    $.log($.name, "Cookie 和 accesstoken 获取成功", 'cookie: ' + cookie + '\n' + 'accesstoken: ' + accesstoken);
+    $.log($.name, "Cookie 和 accesstoken 获取成功", 'cookie: ' + cookie + '\n' + 'accesstoken: ' + accesstoken + '\n' + 'user_agent: ' + user_agent);
 
-    $.msg($.name, "Cookie 和 accesstoken 获取成功!", "cookie: " + cookie + "\n" + "accesstoken: " + accesstoken);
+    $.msg($.name, "Cookie 和 accesstoken 获取成功!", "cookie: " + cookie + "\n" + "accesstoken: " + accesstoken + '\n' + 'user_agent: ' + user_agent);
 
     $.done();
 
