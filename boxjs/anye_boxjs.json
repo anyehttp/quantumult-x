@@ -74,7 +74,7 @@
             "desc": "默认关闭"
           }
       ],
-      "script": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/AppStore.js",
+      "script": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/Steampy.js",
       "author": "@anyeyey",
       "version": "1.0.0",
       "desc": "监控 Steampy cdkey并发送通知,多个数据用&分开,Cookie accessToken只需要一个就可以",
