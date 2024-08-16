@@ -10,7 +10,9 @@ boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/anye_
 
 surge模块：https://github.com/anyehttp/quantumult-x/blob/main/task/Steampy-surge.sgmodule
 
-使用方式：安装完模块后打开https://steampy.com/tabBar或者app抓取cookie
+使用方式：
+1.安装完模块后打开https://steampy.com/ownspace或者app抓取cookie
+2.打开https://steampy.com/tabBar桌面端随便点一个游戏拿到URL里面的id填入boxjs或者青龙，游戏名字也就是name随便写
 */
 
 
