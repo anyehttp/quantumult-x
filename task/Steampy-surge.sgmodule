@@ -1,4 +1,4 @@
-#!name=Steampy监控
+#!name=Steampy监控-自动下单
 #!desc=在boxjs中添加数据 boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/anye_boxjs.json  群组：https://t.me/IPAs_Dd频道：https://t.me/IPAs_share
 #!arguments=定时:30/1 * * * *,MITM:hostname
 #!arguments-desc=定时：自定义Cron表达式，禁用输入 # \n MITM:指定域名，禁用输入 #
