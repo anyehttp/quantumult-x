@@ -29,7 +29,7 @@
     {
       "id": "Steampy",
       "name": "Steampy监控",
-      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_accessToken","Steampy_user_agent","Steampy_notice"],
+      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_user_agent","Steampy_Price","Steampy_Price2","Steampy_accessToken","Steampy_purchase","Steampy_notice1","Steampy_notice2"],
       "settings": [
         {
           "id": "Steampy_Cookie",
@@ -46,6 +46,13 @@
           "desc": "在这里添加Steampy的accessToken"
         },
         {
+          "id": "Steampy_user_agent",
+          "name": "Steampy_user_agent",
+          "val": "",
+          "type": "text",
+          "desc": "在这里添加user_agent"
+        },
+        {
           "id": "Steampy_name",
           "name": "Steampy_name",
           "val": "",
@@ -60,24 +67,45 @@
           "desc": "在这里添加Steampy的id,多个用&分开"
         },
         {
-          "id": "Steampy_user_agent",
-          "name": "Steampy_user_agent",
+          "id": "Steampy_Price",
+          "name": "Steampy自动下单价格",
           "val": "",
           "type": "text",
-          "desc": "在这里添加user_agent"
+          "desc": "在这里满意的价格添加监控到后立刻下单，不会付款需要打开app或者网页版付款,需打开自动下单开关并且对应id和名字多个价格用&隔开"
         },
         {
-            "id": "Steampy_notice",
+          "id": "Steampy_Price2",
+          "name": "Steampy自动下单价格浮动",
+          "val": "",
+          "type": "text",
+          "desc": "下单价格浮动多少,比如下单价格是10则浮动10就是10到20之间"
+        },
+        {
+            "id": "Steampy_purchase",
+            "name": "steampy自动下单",
+            "val": false,
+            "type": "boolean",
+            "desc": "默认关闭"
+          },
+        {
+            "id": "Steampy_notice1",
             "name": "价格无变化是否通知",
             "val": false,
             "type": "boolean",
             "desc": "默认关闭"
+          },
+          {
+            "id": "Steampy_notice2",
+            "name": "价格变化是否通知",
+            "val": true,
+            "type": "boolean",
+            "desc": "默认开启"
           }
       ],
       "script": "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/task/Steampy.js",
       "author": "@anyeyey",
       "version": "1.0.0",
-      "desc": "监控 Steampy cdkey并发送通知,多个数据用&分开,Cookie accessToken只需要一个就可以",
+      "desc": "监控 Steampy cdkey并送通知,多个数据用&分开,Cookie accessToken只需要一个就可以",
       "icons": [
         "https://raw.githubusercontent.com/anyehttp/quantumult-x/main/ico/AppStore.png"
       ]
