@@ -29,7 +29,7 @@
     {
       "id": "Steampy",
       "name": "Steampy监控",
-      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_user_agent","Steampy_Price","Steampy_Price2","Steampy_accessToken","Steampy_purchase","Steampy_notice1","Steampy_notice2"],
+      "keys": ["Steampy_Cookie","Steampy_name","Steampy_id","Steampy_user_agent","Steampy_Price","Steampy_Price2","Steampy_accessToken","Steampy_purchase","Steampy_notice1","Steampy_notice2","Steampy_sound"],
       "settings": [
         {
           "id": "Steampy_Cookie",
@@ -97,6 +97,13 @@
           {
             "id": "Steampy_notice2",
             "name": "价格变化是否通知",
+            "val": true,
+            "type": "boolean",
+            "desc": "默认开启"
+          },
+          {
+            "id": "Steampy_sound",
+            "name": "下单后是否通知带声音",
             "val": true,
             "type": "boolean",
             "desc": "默认开启"
