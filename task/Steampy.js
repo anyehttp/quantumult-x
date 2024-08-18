@@ -141,7 +141,7 @@ async function getList(id, name, index) {
         };
         steampyData.Steampy_id = steampyId;
         writeLocalData(steampyData);
-        return `${name}-id:${id}-${steamName}-${ccy}-${keyPrice}-库存 ${stock}`;
+        return `${name}-${steamName}-${ccy}-${keyPrice}-库存 ${stock}`;
     } else {
         // ID 存在，检查价格是否改变
         const previousPrice = steampyId[id].price;
@@ -159,7 +159,7 @@ async function getList(id, name, index) {
 
                 // 通知处理
                 if (notice2) {
-                    const noticeMsg = `价格变化 ${name}-id:${id}-${steamName}-${ccy}-从 ${previousPrice} 变为 ${keyPrice}-库存 ${stock}`;
+                    const noticeMsg = `价格变化 ${name}-${steamName}-${ccy}-从 ${previousPrice} 变为 ${keyPrice}-库存 ${stock}`;
                     if (purchase && (keyPrice <= minPrice || (keyPrice > minPrice && keyPrice <= maxPrice))) {
                         const purchaseData = {};
                         let orderResp;
@@ -188,13 +188,13 @@ async function getList(id, name, index) {
                     }
                 } else if (notice) {
                     // 价格无变化且通知开启
-                    return `${name}-id:${id} 无变化`;
+                    return `${name} 无变化`;
                 }
             } else {
                 // 如果目标价格为 '#'，则跳过下单逻辑
                 console.log(`${name} 目标价格为 # 跳过下单`);
                 if (notice2) {
-                    return `价格变化 ${name}-id:${id}-${steamName}-${ccy}-从 ${previousPrice} 变为 ${keyPrice}-库存 ${stock}`;
+                    return `价格变化 ${name}-${steamName}-${ccy}-从 ${previousPrice} 变为 ${keyPrice}-库存 ${stock}`;
                 }
             }
         } else if (notice) {
