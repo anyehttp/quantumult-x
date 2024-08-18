@@ -1,7 +1,7 @@
 /*
 AppStore价格查询脚本 @anyeyey
 
-群组：https://t.me/IPAs_Dd频道：https://t.me/IPAs_share
+群组：https://t.me/+A1cOYwvOdeI4MWNl 频道：https://t.me/IPAs_share
 
 boxjs：https://raw.githubusercontent.com/anyehttp/quantumult-x/main/boxjs/anye_boxjs.json
 
