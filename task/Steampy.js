@@ -1,5 +1,5 @@
 /*
-Steampy cdkey监控脚本 @anyeyey
+Steampy cdkey监控脚本+自动下单脚本 @anyeyey
 
 ！！！此脚本只监控网页端app不知道为什么跟网页端不同步
 
