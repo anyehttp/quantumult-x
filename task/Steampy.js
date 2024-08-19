@@ -131,7 +131,8 @@ async function getList(id, name, index) {
 
     if (!resp.result || !resp.result.content || resp.result.content.length === 0) {
         console.warn(`${name} 查询不到 cdkey 信息`);
-        return `${name} 查询不到 cdkey 信息`;
+        $.log(`${JSON.stringify(resp.message)}`)
+        return `${name} 查询不到 cdkey 信息 ${JSON.stringify(resp.message)} ❌`;
     }
 
     const { steamName, ccy, keyPrice, stock, saleId } = resp.result.content[0];
