@@ -2,7 +2,12 @@
 Steampy cdkey监控脚本+自动下单脚本 @anyeyey
 
 ！！！此脚本只监控网页端app不知道为什么跟网页端不同步
-
+cookie用app的时间长
+cookie用app的时间长
+cookie用app的时间长
+cookie用app的时间长
+cookie用app的时间长
+cookie用app的时间长
 
 群组：https://t.me/+A1cOYwvOdeI4MWNl 频道：https://t.me/IPAs_share
 
