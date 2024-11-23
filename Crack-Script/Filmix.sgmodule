@@ -6,4 +6,4 @@
 hostname =  %APPEND% appv2.filmix.com
 
 [Script]
-Filmix破解 = type=http-response,pattern=https:\/\/appv2\.filmix\.com\.cn\/api\/v4\/users,requires-body=1,max-size=0,binary-body-mode=0,script-path=FilMiX破解.js
+Filmix破解 = type=http-response,pattern=https:\/\/appv2\.filmix\.com\.cn\/api\/v4\/users,requires-body=1,max-size=0,binary-body-mode=0,script-path=https://raw.githubusercontent.com/anyehttp/quantumult-x/refs/heads/main/Crack-Script/Filmix.sgmodule
