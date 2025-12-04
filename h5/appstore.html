@@ -1,158 +1,458 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>应用安装中心 - Surge H5</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Surge IPA Installer</title>
 <style>
-body {
-    background: #f5f5f7;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial;
-}
-.container {
-    padding: 20px;
-}
-.card {
-    background: white;
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-input, button, select {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-button {
-    background: #007aff;
-    color: white;
-    border: none;
-}
-button:active {
-    opacity: 0.6;
-}
-.result {
-    margin-top: 15px;
-    padding: 10px;
-    background: #eee;
-    border-radius: 8px;
-    font-size: 14px;
-    white-space: pre-wrap;
-    word-break: break-all;
-}
-.app-item {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-}
+  :root{--bg:#f5f5f7;--card:#fff;--accent:#007aff;--muted:#666}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial;background:var(--bg);color:#111}
+  .wrap{padding:14px;padding-bottom:90px}
+  .card{background:var(--card);padding:12px;border-radius:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+  input,select,button,textarea{width:100%;box-sizing:border-box;font-size:15px;padding:10px;border-radius:8px;border:1px solid #ddd}
+  button{background:var(--accent);color:#fff;border:none}
+  .tabbar{position:fixed;left:0;right:0;bottom:0;height:62px;display:flex;background:#fff;border-top:1px solid #e6e6e6}
+  .tabbar button{flex:1;border:0;background:transparent;font-size:13px;padding:8px}
+  .hidden{display:none}
+  .title{font-weight:600;margin-bottom:8px}
+  .row{display:flex;gap:8px}
+  .half{flex:1}
+  .result{white-space:pre-wrap;font-size:13px;color:var(--muted);margin-top:8px}
+  .app-item{display:flex;gap:10px;align-items:center;padding:8px;border-radius:8px;border:1px solid #eee;margin-bottom:8px;background:#fff}
+  .app-item img{width:56px;height:56px;border-radius:12px;object-fit:cover}
+  .app-info{flex:1}
+  .small{font-size:13px;color:#666}
+  .btn-row{display:flex;gap:8px}
+  .tiny{padding:6px 8px;font-size:13px;border-radius:8px}
+  .danger{background:#ff3b30}
+  .ok{background:#34c759}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
 
-<h2>应用安装中心</h2>
+  <!-- SEARCH PAGE -->
+  <div id="page-search" class="page">
+    <div class="card">
+      <div class="title">搜索应用</div>
+      <input id="searchInput" placeholder="输入应用名称或 Bundle ID（例如 WeChat / com.tencent.xin）" />
+      <div style="height:10px"></div>
 
-<!-- 🔍 1. 搜索应用 -->
-<div class="card">
-    <h3>🔍 搜索应用</h3>
-    <input id="searchInput" placeholder="输入关键词，例如：微信、抖音">
-    <button onclick="searchApp()">搜索</button>
-    <div id="searchResult" class="result"></div>
+      <div class="row">
+        <select id="regionSelect" class="half">
+          <option value="US">美国 (US)</option>
+          <option value="CN" selected>中国 (CN)</option>
+          <option value="JP">日本 (JP)</option>
+          <option value="HK">香港 (HK)</option>
+          <option value="TW">台湾 (TW)</option>
+          <option value="GB">英国 (GB)</option>
+          <option value="DE">德国 (DE)</option>
+        </select>
+
+        <select id="limitSelect" class="half">
+          <option value="5">5 条</option>
+          <option value="10" selected>10 条</option>
+          <option value="20">20 条</option>
+        </select>
+      </div>
+
+      <div style="height:8px"></div>
+      <select id="deviceSelect">
+        <option value="iphone">iPhone</option>
+        <option value="ipad">iPad</option>
+        <option value="both" selected>同时搜索 iPhone 和 iPad</option>
+      </select>
+
+      <div style="height:12px"></div>
+      <button onclick="doSearch()">开始搜索</button>
+      <div id="searchMsg" class="result"></div>
+    </div>
+
+    <div id="searchResults"></div>
+  </div>
+
+  <!-- TASKS PAGE -->
+  <div id="page-tasks" class="page hidden">
+    <div class="card">
+      <div class="title">下载任务（前端任务管理）</div>
+      <div class="small">说明：后端返回 IPA 直链，前端将把任务信息保存到 localStorage。要安装请点击“安装”（调用 xiaobai.app/install?url=...）。</div>
+    </div>
+    <div id="taskList"></div>
+  </div>
+
+  <!-- FILES PAGE -->
+  <div id="page-files" class="page hidden">
+    <div class="card">
+      <div class="title">已登记文件（本地）</div>
+      <div class="small">若你已在设备上保存 .ipa，可手动添加记录以便安装。</div>
+      <div style="height:8px"></div>
+      <input id="fileLabel" placeholder="文件显示名称，例如 微信 8.0.0" />
+      <input id="fileUrl" placeholder="IPA 下载链接 或 本地可访问链接" style="margin-top:8px"/>
+      <div style="height:8px"></div>
+      <div class="row">
+        <button onclick="addFile()" class="half">添加文件</button>
+        <button onclick="clearFiles()" class="half tiny danger">清空列表</button>
+      </div>
+    </div>
+    <div id="fileList"></div>
+  </div>
+
+  <!-- SETTINGS & ACCOUNTS PAGE -->
+  <div id="page-settings" class="page hidden">
+    <div class="card">
+      <div class="title">后端地址（默认已配置）</div>
+      <input id="apiEndpoint" placeholder="Apple API 地址 (例如 https://apple-api.com)" />
+      <input id="installEndpoint" placeholder="安装接口 (例如 https://xiaobai.app)" style="margin-top:8px"/>
+      <div style="height:8px"></div>
+      <div class="row">
+        <button onclick="saveEndpoints()" class="half">保存</button>
+        <button onclick="resetEndpoints()" class="half tiny">恢复默认</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">多账号登录管理</div>
+
+      <div id="accountForm">
+        <input id="acctName" placeholder="昵称（例如 main / alt1）" />
+        <input id="acctEmail" placeholder="Apple ID（邮箱）" style="margin-top:8px" />
+        <input id="acctPassword" placeholder="密码（只用于登录；前端本地保存）" style="margin-top:8px" />
+        <div style="height:8px"></div>
+        <div class="row">
+          <button onclick="acctLogin()" class="half">登录并保存</button>
+          <button onclick="acctAddLocal()" class="half tiny">仅本地保存</button>
+        </div>
+      </div>
+
+      <div style="height:10px"></div>
+      <div id="accountsList"></div>
+    </div>
+  </div>
+
 </div>
 
-<!-- 📌 2. 查询版本 -->
-<div class="card">
-    <h3>📌 查询应用版本</h3>
-    <input id="bundleIdInput" placeholder="Bundle ID，例如 com.tencent.xin">
-    <button onclick="queryVersion()">查询版本</button>
-    <div id="versionResult" class="result"></div>
-</div>
-
-<!-- 👤 3. 已购列表 -->
-<div class="card">
-    <h3>👤 查询已购应用</h3>
-    <button onclick="purchasedList()">加载已购列表</button>
-    <div id="purchaseResult" class="result"></div>
-</div>
-
-<!-- 📥 4. 下载 IPA -->
-<div class="card">
-    <h3>📥 下载 IPA</h3>
-    <input id="downloadBundle" placeholder="Bundle ID">
-    <input id="downloadVersion" placeholder="版本号（可选）">
-    <button onclick="downloadIPA()">下载 IPA</button>
-    <div id="downloadResult" class="result"></div>
-</div>
-
-<!-- 📲 5. 安装 -->
-<div class="card">
-    <h3>📲 安装 IPA</h3>
-    <input id="installUrl" placeholder="IPA 下载链接">
-    <button onclick="install()">安装</button>
-    <div id="installResult" class="result"></div>
-</div>
-
+<!-- bottom tab -->
+<div class="tabbar">
+  <button onclick="navTo('search')">🔎 搜索</button>
+  <button onclick="navTo('tasks')">⬇️ 任务</button>
+  <button onclick="navTo('files')">📁 文件</button>
+  <button onclick="navTo('settings')">⚙️ 设置</button>
 </div>
 
 <script>
-const API = "https://apple-api.com";
-const INSTALL_API = "https://xiaobai.app";
+/*
+  appstore.html
+  - 纯原生 JS
+  - 严格映射你提供的后端接口（见说明）
+  - 多账号：localStorage 管理；登录会调用后端 /auth/login（后端会缓存登录响应）
+*/
 
-async function request(url, method = "GET", data = null) {
-    try {
-        const opt = {
-            method,
-            headers: { "Content-Type": "application/json" }
-        };
-        if (data) opt.body = JSON.stringify(data);
+// ---------- 默认后端地址（可在设置页修改） ----------
+const DEFAULT_API = 'https://apple-api.com';      // 你后端服务
+const DEFAULT_INSTALL = 'https://xiaobai.app';    // 安装脚本地址
 
-        const res = await fetch(url, opt);
-        return await res.json();
-    } catch (e) {
-        return { error: e.toString() };
-    }
+// load settings
+const settings = {
+  api: localStorage.getItem('apiEndpoint') || DEFAULT_API,
+  install: localStorage.getItem('installEndpoint') || DEFAULT_INSTALL
+};
+
+// helper
+function $(id){return document.getElementById(id)}
+function navTo(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+  $('page-'+name).classList.remove('hidden');
+  if(name==='tasks') renderTasks();
+  if(name==='files') renderFiles();
+  if(name==='settings') renderAccounts();
 }
 
-/* 搜索应用 */
-async function searchApp() {
-    const kw = document.getElementById("searchInput").value.trim();
-    const res = await request(`${API}/store/search?q=${encodeURIComponent(kw)}`);
-    document.getElementById("searchResult").innerText = JSON.stringify(res, null, 2);
+// ---------- SEARCH ----------
+async function doSearch(){
+  const q = $('searchInput').value.trim();
+  if(!q){ $('searchMsg').innerText = '请输入搜索关键词或 Bundle ID'; return; }
+  const region = $('regionSelect').value;
+  const limit = $('limitSelect').value;
+  const device = $('deviceSelect').value;
+
+  $('searchMsg').innerText = '正在搜索...';
+  try{
+    // 使用你后端约定的接口： GET /search?keyword=xx&country=US&limit=10&device=iphone
+    const url = `${settings.api}/search?keyword=${encodeURIComponent(q)}&country=${encodeURIComponent(region)}&limit=${limit}&device=${encodeURIComponent(device)}`;
+    const r = await fetch(url);
+    const json = await r.json();
+    if(!json) throw new Error('无响应');
+    renderSearchResults(json.data || json);
+    $('searchMsg').innerText = json.success === false ? JSON.stringify(json.error||json) : '搜索完成';
+  }catch(e){
+    $('searchMsg').innerText = '搜索失败：'+e.message;
+  }
 }
 
-/* 查询版本 */
-async function queryVersion() {
-    const bundleId = document.getElementById("bundleIdInput").value.trim();
-    const res = await request(`${API}/version?bundleId=${bundleId}`);
-    document.getElementById("versionResult").innerText = JSON.stringify(res, null, 2);
+function renderSearchResults(list){
+  const wrap = $('searchResults'); wrap.innerHTML='';
+  if(!list || !list.length){ wrap.innerHTML='<div class="card small">未找到结果</div>'; return;}
+  list.forEach(app=>{
+    const div = document.createElement('div'); div.className='card app-item';
+    const icon = document.createElement('img'); icon.src = app.artworkUrl100 || app.icon || '';
+    const info = document.createElement('div'); info.className='app-info';
+    const name = document.createElement('div'); name.innerHTML = `<strong>${app.trackName || app.name || app.title || app.bundleId}</strong>`;
+    const sub = document.createElement('div'); sub.className='small'; sub.innerText = `Bundle：${app.bundleId || app.bundleId || ''}  版本：${app.version || app.displayVersion || ''}`;
+    const btnRow = document.createElement('div'); btnRow.className='btn-row';
+
+    const dlBtn = document.createElement('button'); dlBtn.className='tiny'; dlBtn.innerText='获取 IPA';
+    dlBtn.onclick = ()=>startDownloadTask(app);
+
+    const verBtn = document.createElement('button'); verBtn.className='tiny'; verBtn.innerText='版本';
+    verBtn.onclick = ()=>showVersion(app);
+
+    btnRow.appendChild(dlBtn); btnRow.appendChild(verBtn);
+
+    info.appendChild(name); info.appendChild(sub); info.appendChild(btnRow);
+    div.appendChild(icon); div.appendChild(info);
+    wrap.appendChild(div);
+  });
 }
 
-/* 已购 */
-async function purchasedList() {
-    const res = await request(`${API}/store/purchased`);
-    document.getElementById("purchaseResult").innerText = JSON.stringify(res, null, 2);
+// ---------- VERSION (simple modal-like) ----------
+async function showVersion(app){
+  const bundle = app.bundleId || app.bundle || app.trackId;
+  const country = $('regionSelect').value || 'CN';
+  const url = `${settings.api}/version?bundleId=${encodeURIComponent(bundle)}&country=${encodeURIComponent(country)}`;
+  try{
+    const r = await fetch(url); const json = await r.json();
+    alert('版本结果：\n' + JSON.stringify(json, null, 2));
+  }catch(e){
+    alert('版本查询失败：' + e.message);
+  }
 }
 
-/* 下载 IPA */
-async function downloadIPA() {
-    const bundle = document.getElementById("downloadBundle").value.trim();
-    const ver = document.getElementById("downloadVersion").value.trim();
-    const url = `${API}/store/download?bundleId=${bundle}${ver ? "&version=" + ver : ""}`;
-    const res = await request(url);
-    document.getElementById("downloadResult").innerText = JSON.stringify(res, null, 2);
+// ---------- DOWNLOAD TASKS (frontend managed) ----------
+function loadTasks(){ return JSON.parse(localStorage.getItem('downloadTasks')||'[]'); }
+function saveTasks(t){ localStorage.setItem('downloadTasks', JSON.stringify(t)); }
+
+async function startDownloadTask(app){
+  // app may have trackId or bundleId
+  const trackId = app.trackId || app.trackId || '';
+  const bundleId = app.bundleId || app.bundleId || app.bundle || '';
+  const version = app.version || app.displayVersion || '';
+
+  const country = $('regionSelect').value || 'CN';
+  const q = `${settings.api}/store/download?${trackId ? 'trackId='+encodeURIComponent(trackId) : ''}${bundleId ? '&bundleId='+encodeURIComponent(bundleId) : ''}${version ? '&version='+encodeURIComponent(version) : ''}&country=${encodeURIComponent(country)}`;
+
+  try{
+    const r = await fetch(q);
+    const json = await r.json();
+    if(!(json && (json.data && json.data.url || json.url))) throw new Error('后端未返回 IPA 链接');
+    const ipaUrl = (json.data && json.data.url) || json.url;
+
+    // create front-end task entry
+    const tasks = loadTasks();
+    const id = 't_'+Date.now();
+    const t = { id, name: app.trackName || app.name || bundleId, bundleId, version, trackId, ipaUrl, status:'ready', createdAt: Date.now() };
+    tasks.unshift(t); saveTasks(tasks);
+    renderTasks();
+    alert('已创建任务，可在“任务”页查看并安装。');
+  }catch(e){
+    alert('获取 IPA 链接失败：' + e.message);
+  }
 }
 
-/* 安装 IPA */
-async function install() {
-    const url = document.getElementById("installUrl").value.trim();
-    const res = await request(`${INSTALL_API}/install?url=${encodeURIComponent(url)}`);
-    document.getElementById("installResult").innerText = JSON.stringify(res, null, 2);
+function renderTasks(){
+  const wrap = $('taskList'); wrap.innerHTML='';
+  const tasks = loadTasks();
+  if(!tasks.length) { wrap.innerHTML='<div class="card small">当前没有下载任务</div>'; return;}
+  tasks.forEach(t=>{
+    const div = document.createElement('div'); div.className='card';
+    div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+      <div><strong>${t.name}</strong><div class="small">Bundle: ${t.bundleId || '-'}  版本: ${t.version || '-'}</div></div>
+      <div>
+        <button class="tiny" onclick="openIpa('${encodeURIComponent(t.ipaUrl)}')">打开链接</button>
+        <button class="tiny ok" onclick="installFromTask('${t.id}')">安装</button>
+        <button class="tiny danger" onclick="removeTask('${t.id}')">删除</button>
+      </div>
+    </div>
+    <div class="small" style="margin-top:8px">状态：${t.status}  ·  创建于：${new Date(t.createdAt).toLocaleString()}</div>
+    <div class="result" id="task_${t.id}"></div>`;
+    wrap.appendChild(div);
+  });
 }
+
+function openIpa(ipaEnc){
+  const ipa = decodeURIComponent(ipaEnc);
+  // 在浏览器中打开 ipa 链接
+  window.open(ipa, '_blank');
+}
+
+function removeTask(id){
+  let tasks = loadTasks(); tasks = tasks.filter(t=>t.id!==id); saveTasks(tasks); renderTasks();
+}
+
+// install via xiaobai.app
+async function installFromTask(id){
+  const tasks = loadTasks(); const t = tasks.find(x=>x.id===id);
+  if(!t){ alert('任务不存在'); return; }
+  const ipa = t.ipaUrl;
+  if(!ipa){ alert('无 ipa 链接'); return; }
+  if(!confirm(`确定调用安装接口安装：\n${ipa}`)) return;
+
+  try{
+    const url = `${settings.install}/install?url=${encodeURIComponent(ipa)}`;
+    const r = await fetch(url);
+    const json = await r.json();
+    t.status = 'installed';
+    saveTasks(tasks);
+    renderTasks();
+    alert('安装接口返回：\n' + JSON.stringify(json, null, 2));
+  }catch(e){
+    alert('安装调用失败：'+e.message);
+  }
+}
+
+// ---------- FILES (local "registered" ipa) ----------
+function loadFiles(){ return JSON.parse(localStorage.getItem('localFiles')||'[]'); }
+function saveFiles(f){ localStorage.setItem('localFiles', JSON.stringify(f)); }
+
+function renderFiles(){
+  const wrap = $('fileList'); wrap.innerHTML='';
+  const files = loadFiles();
+  if(!files.length){ wrap.innerHTML='<div class="card small">暂无文件</div>'; return; }
+  files.forEach(f=>{
+    const d = document.createElement('div'); d.className='card';
+    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+      <div><strong>${f.label}</strong><div class="small">${f.url}</div></div>
+      <div>
+        <button class="tiny" onclick="openIpa('${encodeURIComponent(f.url)}')">打开</button>
+        <button class="tiny ok" onclick="installFile('${encodeURIComponent(f.url)}')">安装</button>
+        <button class="tiny danger" onclick="deleteFile('${f.id}')">删除</button>
+      </div>
+    </div>`;
+    wrap.appendChild(d);
+  });
+}
+
+function addFile(){
+  const label = $('fileLabel').value.trim(); const url = $('fileUrl').value.trim();
+  if(!label || !url){ alert('请填写名称与链接'); return; }
+  const files = loadFiles(); files.unshift({ id:'f_'+Date.now(), label, url }); saveFiles(files); $('fileLabel').value=''; $('fileUrl').value=''; renderFiles();
+}
+
+function deleteFile(id){ let files = loadFiles(); files = files.filter(f=>f.id!==id); saveFiles(files); renderFiles(); }
+function clearFiles(){ if(!confirm('确定清空所有本地文件记录吗？')) return; localStorage.removeItem('localFiles'); renderFiles(); }
+async function installFile(urlEnc){ const url = decodeURIComponent(urlEnc); if(!confirm('调用安装接口安装\n'+url)) return; try{ const r = await fetch(`${settings.install}/install?url=${encodeURIComponent(url)}`); const j = await r.json(); alert('安装接口返回：\n'+JSON.stringify(j,null,2)); }catch(e){ alert('安装失败：'+e.message); } }
+
+// ---------- SETTINGS & ACCOUNTS ----------
+function saveEndpoints(){
+  settings.api = $('apiEndpoint').value.trim() || DEFAULT_API;
+  settings.install = $('installEndpoint').value.trim() || DEFAULT_INSTALL;
+  localStorage.setItem('apiEndpoint', settings.api);
+  localStorage.setItem('installEndpoint', settings.install);
+  alert('保存成功');
+}
+
+function resetEndpoints(){
+  localStorage.removeItem('apiEndpoint'); localStorage.removeItem('installEndpoint');
+  settings.api = DEFAULT_API; settings.install = DEFAULT_INSTALL;
+  $('apiEndpoint').value = settings.api; $('installEndpoint').value = settings.install;
+  alert('已恢复默认并保存');
+}
+
+// account storage (local)
+function loadAccounts(){ return JSON.parse(localStorage.getItem('apple_accounts') || '{"current":null,"list":{}}'); }
+function saveAccounts(obj){ localStorage.setItem('apple_accounts', JSON.stringify(obj)); }
+
+function renderAccounts(){
+  $('apiEndpoint').value = settings.api; $('installEndpoint').value = settings.install;
+  const box = $('accountsList'); box.innerHTML = '';
+  const acc = loadAccounts();
+  const keys = Object.keys(acc.list || {});
+  if(!keys.length){ box.innerHTML = '<div class="small">暂无已保存账号</div>'; return; }
+  keys.forEach(k=>{
+    const a = acc.list[k];
+    const div = document.createElement('div'); div.className='card';
+    div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+      <div><strong>${k}</strong><div class="small">${a.appleId || a.email || ''}</div></div>
+      <div>
+        <button class="tiny" onclick="useAccount('${k}')">切换</button>
+        <button class="tiny" onclick="deleteAccount('${k}')">删除</button>
+      </div>
+    </div>`;
+    box.appendChild(div);
+  });
+}
+
+async function acctLogin(){
+  // 登录并保存（会调用后端 /auth/login）
+  const name = $('acctName').value.trim(); const email = $('acctEmail').value.trim(); const pwd = $('acctPassword').value.trim();
+  if(!name || !email || !pwd){ alert('请填写昵称、Apple ID 与密码'); return; }
+
+  // 调用后端登录接口（POST /auth/login）
+  try{
+    const r = await fetch(`${settings.api}/auth/login`, {
+      method:'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ appleId: email, password: pwd })
+    });
+    const j = await r.json();
+    if(!j || j.success === false){ alert('登录失败：' + JSON.stringify(j.error || j)); return; }
+    // 登录成功 - 将账号加入本地列表并设置为当前
+    const accounts = loadAccounts();
+    accounts.list[name] = { appleId: email, meta: j.data?.loginData || j.data || j };
+    accounts.current = name;
+    saveAccounts(accounts);
+    $('acctName').value=''; $('acctEmail').value=''; $('acctPassword').value='';
+    renderAccounts();
+    alert('登录并保存成功（已设置为当前账号）。\n后端已缓存会话（若后端实现缓存则会生效）。');
+  }catch(e){
+    alert('登录请求失败：'+e.message);
+  }
+}
+
+function acctAddLocal(){
+  const name = $('acctName').value.trim(); const email = $('acctEmail').value.trim(); const pwd = $('acctPassword').value.trim();
+  if(!name || !email){ alert('请输入昵称和 Apple ID'); return; }
+  const accounts = loadAccounts();
+  accounts.list[name] = { appleId: email, note: 'local-only' };
+  accounts.current = name;
+  saveAccounts(accounts); renderAccounts();
+  $('acctName').value=''; $('acctEmail').value=''; $('acctPassword').value='';
+  alert('已保存至本地（未调用后端）。');
+}
+
+function useAccount(name){
+  const accounts = loadAccounts();
+  if(!accounts.list[name]) return alert('账号不存在');
+  accounts.current = name;
+  saveAccounts(accounts);
+  // 如果该账号包含 meta（后端登录响应），尝试通知后端切换会话（后端 AuthService.login 会检查 appleId）
+  const info = accounts.list[name];
+  if(info.meta && info.meta.accountInfo && info.meta.accountInfo.appleId){
+    alert('已设置为当前账号（本地）。前端将调用后端无参请求以加载当前缓存会话。');
+    // 触发后端无参 login 去读取缓存（如果后端缓存了该账号）
+    fetch(`${settings.api}/auth/refresh`, { method:'POST' })
+      .then(r=>r.json()).then(j=>{ console.log('refresh', j); alert('已请求后端刷新登录信息（若后端缓存存在则已切换）。'); })
+      .catch(e=>alert('请求后端刷新登录失败：'+e.message));
+  }else{
+    alert('已切换本地账号，但该项没有后端登录信息（需先通过“登录并保存”按钮进行登录）。');
+  }
+  renderAccounts();
+}
+
+function deleteAccount(name){
+  if(!confirm('删除账号：'+name+'？')) return;
+  const accounts = loadAccounts();
+  delete accounts.list[name];
+  if(accounts.current===name) accounts.current = null;
+  saveAccounts(accounts);
+  renderAccounts();
+}
+
+/* ---------- init ---------- */
+navTo('search');
+renderFiles();
+renderTasks();
+renderAccounts();
+
 </script>
 </body>
 </html>
