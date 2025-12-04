@@ -1,47 +1,72 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Surge IPA Installer</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Surge IPA Installer (纯前端)</title>
 <style>
-  :root{--bg:#f5f5f7;--card:#fff;--accent:#007aff;--muted:#666}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial;background:var(--bg);color:#111}
-  .wrap{padding:14px;padding-bottom:90px}
-  .card{background:var(--card);padding:12px;border-radius:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
-  input,select,button,textarea{width:100%;box-sizing:border-box;font-size:15px;padding:10px;border-radius:8px;border:1px solid #ddd}
-  button{background:var(--accent);color:#fff;border:none}
-  .tabbar{position:fixed;left:0;right:0;bottom:0;height:62px;display:flex;background:#fff;border-top:1px solid #e6e6e6}
-  .tabbar button{flex:1;border:0;background:transparent;font-size:13px;padding:8px}
-  .hidden{display:none}
-  .title{font-weight:600;margin-bottom:8px}
-  .row{display:flex;gap:8px}
-  .half{flex:1}
-  .result{white-space:pre-wrap;font-size:13px;color:var(--muted);margin-top:8px}
-  .app-item{display:flex;gap:10px;align-items:center;padding:8px;border-radius:8px;border:1px solid #eee;margin-bottom:8px;background:#fff}
-  .app-item img{width:56px;height:56px;border-radius:12px;object-fit:cover}
-  .app-info{flex:1}
-  .small{font-size:13px;color:#666}
-  .btn-row{display:flex;gap:8px}
-  .tiny{padding:6px 8px;font-size:13px;border-radius:8px}
-  .danger{background:#ff3b30}
-  .ok{background:#34c759}
+:root{--bg:#f5f5f7;--card:#fff;--accent:#007aff;--muted:#666}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial;background:var(--bg);color:#111}
+.wrap{padding:14px;padding-bottom:90px}
+.card{background:var(--card);padding:12px;border-radius:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+input,select,button,textarea{width:100%;box-sizing:border-box;font-size:15px;padding:10px;border-radius:8px;border:1px solid #ddd}
+button{background:var(--accent);color:#fff;border:none}
+.tabbar{position:fixed;left:0;right:0;bottom:0;height:62px;display:flex;background:#fff;border-top:1px solid #e6e6e6}
+.tabbar button{flex:1;border:0;background:transparent;font-size:13px;padding:8px}
+.hidden{display:none}
+.title{font-weight:600;margin-bottom:8px}
+.row{display:flex;gap:8px}
+.half{flex:1}
+.result{white-space:pre-wrap;font-size:13px;color:var(--muted);margin-top:8px}
+.app-item{display:flex;gap:10px;align-items:center;padding:8px;border-radius:8px;border:1px solid #eee;margin-bottom:8px;background:#fff}
+.app-item img{width:56px;height:56px;border-radius:12px;object-fit:cover}
+.app-info{flex:1}
+.small{font-size:13px;color:#666}
+.btn-row{display:flex;gap:8px;margin-top:8px}
+.tiny{padding:8px 10px;font-size:13px;border-radius:8px}
+.danger{background:#ff3b30}
+.ok{background:#34c759}
+.progress{height:8px;background:#eee;border-radius:6px;margin-top:8px;overflow:hidden}
+.progress > i{display:block;height:100%;background:var(--accent);width:0}
 </style>
 </head>
 <body>
 <div class="wrap">
+
+  <!-- LOGIN PAGE (for adding new account) -->
+  <div id="page-login" class="page hidden">
+    <div class="card">
+      <div class="title">Apple 账号登录（支持 2FA）</div>
+      <input id="loginEmail" placeholder="Apple ID（邮箱）" />
+      <input id="loginPassword" placeholder="密码" type="password" style="margin-top:8px" />
+      <div style="height:8px"></div>
+      <button onclick="doLogin()">登录</button>
+      <div id="loginMsg" class="result"></div>
+    </div>
+
+    <div id="twofaBox" class="card hidden">
+      <div class="title">输入设备发送的 6 位验证码</div>
+      <input id="twofaCode" placeholder="6 位验证码" />
+      <div style="height:8px"></div>
+      <div class="row">
+        <button class="half" onclick="submit2FA()">提交验证码</button>
+        <button class="half tiny danger" onclick="cancel2FA()">取消</button>
+      </div>
+      <div id="twofaMsg" class="result"></div>
+    </div>
+  </div>
 
   <!-- SEARCH PAGE -->
   <div id="page-search" class="page">
     <div class="card">
       <div class="title">搜索应用</div>
       <input id="searchInput" placeholder="输入应用名称或 Bundle ID（例如 WeChat / com.tencent.xin）" />
-      <div style="height:10px"></div>
+      <div style="height:8px"></div>
 
       <div class="row">
         <select id="regionSelect" class="half">
+          <option value="CN">中国 (CN)</option>
           <option value="US">美国 (US)</option>
-          <option value="CN" selected>中国 (CN)</option>
           <option value="JP">日本 (JP)</option>
           <option value="HK">香港 (HK)</option>
           <option value="TW">台湾 (TW)</option>
@@ -60,396 +85,342 @@
       <select id="deviceSelect">
         <option value="iphone">iPhone</option>
         <option value="ipad">iPad</option>
-        <option value="both" selected>同时搜索 iPhone 和 iPad</option>
+        <option value="both" selected>iPhone + iPad</option>
       </select>
 
       <div style="height:12px"></div>
-      <button onclick="doSearch()">开始搜索</button>
+      <div class="row">
+        <button class="half" onclick="doSearch()">开始搜索</button>
+        <button class="half tiny" onclick="navTo('login')">账号登录</button>
+      </div>
+
       <div id="searchMsg" class="result"></div>
     </div>
 
     <div id="searchResults"></div>
   </div>
 
+  <!-- APP DETAIL modal-ish (hidden block) -->
+  <div id="appDetailBox" class="card hidden"></div>
+
   <!-- TASKS PAGE -->
   <div id="page-tasks" class="page hidden">
     <div class="card">
-      <div class="title">下载任务（前端任务管理）</div>
-      <div class="small">说明：后端返回 IPA 直链，前端将把任务信息保存到 localStorage。要安装请点击“安装”（调用 xiaobai.app/install?url=...）。</div>
+      <div class="title">下载任务</div>
+      <div class="small">说明：后端返回 IPA 直链；前端将把链接保存为任务并检测可达性，完成后可直接安装。</div>
     </div>
     <div id="taskList"></div>
   </div>
 
-  <!-- FILES PAGE -->
-  <div id="page-files" class="page hidden">
+  <!-- ACCOUNTS PAGE -->
+  <div id="page-accounts" class="page hidden">
     <div class="card">
-      <div class="title">已登记文件（本地）</div>
-      <div class="small">若你已在设备上保存 .ipa，可手动添加记录以便安装。</div>
-      <div style="height:8px"></div>
-      <input id="fileLabel" placeholder="文件显示名称，例如 微信 8.0.0" />
-      <input id="fileUrl" placeholder="IPA 下载链接 或 本地可访问链接" style="margin-top:8px"/>
-      <div style="height:8px"></div>
-      <div class="row">
-        <button onclick="addFile()" class="half">添加文件</button>
-        <button onclick="clearFiles()" class="half tiny danger">清空列表</button>
-      </div>
+      <div class="title">多账号（本地保存登录响应）</div>
+      <div class="small">登录成功后账号会保存到本地。切换账号将请求后端刷新会话（/auth/refresh），若后端缓存了该账号会生效。</div>
     </div>
-    <div id="fileList"></div>
-  </div>
-
-  <!-- SETTINGS & ACCOUNTS PAGE -->
-  <div id="page-settings" class="page hidden">
-    <div class="card">
-      <div class="title">后端地址（默认已配置）</div>
-      <input id="apiEndpoint" placeholder="Apple API 地址 (例如 https://apple-api.com)" />
-      <input id="installEndpoint" placeholder="安装接口 (例如 https://xiaobai.app)" style="margin-top:8px"/>
-      <div style="height:8px"></div>
-      <div class="row">
-        <button onclick="saveEndpoints()" class="half">保存</button>
-        <button onclick="resetEndpoints()" class="half tiny">恢复默认</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="title">多账号登录管理</div>
-
-      <div id="accountForm">
-        <input id="acctName" placeholder="昵称（例如 main / alt1）" />
-        <input id="acctEmail" placeholder="Apple ID（邮箱）" style="margin-top:8px" />
-        <input id="acctPassword" placeholder="密码（只用于登录；前端本地保存）" style="margin-top:8px" />
-        <div style="height:8px"></div>
-        <div class="row">
-          <button onclick="acctLogin()" class="half">登录并保存</button>
-          <button onclick="acctAddLocal()" class="half tiny">仅本地保存</button>
-        </div>
-      </div>
-
-      <div style="height:10px"></div>
-      <div id="accountsList"></div>
-    </div>
+    <div id="accountsList"></div>
   </div>
 
 </div>
 
-<!-- bottom tab -->
 <div class="tabbar">
   <button onclick="navTo('search')">🔎 搜索</button>
   <button onclick="navTo('tasks')">⬇️ 任务</button>
-  <button onclick="navTo('files')">📁 文件</button>
-  <button onclick="navTo('settings')">⚙️ 设置</button>
+  <button onclick="navTo('accounts')">👤 账号</button>
+  <button onclick="navTo('login')">＋ 登录</button>
 </div>
 
 <script>
 /*
-  appstore.html
-  - 纯原生 JS
-  - 严格映射你提供的后端接口（见说明）
-  - 多账号：localStorage 管理；登录会调用后端 /auth/login（后端会缓存登录响应）
+  Surge 前端 H5：
+  - 使用后端路由（来自你提供的 AppleStoreAPI.js）：
+    POST /auth/login （body: { appleId, password, code? }）
+    POST /auth/refresh （无参）
+    GET  /apps/search/:term?limit=&country=
+    GET  /apps/:id?appVerId=  -> 返回 appInfo（含 url 字段）
+    GET  /apps/:id/versions?direction=&count=&appVerId=
+    GET  /apps/:id/versions/legacy?selset=
+  - 安装 manifest 使用：https://xiaobai.app/?name=...&displayVersion=...&id=...&bundleId=...
+    然后跳转 itms-services://?action=download-manifest&url=MANIFEST_URL
 */
 
-// ---------- 默认后端地址（可在设置页修改） ----------
-const DEFAULT_API = 'https://apple-api.com';      // 你后端服务
-const DEFAULT_INSTALL = 'https://xiaobai.app';    // 安装脚本地址
+// 默认后端域名（固定在 Surge 内运行）
+const API = 'https://apple-api.com';
+const INSTALL_HOST = 'https://xiaobai.app';
 
-// load settings
-const settings = {
-  api: localStorage.getItem('apiEndpoint') || DEFAULT_API,
-  install: localStorage.getItem('installEndpoint') || DEFAULT_INSTALL
-};
-
-// helper
-function $(id){return document.getElementById(id)}
-function navTo(name){
+// ---------- navigation ----------
+function navTo(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-  $('page-'+name).classList.remove('hidden');
-  if(name==='tasks') renderTasks();
-  if(name==='files') renderFiles();
-  if(name==='settings') renderAccounts();
+  document.getElementById('page-'+page).classList.remove('hidden');
+  document.getElementById('loginMsg').innerText=''; document.getElementById('searchMsg').innerText='';
+  if(page==='tasks') renderTasks();
+  if(page==='accounts') renderAccounts();
 }
 
-// ---------- SEARCH ----------
-async function doSearch(){
-  const q = $('searchInput').value.trim();
-  if(!q){ $('searchMsg').innerText = '请输入搜索关键词或 Bundle ID'; return; }
-  const region = $('regionSelect').value;
-  const limit = $('limitSelect').value;
-  const device = $('deviceSelect').value;
-
-  $('searchMsg').innerText = '正在搜索...';
-  try{
-    // 使用你后端约定的接口： GET /search?keyword=xx&country=US&limit=10&device=iphone
-    const url = `${settings.api}/search?keyword=${encodeURIComponent(q)}&country=${encodeURIComponent(region)}&limit=${limit}&device=${encodeURIComponent(device)}`;
-    const r = await fetch(url);
-    const json = await r.json();
-    if(!json) throw new Error('无响应');
-    renderSearchResults(json.data || json);
-    $('searchMsg').innerText = json.success === false ? JSON.stringify(json.error||json) : '搜索完成';
-  }catch(e){
-    $('searchMsg').innerText = '搜索失败：'+e.message;
-  }
-}
-
-function renderSearchResults(list){
-  const wrap = $('searchResults'); wrap.innerHTML='';
-  if(!list || !list.length){ wrap.innerHTML='<div class="card small">未找到结果</div>'; return;}
-  list.forEach(app=>{
-    const div = document.createElement('div'); div.className='card app-item';
-    const icon = document.createElement('img'); icon.src = app.artworkUrl100 || app.icon || '';
-    const info = document.createElement('div'); info.className='app-info';
-    const name = document.createElement('div'); name.innerHTML = `<strong>${app.trackName || app.name || app.title || app.bundleId}</strong>`;
-    const sub = document.createElement('div'); sub.className='small'; sub.innerText = `Bundle：${app.bundleId || app.bundleId || ''}  版本：${app.version || app.displayVersion || ''}`;
-    const btnRow = document.createElement('div'); btnRow.className='btn-row';
-
-    const dlBtn = document.createElement('button'); dlBtn.className='tiny'; dlBtn.innerText='获取 IPA';
-    dlBtn.onclick = ()=>startDownloadTask(app);
-
-    const verBtn = document.createElement('button'); verBtn.className='tiny'; verBtn.innerText='版本';
-    verBtn.onclick = ()=>showVersion(app);
-
-    btnRow.appendChild(dlBtn); btnRow.appendChild(verBtn);
-
-    info.appendChild(name); info.appendChild(sub); info.appendChild(btnRow);
-    div.appendChild(icon); div.appendChild(info);
-    wrap.appendChild(div);
-  });
-}
-
-// ---------- VERSION (simple modal-like) ----------
-async function showVersion(app){
-  const bundle = app.bundleId || app.bundle || app.trackId;
-  const country = $('regionSelect').value || 'CN';
-  const url = `${settings.api}/version?bundleId=${encodeURIComponent(bundle)}&country=${encodeURIComponent(country)}`;
-  try{
-    const r = await fetch(url); const json = await r.json();
-    alert('版本结果：\n' + JSON.stringify(json, null, 2));
-  }catch(e){
-    alert('版本查询失败：' + e.message);
-  }
-}
-
-// ---------- DOWNLOAD TASKS (frontend managed) ----------
-function loadTasks(){ return JSON.parse(localStorage.getItem('downloadTasks')||'[]'); }
-function saveTasks(t){ localStorage.setItem('downloadTasks', JSON.stringify(t)); }
-
-async function startDownloadTask(app){
-  // app may have trackId or bundleId
-  const trackId = app.trackId || app.trackId || '';
-  const bundleId = app.bundleId || app.bundleId || app.bundle || '';
-  const version = app.version || app.displayVersion || '';
-
-  const country = $('regionSelect').value || 'CN';
-  const q = `${settings.api}/store/download?${trackId ? 'trackId='+encodeURIComponent(trackId) : ''}${bundleId ? '&bundleId='+encodeURIComponent(bundleId) : ''}${version ? '&version='+encodeURIComponent(version) : ''}&country=${encodeURIComponent(country)}`;
-
-  try{
-    const r = await fetch(q);
-    const json = await r.json();
-    if(!(json && (json.data && json.data.url || json.url))) throw new Error('后端未返回 IPA 链接');
-    const ipaUrl = (json.data && json.data.url) || json.url;
-
-    // create front-end task entry
-    const tasks = loadTasks();
-    const id = 't_'+Date.now();
-    const t = { id, name: app.trackName || app.name || bundleId, bundleId, version, trackId, ipaUrl, status:'ready', createdAt: Date.now() };
-    tasks.unshift(t); saveTasks(tasks);
-    renderTasks();
-    alert('已创建任务，可在“任务”页查看并安装。');
-  }catch(e){
-    alert('获取 IPA 链接失败：' + e.message);
-  }
-}
-
-function renderTasks(){
-  const wrap = $('taskList'); wrap.innerHTML='';
-  const tasks = loadTasks();
-  if(!tasks.length) { wrap.innerHTML='<div class="card small">当前没有下载任务</div>'; return;}
-  tasks.forEach(t=>{
-    const div = document.createElement('div'); div.className='card';
-    div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-      <div><strong>${t.name}</strong><div class="small">Bundle: ${t.bundleId || '-'}  版本: ${t.version || '-'}</div></div>
-      <div>
-        <button class="tiny" onclick="openIpa('${encodeURIComponent(t.ipaUrl)}')">打开链接</button>
-        <button class="tiny ok" onclick="installFromTask('${t.id}')">安装</button>
-        <button class="tiny danger" onclick="removeTask('${t.id}')">删除</button>
-      </div>
-    </div>
-    <div class="small" style="margin-top:8px">状态：${t.status}  ·  创建于：${new Date(t.createdAt).toLocaleString()}</div>
-    <div class="result" id="task_${t.id}"></div>`;
-    wrap.appendChild(div);
-  });
-}
-
-function openIpa(ipaEnc){
-  const ipa = decodeURIComponent(ipaEnc);
-  // 在浏览器中打开 ipa 链接
-  window.open(ipa, '_blank');
-}
-
-function removeTask(id){
-  let tasks = loadTasks(); tasks = tasks.filter(t=>t.id!==id); saveTasks(tasks); renderTasks();
-}
-
-// install via xiaobai.app
-async function installFromTask(id){
-  const tasks = loadTasks(); const t = tasks.find(x=>x.id===id);
-  if(!t){ alert('任务不存在'); return; }
-  const ipa = t.ipaUrl;
-  if(!ipa){ alert('无 ipa 链接'); return; }
-  if(!confirm(`确定调用安装接口安装：\n${ipa}`)) return;
-
-  try{
-    const url = `${settings.install}/install?url=${encodeURIComponent(ipa)}`;
-    const r = await fetch(url);
-    const json = await r.json();
-    t.status = 'installed';
-    saveTasks(tasks);
-    renderTasks();
-    alert('安装接口返回：\n' + JSON.stringify(json, null, 2));
-  }catch(e){
-    alert('安装调用失败：'+e.message);
-  }
-}
-
-// ---------- FILES (local "registered" ipa) ----------
-function loadFiles(){ return JSON.parse(localStorage.getItem('localFiles')||'[]'); }
-function saveFiles(f){ localStorage.setItem('localFiles', JSON.stringify(f)); }
-
-function renderFiles(){
-  const wrap = $('fileList'); wrap.innerHTML='';
-  const files = loadFiles();
-  if(!files.length){ wrap.innerHTML='<div class="card small">暂无文件</div>'; return; }
-  files.forEach(f=>{
-    const d = document.createElement('div'); d.className='card';
-    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-      <div><strong>${f.label}</strong><div class="small">${f.url}</div></div>
-      <div>
-        <button class="tiny" onclick="openIpa('${encodeURIComponent(f.url)}')">打开</button>
-        <button class="tiny ok" onclick="installFile('${encodeURIComponent(f.url)}')">安装</button>
-        <button class="tiny danger" onclick="deleteFile('${f.id}')">删除</button>
-      </div>
-    </div>`;
-    wrap.appendChild(d);
-  });
-}
-
-function addFile(){
-  const label = $('fileLabel').value.trim(); const url = $('fileUrl').value.trim();
-  if(!label || !url){ alert('请填写名称与链接'); return; }
-  const files = loadFiles(); files.unshift({ id:'f_'+Date.now(), label, url }); saveFiles(files); $('fileLabel').value=''; $('fileUrl').value=''; renderFiles();
-}
-
-function deleteFile(id){ let files = loadFiles(); files = files.filter(f=>f.id!==id); saveFiles(files); renderFiles(); }
-function clearFiles(){ if(!confirm('确定清空所有本地文件记录吗？')) return; localStorage.removeItem('localFiles'); renderFiles(); }
-async function installFile(urlEnc){ const url = decodeURIComponent(urlEnc); if(!confirm('调用安装接口安装\n'+url)) return; try{ const r = await fetch(`${settings.install}/install?url=${encodeURIComponent(url)}`); const j = await r.json(); alert('安装接口返回：\n'+JSON.stringify(j,null,2)); }catch(e){ alert('安装失败：'+e.message); } }
-
-// ---------- SETTINGS & ACCOUNTS ----------
-function saveEndpoints(){
-  settings.api = $('apiEndpoint').value.trim() || DEFAULT_API;
-  settings.install = $('installEndpoint').value.trim() || DEFAULT_INSTALL;
-  localStorage.setItem('apiEndpoint', settings.api);
-  localStorage.setItem('installEndpoint', settings.install);
-  alert('保存成功');
-}
-
-function resetEndpoints(){
-  localStorage.removeItem('apiEndpoint'); localStorage.removeItem('installEndpoint');
-  settings.api = DEFAULT_API; settings.install = DEFAULT_INSTALL;
-  $('apiEndpoint').value = settings.api; $('installEndpoint').value = settings.install;
-  alert('已恢复默认并保存');
-}
-
-// account storage (local)
+// ---------- accounts storage ----------
 function loadAccounts(){ return JSON.parse(localStorage.getItem('apple_accounts') || '{"current":null,"list":{}}'); }
-function saveAccounts(obj){ localStorage.setItem('apple_accounts', JSON.stringify(obj)); }
+function saveAccounts(o){ localStorage.setItem('apple_accounts', JSON.stringify(o)); }
 
+// render accounts UI
 function renderAccounts(){
-  $('apiEndpoint').value = settings.api; $('installEndpoint').value = settings.install;
-  const box = $('accountsList'); box.innerHTML = '';
+  const box = document.getElementById('accountsList'); box.innerHTML='';
   const acc = loadAccounts();
   const keys = Object.keys(acc.list || {});
-  if(!keys.length){ box.innerHTML = '<div class="small">暂无已保存账号</div>'; return; }
+  if(!keys.length){ box.innerHTML = '<div class="card small">暂无已保存账号</div>'; return; }
   keys.forEach(k=>{
-    const a = acc.list[k];
+    const info = acc.list[k];
     const div = document.createElement('div'); div.className='card';
     div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-      <div><strong>${k}</strong><div class="small">${a.appleId || a.email || ''}</div></div>
+      <div><strong>${k}</strong><div class="small">${info.appleId || ''}</div></div>
       <div>
-        <button class="tiny" onclick="useAccount('${k}')">切换</button>
-        <button class="tiny" onclick="deleteAccount('${k}')">删除</button>
+        <button class="tiny" onclick="switchAccount('${k}')">切换</button>
+        <button class="tiny danger" onclick="removeAccount('${k}')">删除</button>
       </div>
     </div>`;
     box.appendChild(div);
   });
 }
 
-async function acctLogin(){
-  // 登录并保存（会调用后端 /auth/login）
-  const name = $('acctName').value.trim(); const email = $('acctEmail').value.trim(); const pwd = $('acctPassword').value.trim();
-  if(!name || !email || !pwd){ alert('请填写昵称、Apple ID 与密码'); return; }
+function switchAccount(k){
+  const acc = loadAccounts();
+  if(!acc.list[k]) return alert('账号不存在');
+  acc.current = k; saveAccounts(acc);
+  // 请求后端刷新会话（后端 AuthService.login 会从缓存中读取）
+  fetch(API + '/auth/refresh', {method:'POST'}).then(r=>r.json()).then(j=>{
+    alert('已请求后端刷新登录（若后端缓存存在则会切换）。\n后端返回：' + JSON.stringify(j));
+  }).catch(e=>alert('刷新失败：'+e.message));
+  renderAccounts();
+}
 
-  // 调用后端登录接口（POST /auth/login）
+function removeAccount(k){
+  if(!confirm('删除账号 ' + k + ' ?')) return;
+  const acc = loadAccounts();
+  delete acc.list[k]; if(acc.current===k) acc.current=null; saveAccounts(acc); renderAccounts();
+}
+
+// ---------- LOGIN (supports optional code param for 2FA) ----------
+let pendingLogin = null; // store {name,email,password}
+async function doLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pwd = document.getElementById('loginPassword').value.trim();
+  if(!email || !pwd) { document.getElementById('loginMsg').innerText = '请输入 Apple ID 与密码'; return; }
+  document.getElementById('loginMsg').innerText = '正在登录...';
   try{
-    const r = await fetch(`${settings.api}/auth/login`, {
+    const resp = await fetch(API + '/auth/login', {
       method:'POST',
-      headers: {'Content-Type':'application/json'},
+      headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ appleId: email, password: pwd })
     });
-    const j = await r.json();
-    if(!j || j.success === false){ alert('登录失败：' + JSON.stringify(j.error || j)); return; }
-    // 登录成功 - 将账号加入本地列表并设置为当前
-    const accounts = loadAccounts();
-    accounts.list[name] = { appleId: email, meta: j.data?.loginData || j.data || j };
-    accounts.current = name;
-    saveAccounts(accounts);
-    $('acctName').value=''; $('acctEmail').value=''; $('acctPassword').value='';
-    renderAccounts();
-    alert('登录并保存成功（已设置为当前账号）。\n后端已缓存会话（若后端实现缓存则会生效）。');
+    const j = await resp.json();
+    // 后端设计：如果需要2FA可在返回中体现（我们通过检测 accountInfo 来判定是否登录）
+    if(j && j.success===false){ document.getElementById('loginMsg').innerText = '登录失败：'+JSON.stringify(j.error || j); return; }
+    const payload = j.data || j;
+    // if payload contains accountInfo -> logged in
+    if(payload && payload.loginData?.accountInfo || payload.accountInfo){
+      // success
+      const acc = loadAccounts();
+      const key = email; // use email as key (no nickname)
+      acc.list[key] = { appleId: email, meta: payload.loginData || payload };
+      acc.current = key; saveAccounts(acc);
+      document.getElementById('loginMsg').innerText = '登录成功并已保存本地。';
+      document.getElementById('loginEmail').value=''; document.getElementById('loginPassword').value='';
+      renderAccounts();
+      return;
+    }
+    // if not logged and server indicates need for 2FA (server-specific)
+    // We'll assume server returns something indicating 2FA is required; since server uses same endpoint with code support,
+    // set pendingLogin and show 2FA box.
+    pendingLogin = { appleId: email, password: pwd };
+    document.getElementById('loginMsg').innerText = '需要设备验证码（请查看 iPhone/iPad 弹窗），输入后提交。';
+    document.getElementById('twofaBox').classList.remove('hidden');
   }catch(e){
-    alert('登录请求失败：'+e.message);
+    document.getElementById('loginMsg').innerText = '登录请求失败：' + e.message;
   }
 }
 
-function acctAddLocal(){
-  const name = $('acctName').value.trim(); const email = $('acctEmail').value.trim(); const pwd = $('acctPassword').value.trim();
-  if(!name || !email){ alert('请输入昵称和 Apple ID'); return; }
-  const accounts = loadAccounts();
-  accounts.list[name] = { appleId: email, note: 'local-only' };
-  accounts.current = name;
-  saveAccounts(accounts); renderAccounts();
-  $('acctName').value=''; $('acctEmail').value=''; $('acctPassword').value='';
-  alert('已保存至本地（未调用后端）。');
-}
-
-function useAccount(name){
-  const accounts = loadAccounts();
-  if(!accounts.list[name]) return alert('账号不存在');
-  accounts.current = name;
-  saveAccounts(accounts);
-  // 如果该账号包含 meta（后端登录响应），尝试通知后端切换会话（后端 AuthService.login 会检查 appleId）
-  const info = accounts.list[name];
-  if(info.meta && info.meta.accountInfo && info.meta.accountInfo.appleId){
-    alert('已设置为当前账号（本地）。前端将调用后端无参请求以加载当前缓存会话。');
-    // 触发后端无参 login 去读取缓存（如果后端缓存了该账号）
-    fetch(`${settings.api}/auth/refresh`, { method:'POST' })
-      .then(r=>r.json()).then(j=>{ console.log('refresh', j); alert('已请求后端刷新登录信息（若后端缓存存在则已切换）。'); })
-      .catch(e=>alert('请求后端刷新登录失败：'+e.message));
-  }else{
-    alert('已切换本地账号，但该项没有后端登录信息（需先通过“登录并保存”按钮进行登录）。');
+async function submit2FA(){
+  const code = document.getElementById('twofaCode').value.trim();
+  if(!pendingLogin) return alert('无待验证登录，请先输入账号密码并提交登录。');
+  if(!/^\d{4,6}$/.test(code)) return alert('请输入收到的验证码（4-6 位数字）');
+  document.getElementById('twofaMsg').innerText = '提交中...';
+  try{
+    const body = { appleId: pendingLogin.appleId, password: pendingLogin.password, code };
+    const resp = await fetch(API + '/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const j = await resp.json();
+    if(j && j.success===false){ document.getElementById('twofaMsg').innerText = '验证失败：'+JSON.stringify(j.error||j); return; }
+    const payload = j.data || j;
+    if(payload && (payload.loginData?.accountInfo || payload.accountInfo)){
+      const acc = loadAccounts(); const key = pendingLogin.appleId;
+      acc.list[key] = { appleId: pendingLogin.appleId, meta: payload.loginData || payload };
+      acc.current = key; saveAccounts(acc);
+      document.getElementById('twofaMsg').innerText = '登录并保存成功';
+      pendingLogin = null; document.getElementById('twofaBox').classList.add('hidden'); renderAccounts();
+      return;
+    }
+    document.getElementById('twofaMsg').innerText = '未知响应：' + JSON.stringify(j);
+  }catch(e){
+    document.getElementById('twofaMsg').innerText = '提交验证码失败：' + e.message;
   }
-  renderAccounts();
+}
+function cancel2FA(){ pendingLogin = null; document.getElementById('twofaBox').classList.add('hidden'); }
+
+// ---------- SEARCH ----------
+async function doSearch(){
+  const q = document.getElementById('searchInput').value.trim();
+  if(!q){ document.getElementById('searchMsg').innerText = '请输入搜索关键词或 Bundle ID'; return; }
+  const region = document.getElementById('regionSelect').value;
+  const limit = document.getElementById('limitSelect').value;
+  document.getElementById('searchMsg').innerText = '正在搜索...';
+  try{
+    const url = API + '/apps/search/' + encodeURIComponent(q) + `?limit=${limit}&country=${encodeURIComponent(region)}`;
+    const r = await fetch(url); const j = await r.json();
+    const list = (j && j.data) ? j.data : (j || []);
+    renderSearchResults(list);
+    document.getElementById('searchMsg').innerText = '搜索完成';
+  }catch(e){
+    document.getElementById('searchMsg').innerText = '搜索失败：' + e.message;
+  }
 }
 
-function deleteAccount(name){
-  if(!confirm('删除账号：'+name+'？')) return;
-  const accounts = loadAccounts();
-  delete accounts.list[name];
-  if(accounts.current===name) accounts.current = null;
-  saveAccounts(accounts);
-  renderAccounts();
+function renderSearchResults(list){
+  const wrap = document.getElementById('searchResults'); wrap.innerHTML='';
+  if(!list || !list.length){ wrap.innerHTML='<div class="card small">未找到结果</div>'; return; }
+  list.forEach(app=>{
+    const div = document.createElement('div'); div.className='card app-item';
+    const icon = document.createElement('img'); icon.src = app.artworkUrl100 || app.icon || '';
+    const info = document.createElement('div'); info.className='app-info';
+    const name = document.createElement('div'); name.innerHTML = `<strong>${app.trackName || app.name || app.title || app.bundleId}</strong>`;
+    const sub = document.createElement('div'); sub.className='small'; sub.innerText = `Bundle：${app.bundleId||app.bundleId||''}  版本：${app.version||app.displayVersion||''}`;
+    const row = document.createElement('div'); row.className='btn-row';
+    const detailBtn = document.createElement('button'); detailBtn.className='tiny'; detailBtn.innerText='详情/版本'; detailBtn.onclick = ()=>showAppDetail(app);
+    const dlBtn = document.createElement('button'); dlBtn.className='tiny ok'; dlBtn.innerText='获取 IPA'; dlBtn.onclick = ()=>createDownloadTask(app);
+    row.appendChild(detailBtn); row.appendChild(dlBtn);
+    info.appendChild(name); info.appendChild(sub); info.appendChild(row);
+    div.appendChild(icon); div.appendChild(info);
+    wrap.appendChild(div);
+  });
 }
 
-/* ---------- init ---------- */
+// show app detail (and versions)
+async function showAppDetail(app){
+  const container = document.getElementById('appDetailBox'); container.classList.remove('hidden'); container.innerHTML = '<div class="title">加载中...</div>';
+  const id = app.trackId || app.collectionId || app.trackId;
+  try{
+    const verUrl = API + '/apps/' + encodeURIComponent(id) + '/versions';
+    const r = await fetch(verUrl); const j = await r.json();
+    const versions = j && j.data ? j.data : [];
+    // render
+    let html = `<div style="display:flex;gap:12px"><img style="width:84px;height:84px;border-radius:12px" src="${app.artworkUrl100||app.icon||''}" /><div><div style="font-weight:600">${app.trackName||app.name||''}</div><div class="small">Bundle: ${app.bundleId||''}</div></div></div>`;
+    html += '<div style="height:10px"></div><div class="title">可用版本</div>';
+    if(!versions.length) html += '<div class="small">未返回版本列表，可尝试直接点击 获取 IPA</div>';
+    else{
+      html += '<div class="small">点击版本将使用该外部版本 ID 获取 IPA</div>';
+      versions.forEach(v=>{
+        // v may be [external_identifier, bundle_version]
+        const extId = Array.isArray(v) ? v[0] : v.externalVersionId || v[0];
+        const disp = Array.isArray(v) ? v[1] : v.displayVersion || v[1] || v[0];
+        html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><div>${disp} (${extId})</div><div><button class="tiny" onclick="getIpaByVersion('${encodeURIComponent(id)}','${encodeURIComponent(extId)}','${encodeURIComponent(app.trackName||app.name||'app')}','${encodeURIComponent(disp)}','${encodeURIComponent(app.bundleId||'')}')">下载该版本 IPA</button></div></div>`;
+      });
+    }
+    html += '<div style="height:10px"></div><div><button onclick="document.getElementById(\'appDetailBox\').classList.add(\'hidden\')">关闭</button></div>';
+    container.innerHTML = html;
+  }catch(e){
+    container.innerText = '版本查询失败：' + e.message;
+  }
+}
+
+// ---------- get IPA by app id (latest if no appVerId) ----------
+async function createDownloadTask(app){
+  // use app.trackId as id
+  const id = app.trackId || app.collectionId || app.trackId;
+  await fetchIpaAndCreateTask(id, undefined, app.trackName || app.name || app.bundleId || 'app', app.displayVersion || app.version || '');
+}
+async function getIpaByVersion(id, appVerId, name, displayVersion, bundleId){
+  id = decodeURIComponent(id); appVerId = decodeURIComponent(appVerId);
+  await fetchIpaAndCreateTask(id, appVerId, decodeURIComponent(name), decodeURIComponent(displayVersion), decodeURIComponent(bundleId));
+}
+
+async function fetchIpaAndCreateTask(id, appVerId, name, displayVersion, bundleId){
+  try{
+    const q = API + '/apps/' + encodeURIComponent(id) + (appVerId ? ('?appVerId=' + encodeURIComponent(appVerId)) : '');
+    const r = await fetch(q); const j = await r.json();
+    if(!j || j.success===false) throw new Error(JSON.stringify(j.error || j));
+    const info = j.data?.appInfo || j.data || j;
+    // attempt to find ipa url
+    const ipaUrl = (info && info.appInfo && info.appInfo.appInfo && info.appInfo.appInfo.url) ||
+                   (info && info.url) ||
+                   (info && info.appInfo && info.appInfo.url) ||
+                   info.url || info.appId || info.appInfo?.url;
+    // fallback: info.url or info.appInfo.url; server formats vary; try multiple places
+    let finalIpa = ipaUrl;
+    if(!finalIpa && info && typeof info === 'object'){
+      // try common properties
+      finalIpa = info.url || info.appInfo?.url || info.songList?.[0]?.URL || null;
+    }
+    if(!finalIpa) throw new Error('未在后端响应中找到 IPA 链接（请确认调用 /apps/:id 返回内容结构）');
+    // create task
+    const tasks = JSON.parse(localStorage.getItem('downloadTasks') || '[]');
+    const tid = 't_' + Date.now();
+    tasks.unshift({ id: tid, name: name || ('app_' + id), bundleId: bundleId||'', displayVersion: displayVersion||'', appId: id, ipaUrl: finalIpa, status:'ready', createdAt: Date.now() });
+    localStorage.setItem('downloadTasks', JSON.stringify(tasks));
+    alert('已创建任务：可在“任务”页查看并安装。');
+    renderTasks();
+  }catch(e){
+    alert('获取 IPA 失败：' + e.message);
+  }
+}
+
+// ---------- TASKS UI ----------
+function renderTasks(){
+  const wrap = document.getElementById('taskList'); wrap.innerHTML='';
+  const tasks = JSON.parse(localStorage.getItem('downloadTasks') || '[]');
+  if(!tasks.length){ wrap.innerHTML = '<div class="card small">当前没有任务</div>'; return; }
+  tasks.forEach(t=>{
+    const d = document.createElement('div'); d.className='card';
+    d.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+      <div><strong>${t.name}</strong><div class="small">Bundle:${t.bundleId||'-'}  版本:${t.displayVersion||'-'}</div></div>
+      <div>
+        <button class="tiny" onclick="openUrl('${encodeURIComponent(t.ipaUrl)}')">打开 IPA</button>
+        <button class="tiny ok" onclick="installTask('${t.id}')">安装</button>
+        <button class="tiny danger" onclick="removeTask('${t.id}')">删除</button>
+      </div>
+    </div>
+    <div id="taskstat_${t.id}" class="small" style="margin-top:8px">状态：${t.status} · 创建于：${new Date(t.createdAt).toLocaleString()}</div>
+    <div class="progress"><i id="prog_${t.id}" style="width:${t.status==='ready'? '100%': '0%'}"></i></div>`;
+    wrap.appendChild(d);
+  });
+}
+
+// open IPA url
+function openUrl(enc){ window.open(decodeURIComponent(enc), '_blank'); }
+
+function removeTask(id){ let t = JSON.parse(localStorage.getItem('downloadTasks')||'[]'); t = t.filter(x=>x.id!==id); localStorage.setItem('downloadTasks', JSON.stringify(t)); renderTasks(); }
+
+// install flow: assemble manifest url and open itms-services://...
+function installTask(id){
+  const tasks = JSON.parse(localStorage.getItem('downloadTasks') || '[]');
+  const t = tasks.find(x=>x.id===id);
+  if(!t) return alert('任务不存在');
+  // build manifest URL expected by installapp.js
+  // installapp expects query params: name, displayVersion, id, bundleId
+  // we'll use t.name / t.displayVersion / t.appId / t.bundleId
+  const name = encodeURIComponent(t.name || '');
+  const displayVersion = encodeURIComponent(t.displayVersion || '');
+  const appId = encodeURIComponent(t.appId || t.appId || '');
+  const bundleId = encodeURIComponent(t.bundleId || '');
+  const manifestUrl = `${INSTALL_HOST}/?name=${name}&displayVersion=${displayVersion}&id=${appId}&bundleId=${bundleId}`;
+  // Manifest URL must be accessible by iOS. Now open it via itms-services.
+  const itms = 'itms-services://?action=download-manifest&url=' + encodeURIComponent(manifestUrl);
+  // Mark status
+  t.status = 'installing';
+  localStorage.setItem('downloadTasks', JSON.stringify(tasks));
+  renderTasks();
+  // redirect to itms-services to trigger install
+  window.location.href = itms;
+}
+
+// ---------- init ----------
 navTo('search');
-renderFiles();
 renderTasks();
 renderAccounts();
 
