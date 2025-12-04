@@ -367,7 +367,7 @@ const validate = (condition, message) => {
   }
 };
 
-// 主函数（核心：跨域头+OPTIONS路由）
+// 主函数（核心：跨域头+OPTIONS路由，修复res.status错误）
 const main = async () => {
   try {
     // 预加载TaskProcessor
@@ -409,7 +409,7 @@ const main = async () => {
     // 创建express实例
     const app = new $.express($request);
 
-    // 2. OPTIONS请求处理（放在所有路由最前面）
+    // 2. OPTIONS请求处理（修复：用statusCode替代status()方法）
     app.options("*", (req, res) => {
       res.headers = {
         ...res.headers,
@@ -418,7 +418,8 @@ const main = async () => {
         "access-control-allow-headers": "Content-Type",
         "access-control-max-age": "86400"
       };
-      res.status(200).send(""); // 必须返回200状态
+      res.statusCode = 200; // 替换res.status(200)
+      res.send("");
     });
 
     // 中间件
@@ -471,9 +472,10 @@ const main = async () => {
       } catch (err) { next(err); }
     });
 
-    // 错误处理中间件
+    // 错误处理中间件（修复：用statusCode替代status()方法）
     app.use((err, req, res) => {
-      res.status(err.status || 500).json(createResponse(false, null, err.message || "未知错误"));
+      res.statusCode = err.status || 500; // 替换res.status(err.status || 500)
+      res.json(createResponse(false, null, err.message || "未知错误"));
     });
 
     const response = await app.run();
