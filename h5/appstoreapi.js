@@ -1,4 +1,4 @@
-// 模块导入工具类1
+// 模块导入工具类
 class $ {
   static async imports(...input) {
     return await Promise.all(input.map(i => this.import(...i)));
@@ -883,8 +883,9 @@ const main = async () => {
     // ================ 关键修正：CORS中间件必须在最前面 ================
     // 1. 首先添加CORS中间件
     app.use((req, res, next) => {
-      // 记录所有请求，用于调试
-      console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - Origin: ${req.headers.origin}`);
+      // 记录请求，用于调试
+      const method = req.method ? req.method.toUpperCase() : 'UNKNOWN';
+      console.log(`[${new Date().toISOString()}] ${method} ${req.url} - Origin: ${req.headers.origin}`);
       
       // 设置CORS响应头
       res.headers = res.headers || {};
@@ -895,9 +896,9 @@ const main = async () => {
       res.headers['Access-Control-Allow-Credentials'] = 'true';
       res.headers['Access-Control-Max-Age'] = '86400';
       
-      // 处理预检请求（OPTIONS）
-      if (req.method === 'OPTIONS') {
-        console.log(`[${new Date().toISOString()}] Handling OPTIONS preflight request`);
+      // 处理预检请求（OPTIONS） - 这里必须使用大写比较
+      if (method === 'OPTIONS') {
+        console.log(`[${new Date().toISOString()}] Handling OPTIONS preflight request for ${req.url}`);
         res.statusCode = 200;
         res.end();
         return;
