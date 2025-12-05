@@ -1,4 +1,4 @@
-// 模块导入工具类
+// 模块导入工具类1
 class $ {
   static async imports(...input) {
     return await Promise.all(input.map(i => this.import(...i)));
@@ -791,21 +791,6 @@ const StoreService = class {
 
     Object.assign(appInfo, { appleId });
 
-    // 调试信息输出;
-    //$.log("应用名称:", name);
-    // $.log("软件下载链接:", url);
-    // $.log("应用图标:", icon);
-    // $.log("应用ID:", appId);
-    // $.log("软件授权信息:", sinf);
-    // $.log("应用包标识符:", bundleId);
-    // $.log("用户版本号:", displayVersion);
-    // $.log("内部版本号:", buildVersion);
-    // $.log("版本标识符:", externalVersionId);
-    // $.log("版本标识符列表:", externalVersionIdList);
-    // $.log("文件大小:", fileSize);
-    // $.log("iTunesMetadata.plist 文件", metadata);
-    // $.log("货币:", currency);
-    // $.log("最低支持系统版本:", minimumOsVersion);
     return {
       name,
       appId,
@@ -894,20 +879,25 @@ const main = async () => {
     });
 
     const app = new $.express($request);
-    
-    // ================ 1. 添加CORS中间件 ================
+
+    // ================ 关键修正：CORS中间件必须在最前面 ================
+    // 1. 首先添加CORS中间件
     app.use((req, res, next) => {
+      // 记录所有请求，用于调试
+      console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - Origin: ${req.headers.origin}`);
+      
       // 设置CORS响应头
       res.headers = res.headers || {};
       res.headers['Access-Control-Allow-Origin'] = '*';
-      res.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
-      res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Cache-Control, X-File-Name';
-      res.headers['Access-Control-Expose-Headers'] = 'Content-Length, X-Total-Count, Content-Range';
+      res.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS, PATCH';
+      res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With, Accept, Origin, Cache-Control, X-File-Name, Content-Length';
+      res.headers['Access-Control-Expose-Headers'] = 'Content-Length, X-Total-Count, Content-Range, Content-Disposition';
       res.headers['Access-Control-Allow-Credentials'] = 'true';
       res.headers['Access-Control-Max-Age'] = '86400';
       
-      // 处理预检请求
+      // 处理预检请求（OPTIONS）
       if (req.method === 'OPTIONS') {
+        console.log(`[${new Date().toISOString()}] Handling OPTIONS preflight request`);
         res.statusCode = 200;
         res.end();
         return;
@@ -916,19 +906,21 @@ const main = async () => {
       next();
     });
 
-    // ================ 2. 添加其他中间件 ================
+    // 2. 然后添加其他中间件
     app.use($.express.json());
     app.use($.express.logger());
 
-    // ================ 3. 显式处理OPTIONS请求 ================
+    // 3. 显式处理OPTIONS请求（补充处理）
     app.options('*', (req, res) => {
+      console.log(`[${new Date().toISOString()}] Explicit OPTIONS handler for ${req.url}`);
       res.statusCode = 200;
       res.end();
     });
 
-    // ================ 4. API路由 ================
+    // 4. API路由
     // 根路径 - API 信息
     app.get("/", (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] GET / received`);
       const data = {
         name: "Apple Store API",
         version: "1.0.0",
@@ -1022,19 +1014,27 @@ const main = async () => {
 
     // 登录接口
     app.post("/auth/login", async (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] POST /auth/login received`, req.body);
       const { appleId, password, code } = req.body;
       validate(appleId && password, "缺少必要参数: appleId 和 password");
 
-      const result = await AuthService.login({ appleId, password, code });
-      const data = {
-        message: "登录成功",
-        loginData: result,
-      };
-      res.json(createResponse(true, data));
+      try {
+        const result = await AuthService.login({ appleId, password, code });
+        const data = {
+          message: "登录成功",
+          loginData: result,
+        };
+        console.log(`[${new Date().toISOString()}] Login successful for ${appleId}`);
+        res.json(createResponse(true, data));
+      } catch (error) {
+        console.log(`[${new Date().toISOString()}] Login failed:`, error.message);
+        next(error);
+      }
     });
 
     // 刷新Cookie接口
     app.post("/auth/refresh", async (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] POST /auth/refresh received`);
       await AuthService.refreshCookie();
       const data = {
         message: "Cookie 刷新成功",
@@ -1044,27 +1044,35 @@ const main = async () => {
 
     // 重置登录状态和缓存接口
     app.post("/auth/reset", async (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] POST /auth/reset received`);
       const result = AuthService.reset();
       res.json(createResponse(true, result));
     });
 
     // 获取应用信息接口 - 可用于下载APP
     app.get("/apps/:id", async (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] GET /apps/${req.params.id} received`);
       const { id } = req.params;
       const { appVerId } = req.query;
 
       validate(!isNaN(id), "无效的应用 ID");
 
-      const appInfo = await StoreService.getAppInfo(parseInt(id), appVerId);
-      const data = {
-        appId: id,
-        appInfo: appInfo,
-      };
-      res.json(createResponse(true, data));
+      try {
+        const appInfo = await StoreService.getAppInfo(parseInt(id), appVerId);
+        const data = {
+          appId: id,
+          appInfo: appInfo,
+        };
+        res.json(createResponse(true, data));
+      } catch (error) {
+        console.log(`[${new Date().toISOString()}] Get app info failed:`, error.message);
+        next(error);
+      }
     });
 
     // 官方获取应用历史版本信息接口
     app.get("/apps/:id/versions", async (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] GET /apps/${req.params.id}/versions received`);
       const { id } = req.params;
       const { direction = "next", count = -1, appVerId } = req.query;
 
@@ -1072,82 +1080,105 @@ const main = async () => {
       validate(!isNaN(count) && count >= -1 && count <= 20, "分页数量只能1-20");
 
       await isTaskProcessor;
-      const versions = await StoreService.getVersions({
-        direction,
-        count: parseInt(count),
-        salableAdamId: parseInt(id),
-        startVersionId: appVerId ? parseInt(appVerId) : undefined,
-      });
+      try {
+        const versions = await StoreService.getVersions({
+          direction,
+          count: parseInt(count),
+          salableAdamId: parseInt(id),
+          startVersionId: appVerId ? parseInt(appVerId) : undefined,
+        });
 
-      const data = {
-        appId: id,
-        ...versions,
-        direction,
-        count: parseInt(count),
-        appVerId,
-      };
-      res.json(createResponse(true, data));
+        const data = {
+          appId: id,
+          ...versions,
+          direction,
+          count: parseInt(count),
+          appVerId,
+        };
+        res.json(createResponse(true, data));
+      } catch (error) {
+        console.log(`[${new Date().toISOString()}] Get versions failed:`, error.message);
+        next(error);
+      }
     });
 
     // 三方获取应用历史版本信息接口
     app.get("/apps/:id/versions/legacy", async (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] GET /apps/${req.params.id}/versions/legacy received`);
       const { id } = req.params;
       const { selset } = req.query;
 
       validate(!isNaN(id), "无效的应用 ID");
 
-      const data = selset
-        ? await VersionService.getAppVersionList(id, selset)
-        : await VersionService.concurrentGetVersionList(id).catch(
-            ({ errors = [], error }) => {
-              throw errors.length ? errors.map(e => e.message) : error;
-            }
-          );
+      try {
+        const data = selset
+          ? await VersionService.getAppVersionList(id, selset)
+          : await VersionService.concurrentGetVersionList(id).catch(
+              ({ errors = [], error }) => {
+                throw errors.length ? errors.map(e => e.message) : error;
+              }
+            );
 
-      res.json(createResponse(true, data));
+        res.json(createResponse(true, data));
+      } catch (error) {
+        console.log(`[${new Date().toISOString()}] Get legacy versions failed:`, error.message);
+        next(error);
+      }
     });
 
     // 购买APP接口
     app.post("/apps/:id/purchase", async (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] POST /apps/${req.params.id}/purchase received`);
       const { id } = req.params;
 
       validate(!isNaN(id), "无效的应用 ID");
 
-      const result = await StoreService.purchaseApp(id);
-      const data = {
-        appId: id,
-        message: "购买请求已提交",
-        purchaseResult: result,
-      };
-      res.json(createResponse(true, data));
+      try {
+        const result = await StoreService.purchaseApp(id);
+        const data = {
+          appId: id,
+          message: "购买请求已提交",
+          purchaseResult: result,
+        };
+        res.json(createResponse(true, data));
+      } catch (error) {
+        console.log(`[${new Date().toISOString()}] Purchase failed:`, error.message);
+        next(error);
+      }
     });
 
     // 搜索APP接口
     app.get("/apps/search/:term", async (req, res, next) => {
+      console.log(`[${new Date().toISOString()}] GET /apps/search/${req.params.term} received`);
       const { term } = req.params;
       const { limit = 10, country } = req.query;
 
-      // // 参数验证
+      // 参数验证
       validate(term, "缺少必要参数: term");
       validate(limit > 0 && limit <= 20, "结果数量限制必须在1-20之间");
 
-      const searchResult = await StoreService.searchApps({
-        term,
-        country,
-        limit: parseInt(limit),
-      });
+      try {
+        const searchResult = await StoreService.searchApps({
+          term,
+          country,
+          limit: parseInt(limit),
+        });
 
-      const data = {
-        searchTerm: term,
-        explicit: true,
-        ...searchResult,
-      };
-      res.json(createResponse(true, data));
+        const data = {
+          searchTerm: term,
+          explicit: true,
+          ...searchResult,
+        };
+        res.json(createResponse(true, data));
+      } catch (error) {
+        console.log(`[${new Date().toISOString()}] Search failed:`, error.message);
+        next(error);
+      }
     });
 
     // ================ 5. 错误处理中间件 ================
     app.use((err, req, res, next) => {
-      $.log("API Error:", err);
+      console.log(`[${new Date().toISOString()}] API Error:`, err.message, err.stack);
       
       // 确保错误响应也包含CORS头
       res.headers = res.headers || {};
@@ -1160,12 +1191,39 @@ const main = async () => {
         .json(createResponse(false, null, err.message || "未知错误"));
     });
 
+    // 处理404 - 没有匹配的路由
+    app.use((req, res, next) => {
+      console.log(`[${new Date().toISOString()}] 404 Not Found: ${req.method} ${req.url}`);
+      
+      // 确保404响应也包含CORS头
+      res.headers = res.headers || {};
+      res.headers['Access-Control-Allow-Origin'] = '*';
+      res.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
+      res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With';
+
+      res.status(404).json(createResponse(false, null, `未找到路由: ${req.method} ${req.url}`));
+    });
+
     const response = await app.run();
+    console.log(`[${new Date().toISOString()}] Request completed`);
     $done({ response });
   } catch (error) {
-    console.log(error.toString());
+    console.log(`[${new Date().toISOString()}] Main function error:`, error.toString());
     console.log(error.stack);
-    $done();
+    
+    // 确保异常情况下也有响应
+    const response = {
+      status: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(createResponse(false, null, error.message || "服务器内部错误"))
+    };
+    
+    $done({ response });
   }
 };
 
