@@ -3,418 +3,2029 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>苹果应用管理平台</title>
+    <title>苹果应用安装器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #007AFF;
+            --secondary-color: #5856D6;
+            --success-color: #34C759;
+            --danger-color: #FF3B30;
+            --warning-color: #FF9500;
+            --light-bg: #F2F2F7;
+            --dark-text: #1D1D1F;
+            --light-text: #8E8E93;
+            --border-color: #C7C7CC;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Arial", "Microsoft YaHei", sans-serif;
         }
+        
         body {
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
         }
+        
         .container {
-            background: #fff;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
         h1 {
             font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        .api-status {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success-color);
+            margin-right: 8px;
+        }
+        
+        .main-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+        
+        .sidebar {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            height: fit-content;
+        }
+        
+        .content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
             margin-bottom: 20px;
-            color: #1d1d1f;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 12px;
         }
-        h2 {
-            font-size: 18px;
-            margin: 16px 0 12px;
-            color: #1d1d1f;
+        
+        .tab-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--light-text);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
         }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
+        
         label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-weight: 500;
-            color: #424245;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
             font-size: 14px;
-            transition: border-color 0.2s;
         }
+        
+        input, select, button {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
         input:focus, select:focus {
             outline: none;
-            border-color: #0071e3;
+            border-color: var(--primary-color);
         }
-        button {
-            background-color: #0071e3;
-            color: #fff;
+        
+        .btn {
+            padding: 12px 24px;
             border: none;
-            border-radius: 6px;
-            padding: 10px 16px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 500;
             cursor: pointer;
-            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
         }
-        button:hover {
-            background-color: #0077ed;
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
         }
-        .result {
-            margin-top: 16px;
+        
+        .btn-primary:hover {
+            background-color: #0056CC;
+        }
+        
+        .btn-secondary {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #E5E5EA;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #2DAE49;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #D70015;
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        .btn-block {
+            width: 100%;
+        }
+        
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+        
+        .account-list {
+            margin-top: 20px;
+        }
+        
+        .account-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 12px;
-            border-radius: 6px;
-            background-color: #f9f9fb;
-            border: 1px solid #eee;
-            font-size: 14px;
-            word-break: break-all;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background-color: var(--light-bg);
         }
-        .result.success {
-            border-color: #34c759;
-            color: #34c759;
+        
+        .account-info {
+            display: flex;
+            align-items: center;
         }
-        .result.error {
-            border-color: #ff3b30;
-            color: #ff3b30;
+        
+        .account-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
         }
-        .install-link {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 10px 16px;
-            background-color: #34c759;
-            color: #fff;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 14px;
+        
+        .account-details {
+            flex: 1;
+        }
+        
+        .account-name {
             font-weight: 500;
         }
-        .install-link:hover {
-            background-color: #32d74b;
+        
+        .account-status {
+            font-size: 12px;
+            color: var(--light-text);
         }
-        .api-domain {
-            margin-top: 8px;
-            font-size: 13px;
-            color: #6e6e73;
+        
+        .account-status.logged-in {
+            color: var(--success-color);
+        }
+        
+        .account-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .search-input {
+            flex: 1;
+        }
+        
+        .search-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        .app-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .app-icon {
+            width: 100%;
+            height: 160px;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--light-text);
+        }
+        
+        .app-icon img {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+        }
+        
+        .app-info {
+            padding: 16px;
+        }
+        
+        .app-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .app-bundle {
+            font-size: 12px;
+            color: var(--light-text);
+            margin-bottom: 8px;
+        }
+        
+        .app-version {
+            font-size: 12px;
+            color: var(--light-text);
+        }
+        
+        .app-detail-container {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .app-detail-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            background-color: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--light-text);
+        }
+        
+        .app-detail-icon img {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+        }
+        
+        .app-detail-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .app-detail-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .app-detail-bundle {
+            font-size: 14px;
+            color: var(--light-text);
+            margin-bottom: 12px;
+        }
+        
+        .app-detail-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .versions-container {
+            margin-top: 24px;
+        }
+        
+        .versions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .version-list {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .version-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .version-item:last-child {
+            border-bottom: none;
+        }
+        
+        .version-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .version-number {
+            font-weight: 500;
+        }
+        
+        .version-build {
+            font-size: 12px;
+            color: var(--light-text);
+        }
+        
+        .version-date {
+            font-size: 12px;
+            color: var(--light-text);
+        }
+        
+        .version-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .local-install-container {
+            margin-top: 24px;
+            padding: 24px;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .install-dropzone {
+            padding: 40px;
+            cursor: pointer;
+        }
+        
+        .install-dropzone:hover {
+            background-color: var(--light-bg);
+        }
+        
+        .install-icon {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+        }
+        
+        .install-text {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .install-subtext {
+            color: var(--light-text);
+            margin-bottom: 16px;
+        }
+        
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--light-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            font-size: 12px;
+            color: var(--light-text);
+            text-align: center;
+        }
+        
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-success {
+            background-color: rgba(52, 199, 89, 0.1);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+        
+        .alert-error {
+            background-color: rgba(255, 59, 48, 0.1);
+            color: var(--danger-color);
+            border: 1px solid var(--danger-color);
+        }
+        
+        .alert-info {
+            background-color: rgba(0, 122, 255, 0.1);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .alert-icon {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--light-text);
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--light-text);
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .app-detail-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .app-detail-icon {
+                margin: 0 auto;
+            }
+            
+            .app-detail-actions {
+                justify-content: center;
+            }
+            
+            .search-results {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 登录模块 -->
     <div class="container">
-        <h1>苹果账号登录</h1>
-        <div class="form-group">
-            <label for="appleId">Apple ID</label>
-            <input type="text" id="appleId" placeholder="请输入Apple账号">
-        </div>
-        <div class="form-group">
-            <label for="password">密码</label>
-            <input type="password" id="password" placeholder="请输入账号密码">
-        </div>
-        <div class="form-group">
-            <label for="code">验证码（二次验证时填写）</label>
-            <input type="text" id="code" placeholder="可选，二次验证时输入">
-        </div>
-        <button id="loginBtn">登录</button>
-        <div class="result" id="loginResult"></div>
-    </div>
-
-    <!-- 应用搜索模块 -->
-    <div class="container">
-        <h1>应用搜索</h1>
-        <div class="form-group">
-            <label for="searchTerm">搜索关键词</label>
-            <input type="text" id="searchTerm" placeholder="请输入应用名称">
-        </div>
-        <div class="form-group">
-            <label for="searchLimit">结果数量（1-20）</label>
-            <input type="number" id="searchLimit" value="10" min="1" max="20">
-        </div>
-        <div class="form-group">
-            <label for="searchCountry">地区</label>
-            <select id="searchCountry">
-                <option value="CN">中国（CN）</option>
-                <option value="US">美国（US）</option>
-                <option value="JP">日本（JP）</option>
-                <option value="HK">中国香港（HK）</option>
-            </select>
-        </div>
-        <button id="searchBtn">搜索应用</button>
-        <div class="result" id="searchResult"></div>
-        <div id="appList" class="result" style="margin-top: 12px; display: none;"></div>
-    </div>
-
-    <!-- 应用安装模块 -->
-    <div class="container">
-        <h1>应用安装</h1>
-        <div class="form-group">
-            <label for="appId">应用ID（Adam ID）</label>
-            <input type="text" id="appId" placeholder="请输入应用ID">
-        </div>
-        <div class="form-group">
-            <label for="appVerId">版本ID（可选，默认最新版）</label>
-            <input type="text" id="appVerId" placeholder="可选，不填获取最新版本">
-        </div>
-        <button id="getAppInfoBtn">获取应用信息</button>
-        <div class="result" id="appInfoResult"></div>
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>苹果应用安装器</h1>
+                    <div class="subtitle">App Store 低版本应用安装、已购下架应用安装</div>
+                </div>
+                <div class="api-status">
+                    <div class="status-dot" id="apiStatus"></div>
+                    <span id="apiStatusText">API 连接正常</span>
+                </div>
+            </div>
+        </header>
         
-        <!-- 安装链接区域 -->
-        <div id="installArea" style="display: none; margin-top: 16px;">
-            <h2>安装信息</h2>
-            <div class="form-group">
-                <label>应用名称</label>
-                <input type="text" id="installName" readonly>
+        <div class="main-layout">
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="accounts">账号管理</button>
+                    <button class="tab-btn" data-tab="search">搜索应用</button>
+                    <button class="tab-btn" data-tab="install">本地安装</button>
+                </div>
+                
+                <!-- 账号管理 -->
+                <div class="tab-content active" id="accounts">
+                    <div class="form-group">
+                        <label for="appleId">Apple ID</label>
+                        <input type="text" id="appleId" placeholder="输入 Apple ID">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" id="password" placeholder="输入密码">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="code">验证码（如果需要）</label>
+                        <input type="text" id="code" placeholder="输入验证码（可选）">
+                    </div>
+                    
+                    <button class="btn btn-primary btn-block" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> 登录
+                    </button>
+                    
+                    <div class="account-list" id="accountList">
+                        <!-- 账号列表将动态加载 -->
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <p>暂无账号，请添加一个</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 搜索应用 -->
+                <div class="tab-content" id="search">
+                    <div class="form-group">
+                        <label for="searchTerm">搜索关键词</label>
+                        <input type="text" id="searchTerm" placeholder="输入应用名称或关键词">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="searchLimit">结果数量</label>
+                        <select id="searchLimit">
+                            <option value="10">10 个结果</option>
+                            <option value="20">20 个结果</option>
+                            <option value="50">50 个结果</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="searchCountry">国家/地区</label>
+                        <select id="searchCountry">
+                            <option value="CN">中国</option>
+                            <option value="US">美国</option>
+                            <option value="JP">日本</option>
+                            <option value="HK">香港</option>
+                            <option value="TW">台湾</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-block" id="searchBtn">
+                        <i class="fas fa-search"></i> 搜索应用
+                    </button>
+                    
+                    <div class="search-results" id="searchResults">
+                        <!-- 搜索结果将动态加载 -->
+                    </div>
+                </div>
+                
+                <!-- 本地安装 -->
+                <div class="tab-content" id="install">
+                    <div class="local-install-container">
+                        <div class="install-dropzone" id="installDropzone">
+                            <div class="install-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="install-text">拖放 IPA 文件到此处</div>
+                            <div class="install-subtext">或点击选择文件</div>
+                            <input type="file" id="ipaFile" accept=".ipa" style="display: none;">
+                            <button class="btn btn-secondary" id="selectIpaBtn">
+                                <i class="fas fa-folder-open"></i> 选择 IPA 文件
+                            </button>
+                        </div>
+                        
+                        <div class="progress-container" id="progressContainer">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="progress-text" id="progressText">准备中...</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>版本号</label>
-                <input type="text" id="installVersion" readonly>
-            </div>
-            <div class="form-group">
-                <label>Bundle ID</label>
-                <input type="text" id="installBundleId" readonly>
-            </div>
-            <div class="form-group">
-                <label>安装链接（点击安装）</label>
-                <a id="installPlistLink" class="install-link" href="#" target="_blank">点击安装应用</a>
-            </div>
-            <div class="api-domain">
-                支持域名：apple-api.com、xiaobai.app（Surge iOS Miti模块配置）
+            
+            <!-- 主内容区 -->
+            <div class="content">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="appDetail">应用详情</button>
+                    <button class="tab-btn" data-tab="versions">版本历史</button>
+                    <button class="tab-btn" data-tab="downloads">下载管理</button>
+                </div>
+                
+                <!-- 应用详情 -->
+                <div class="tab-content active" id="appDetail">
+                    <div class="empty-state" id="appDetailEmpty">
+                        <div class="empty-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <p>选择一个应用查看详情</p>
+                        <p class="install-subtext">您可以在左侧搜索应用或从已下载的应用中选择</p>
+                    </div>
+                    
+                    <div id="appDetailContent" style="display: none;">
+                        <div class="app-detail-container">
+                            <div class="app-detail-icon" id="appIcon">
+                                <i class="fas fa-apple"></i>
+                            </div>
+                            <div class="app-detail-info">
+                                <div class="app-detail-name" id="appName">应用名称</div>
+                                <div class="app-detail-bundle" id="appBundleId">com.example.app</div>
+                                <div class="app-detail-actions">
+                                    <button class="btn btn-primary" id="downloadBtn">
+                                        <i class="fas fa-download"></i> 下载 IPA
+                                    </button>
+                                    <button class="btn btn-success" id="installBtn">
+                                        <i class="fas fa-mobile-alt"></i> 安装到设备
+                                    </button>
+                                    <button class="btn btn-secondary" id="viewVersionsBtn">
+                                        <i class="fas fa-history"></i> 查看历史版本
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="versionSelect">选择版本</label>
+                            <select id="versionSelect">
+                                <option value="">加载版本中...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="app-info-grid">
+                            <div class="info-item">
+                                <div class="info-label">版本号</div>
+                                <div class="info-value" id="appVersion">1.0.0</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">构建版本</div>
+                                <div class="info-value" id="appBuildVersion">100</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">文件大小</div>
+                                <div class="info-value" id="appSize">100 MB</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">最低系统要求</div>
+                                <div class="info-value" id="appMinOS">iOS 12.0</div>
+                            </div>
+                        </div>
+                        
+                        <div id="appDetailAlerts"></div>
+                    </div>
+                </div>
+                
+                <!-- 版本历史 -->
+                <div class="tab-content" id="versions">
+                    <div class="empty-state" id="versionsEmpty">
+                        <div class="empty-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <p>选择一个应用查看版本历史</p>
+                    </div>
+                    
+                    <div id="versionsContent" style="display: none;">
+                        <div class="versions-header">
+                            <h3 id="versionsTitle">版本历史</h3>
+                            <div class="version-controls">
+                                <button class="btn btn-secondary btn-sm" id="refreshVersionsBtn">
+                                    <i class="fas fa-sync-alt"></i> 刷新
+                                </button>
+                                <select id="versionSource">
+                                    <option value="official">官方版本</option>
+                                    <option value="legacy">第三方版本</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="version-list" id="versionList">
+                            <!-- 版本列表将动态加载 -->
+                        </div>
+                        
+                        <div class="loading" id="versionsLoading" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>加载版本中...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 下载管理 -->
+                <div class="tab-content" id="downloads">
+                    <div class="empty-state" id="downloadsEmpty">
+                        <div class="empty-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <p>暂无下载记录</p>
+                        <p class="install-subtext">下载的应用将显示在这里</p>
+                    </div>
+                    
+                    <div id="downloadsContent" style="display: none;">
+                        <div class="downloads-header">
+                            <h3>已下载的应用</h3>
+                            <button class="btn btn-secondary btn-sm" id="clearDownloadsBtn">
+                                <i class="fas fa-trash-alt"></i> 清除记录
+                            </button>
+                        </div>
+                        
+                        <div class="download-list" id="downloadList">
+                            <!-- 下载列表将动态加载 -->
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- 辅助功能模块 -->
-    <div class="container">
-        <h1>辅助功能</h1>
-        <button id="refreshCookieBtn" style="margin-right: 10px; margin-bottom: 10px;">刷新登录Cookie</button>
-        <button id="resetAuthBtn" style="margin-bottom: 10px;">重置登录状态</button>
-        <button id="getVersionListBtn" style="margin-bottom: 10px;">获取应用历史版本</button>
-        <button id="purchaseAppBtn" style="margin-bottom: 10px;">购买应用（未购买时）</button>
-        <div class="result" id="auxResult"></div>
+    
+    <!-- 登录确认模态框 -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Apple ID 登录确认</div>
+                <button class="modal-close" id="closeLoginModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>您将要使用以下 Apple ID 登录：</p>
+                <p><strong id="confirmAppleId"></strong></p>
+                <p class="install-subtext">登录后，该账号将添加到您的账号列表中</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelLoginBtn">取消</button>
+                <button class="btn btn-primary" id="confirmLoginBtn">确认登录</button>
+            </div>
+        </div>
     </div>
-
+    
+    <!-- 安装确认模态框 -->
+    <div class="modal" id="installModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">应用安装确认</div>
+                <button class="modal-close" id="closeInstallModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>您将要安装以下应用：</p>
+                <p><strong id="installAppName"></strong></p>
+                <p class="install-subtext">安装前请确保您的设备已信任企业证书（如果适用）</p>
+                
+                <div class="form-group">
+                    <label for="installMethod">安装方式</label>
+                    <select id="installMethod">
+                        <option value="itms">通过 iTunes 服务安装</option>
+                        <option value="safari">在 Safari 中下载</option>
+                        <option value="local">使用本地 IPA 文件</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelInstallBtn">取消</button>
+                <button class="btn btn-success" id="confirmInstallBtn">开始安装</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 消息提示 -->
+    <div id="alertContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+    
     <script>
-        // 基础配置（根据实际部署修改localhost:8000）
-        const BASE_API_URL = "http://localhost:8000";
-        const IPA_BASE_URL = "http://localhost:8000"; // IPA文件存储地址
-
-        // 工具函数：显示结果
-        const showResult = (elemId, content, isSuccess = true) => {
-            const elem = document.getElementById(elemId);
-            elem.textContent = content;
-            elem.className = `result ${isSuccess ? 'success' : 'error'}`;
+        // 配置
+        const API_BASE_URL = 'https://apple-api.com'; // 根据实际配置修改
+        const INSTALL_SERVICE_URL = 'https://xiaobai.app'; // 根据实际配置修改
+        
+        // 全局状态
+        let state = {
+            currentApp: null,
+            currentAccount: null,
+            accounts: [],
+            downloads: [],
+            apiConnected: false
         };
-
-        // 1. 登录功能
-        document.getElementById('loginBtn').addEventListener('click', async () => {
-            const appleId = document.getElementById('appleId').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const code = document.getElementById('code').value.trim();
-
-            if (!appleId || !password) {
-                showResult('loginResult', '请填写Apple ID和密码', false);
-                return;
+        
+        // DOM 元素
+        const elements = {
+            apiStatus: document.getElementById('apiStatus'),
+            apiStatusText: document.getElementById('apiStatusText'),
+            loginBtn: document.getElementById('loginBtn'),
+            searchBtn: document.getElementById('searchBtn'),
+            selectIpaBtn: document.getElementById('selectIpaBtn'),
+            downloadBtn: document.getElementById('downloadBtn'),
+            installBtn: document.getElementById('installBtn'),
+            viewVersionsBtn: document.getElementById('viewVersionsBtn'),
+            refreshVersionsBtn: document.getElementById('refreshVersionsBtn'),
+            clearDownloadsBtn: document.getElementById('clearDownloadsBtn'),
+            accountList: document.getElementById('accountList'),
+            searchResults: document.getElementById('searchResults'),
+            appDetailEmpty: document.getElementById('appDetailEmpty'),
+            appDetailContent: document.getElementById('appDetailContent'),
+            versionsEmpty: document.getElementById('versionsEmpty'),
+            versionsContent: document.getElementById('versionsContent'),
+            downloadsEmpty: document.getElementById('downloadsEmpty'),
+            downloadsContent: document.getElementById('downloadsContent'),
+            installDropzone: document.getElementById('installDropzone'),
+            progressContainer: document.getElementById('progressContainer'),
+            progressFill: document.getElementById('progressFill'),
+            progressText: document.getElementById('progressText'),
+            ipaFile: document.getElementById('ipaFile'),
+            versionSelect: document.getElementById('versionSelect'),
+            versionList: document.getElementById('versionList'),
+            downloadList: document.getElementById('downloadList'),
+            appName: document.getElementById('appName'),
+            appBundleId: document.getElementById('appBundleId'),
+            appIcon: document.getElementById('appIcon'),
+            appVersion: document.getElementById('appVersion'),
+            appBuildVersion: document.getElementById('appBuildVersion'),
+            appSize: document.getElementById('appSize'),
+            appMinOS: document.getElementById('appMinOS'),
+            versionsTitle: document.getElementById('versionsTitle'),
+            versionsLoading: document.getElementById('versionsLoading'),
+            appDetailAlerts: document.getElementById('appDetailAlerts'),
+            loginModal: document.getElementById('loginModal'),
+            installModal: document.getElementById('installModal'),
+            confirmAppleId: document.getElementById('confirmAppleId'),
+            installAppName: document.getElementById('installAppName'),
+            closeLoginModal: document.getElementById('closeLoginModal'),
+            closeInstallModal: document.getElementById('closeInstallModal'),
+            cancelLoginBtn: document.getElementById('cancelLoginBtn'),
+            confirmLoginBtn: document.getElementById('confirmLoginBtn'),
+            cancelInstallBtn: document.getElementById('cancelInstallBtn'),
+            confirmInstallBtn: document.getElementById('confirmInstallBtn'),
+            installMethod: document.getElementById('installMethod'),
+            alertContainer: document.getElementById('alertContainer')
+        };
+        
+        // 工具函数
+        const utils = {
+            showAlert(message, type = 'info', duration = 5000) {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.innerHTML = `
+                    <div class="alert-icon">
+                        ${type === 'success' ? '<i class="fas fa-check-circle"></i>' : 
+                          type === 'error' ? '<i class="fas fa-exclamation-circle"></i>' : 
+                          '<i class="fas fa-info-circle"></i>'}
+                    </div>
+                    <div class="alert-content">${message}</div>
+                `;
+                
+                elements.alertContainer.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    alert.style.transform = 'translateX(100%)';
+                    setTimeout(() => alert.remove(), 300);
+                }, duration);
+                
+                return alert;
+            },
+            
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            },
+            
+            debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            },
+            
+            generateAvatar(text) {
+                const colors = ['#007AFF', '#5856D6', '#FF2D55', '#FF9500', '#34C759'];
+                const color = colors[text.charCodeAt(0) % colors.length];
+                const letter = text.charAt(0).toUpperCase();
+                
+                return { color, letter };
             }
-
-            try {
-                const res = await fetch(`${BASE_API_URL}/auth/login`, {
+        };
+        
+        // API 服务
+        const api = {
+            async request(endpoint, options = {}) {
+                const url = `${API_BASE_URL}${endpoint}`;
+                const defaultOptions = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                const config = { ...defaultOptions, ...options };
+                
+                try {
+                    const response = await fetch(url, config);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (!data.success) {
+                        throw new Error(data.error || '未知错误');
+                    }
+                    
+                    return data.data;
+                } catch (error) {
+                    console.error('API 请求失败:', error);
+                    utils.showAlert(`请求失败: ${error.message}`, 'error');
+                    throw error;
+                }
+            },
+            
+            // 账号相关
+            async login(appleId, password, code = '') {
+                return this.request('/auth/login', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ appleId, password, code })
                 });
-                const data = await res.json();
-
-                if (data.success) {
-                    showResult('loginResult', `登录成功！账号：${appleId}`);
-                } else {
-                    showResult('loginResult', `登录失败：${data.error}`, false);
+            },
+            
+            async refreshCookie() {
+                return this.request('/auth/refresh', {
+                    method: 'POST'
+                });
+            },
+            
+            async resetAuth() {
+                return this.request('/auth/reset', {
+                    method: 'POST'
+                });
+            },
+            
+            // 应用相关
+            async getAppInfo(appId, appVerId = '') {
+                const endpoint = appVerId ? 
+                    `/apps/${appId}?appVerId=${appVerId}` : 
+                    `/apps/${appId}`;
+                return this.request(endpoint);
+            },
+            
+            async getAppVersions(appId, direction = 'next', count = -1, appVerId = '') {
+                let endpoint = `/apps/${appId}/versions?direction=${direction}&count=${count}`;
+                if (appVerId) {
+                    endpoint += `&appVerId=${appVerId}`;
                 }
-            } catch (err) {
-                showResult('loginResult', `接口请求失败：${err.message}`, false);
-            }
-        });
-
-        // 2. 应用搜索功能
-        document.getElementById('searchBtn').addEventListener('click', async () => {
-            const term = document.getElementById('searchTerm').value.trim();
-            const limit = document.getElementById('searchLimit').value;
-            const country = document.getElementById('searchCountry').value;
-
-            if (!term) {
-                showResult('searchResult', '请输入搜索关键词', false);
-                return;
-            }
-
-            try {
-                const res = await fetch(`${BASE_API_URL}/apps/search/${encodeURIComponent(term)}?limit=${limit}&country=${country}`);
-                const data = await res.json();
-
-                if (data.success) {
-                    showResult('searchResult', `搜索成功，找到${data.data.resultCount}个应用`);
-                    const appListElem = document.getElementById('appList');
-                    appListElem.style.display = 'block';
-                    
-                    let appHtml = '<h3>搜索结果</h3>';
-                    data.data.results.forEach(app => {
-                        appHtml += `
-                            <div style="margin: 8px 0; padding: 8px; border-bottom: 1px solid #eee;">
-                                <p><strong>名称：</strong>${app.trackName}</p>
-                                <p><strong>ID：</strong>${app.trackId}（点击复制）</p>
-                                <p><strong>版本：</strong>${app.version}</p>
-                                <p><strong>Bundle ID：</strong>${app.bundleId}</p>
-                                <button onclick="copyAppId(${app.trackId})">复制ID</button>
-                            </div>
-                        `;
-                    });
-                    appListElem.innerHTML = appHtml;
-                } else {
-                    showResult('searchResult', `搜索失败：${data.error}`, false);
-                    document.getElementById('appList').style.display = 'none';
+                return this.request(endpoint);
+            },
+            
+            async getLegacyVersions(appId, selset = '') {
+                let endpoint = `/apps/${appId}/versions/legacy`;
+                if (selset) {
+                    endpoint += `?selset=${selset}`;
                 }
-            } catch (err) {
-                showResult('searchResult', `接口请求失败：${err.message}`, false);
+                return this.request(endpoint);
+            },
+            
+            async purchaseApp(appId) {
+                return this.request(`/apps/${appId}/purchase`, {
+                    method: 'POST'
+                });
+            },
+            
+            async searchApps(term, limit = 10, country = 'CN') {
+                return this.request(`/apps/search/${term}?limit=${limit}&country=${country}`);
+            },
+            
+            // 检查 API 连接
+            async checkConnection() {
+                try {
+                    await this.request('/');
+                    state.apiConnected = true;
+                    elements.apiStatus.style.backgroundColor = '#34C759';
+                    elements.apiStatusText.textContent = 'API 连接正常';
+                    return true;
+                } catch (error) {
+                    state.apiConnected = false;
+                    elements.apiStatus.style.backgroundColor = '#FF3B30';
+                    elements.apiStatusText.textContent = 'API 连接失败';
+                    return false;
+                }
             }
-        });
-
-        // 复制应用ID到输入框
-        window.copyAppId = (id) => {
-            document.getElementById('appId').value = id;
-            showResult('searchResult', `已复制应用ID：${id}`, true);
         };
-
-        // 3. 获取应用信息与生成安装链接
-        document.getElementById('getAppInfoBtn').addEventListener('click', async () => {
-            const appId = document.getElementById('appId').value.trim();
-            const appVerId = document.getElementById('appVerId').value.trim();
-
-            if (!appId) {
-                showResult('appInfoResult', '请填写应用ID', false);
-                return;
-            }
-
-            try {
-                // 拼接请求URL（带版本号或不带）
-                let reqUrl = `${BASE_API_URL}/apps/${appId}`;
-                if (appVerId) reqUrl += `?appVerId=${appVerId}`;
-
-                const res = await fetch(reqUrl);
-                const data = await res.json();
-
-                if (data.success) {
-                    const appInfo = data.data.appInfo;
-                    showResult('appInfoResult', `获取应用信息成功：${appInfo.name}（v${appInfo.displayVersion}）`);
+        
+        // 账号管理
+        const accountManager = {
+            async addAccount(appleId, password, code = '') {
+                try {
+                    const result = await api.login(appleId, password, code);
                     
-                    // 填充安装信息
-                    document.getElementById('installName').value = appInfo.name;
-                    document.getElementById('installVersion').value = appInfo.displayVersion;
-                    document.getElementById('installBundleId').value = appInfo.bundleId;
+                    const account = {
+                        appleId,
+                        password, // 注意：实际应用中不应该明文存储密码
+                        loggedIn: true,
+                        lastLogin: new Date().toISOString(),
+                        accountInfo: result.loginData.accountInfo
+                    };
                     
-                    // 生成plist安装链接（模拟原代码逻辑）
-                    const plistParams = new URLSearchParams({
-                        name: appInfo.name,
-                        displayVersion: appInfo.displayVersion,
-                        id: appId,
-                        bundleId: appInfo.bundleId
+                    // 添加到状态
+                    state.accounts.push(account);
+                    state.currentAccount = account;
+                    
+                    // 保存到 localStorage
+                    this.saveAccounts();
+                    
+                    // 更新 UI
+                    this.renderAccountList();
+                    
+                    utils.showAlert(`账号 ${appleId} 登录成功`, 'success');
+                    
+                    return account;
+                } catch (error) {
+                    utils.showAlert(`登录失败: ${error.message}`, 'error');
+                    throw error;
+                }
+            },
+            
+            removeAccount(appleId) {
+                state.accounts = state.accounts.filter(acc => acc.appleId !== appleId);
+                
+                if (state.currentAccount && state.currentAccount.appleId === appleId) {
+                    state.currentAccount = state.accounts[0] || null;
+                }
+                
+                this.saveAccounts();
+                this.renderAccountList();
+                
+                utils.showAlert(`账号 ${appleId} 已移除`, 'success');
+            },
+            
+            switchAccount(appleId) {
+                const account = state.accounts.find(acc => acc.appleId === appleId);
+                if (account) {
+                    state.currentAccount = account;
+                    this.renderAccountList();
+                    
+                    // 尝试重新登录
+                    this.loginAccount(appleId);
+                }
+            },
+            
+            async loginAccount(appleId) {
+                const account = state.accounts.find(acc => acc.appleId === appleId);
+                if (!account) return;
+                
+                try {
+                    const result = await api.login(account.appleId, account.password);
+                    account.loggedIn = true;
+                    account.lastLogin = new Date().toISOString();
+                    
+                    this.saveAccounts();
+                    this.renderAccountList();
+                    
+                    utils.showAlert(`已切换到账号 ${appleId}`, 'success');
+                } catch (error) {
+                    account.loggedIn = false;
+                    this.renderAccountList();
+                    utils.showAlert(`切换账号失败: ${error.message}`, 'error');
+                }
+            },
+            
+            saveAccounts() {
+                // 注意：实际应用中应该加密存储敏感信息
+                const accountsToSave = state.accounts.map(acc => ({
+                    ...acc,
+                    password: btoa(acc.password) // 简单 base64 编码，实际应用中应该使用更安全的加密
+                }));
+                
+                localStorage.setItem('apple_accounts', JSON.stringify(accountsToSave));
+            },
+            
+            loadAccounts() {
+                const saved = localStorage.getItem('apple_accounts');
+                if (saved) {
+                    try {
+                        const accounts = JSON.parse(saved);
+                        state.accounts = accounts.map(acc => ({
+                            ...acc,
+                            password: atob(acc.password) // 解码
+                        }));
+                        
+                        if (state.accounts.length > 0) {
+                            state.currentAccount = state.accounts[0];
+                        }
+                        
+                        this.renderAccountList();
+                    } catch (error) {
+                        console.error('加载账号失败:', error);
+                    }
+                }
+            },
+            
+            renderAccountList() {
+                const container = elements.accountList;
+                
+                if (state.accounts.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <p>暂无账号，请添加一个</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = state.accounts.map(account => {
+                    const avatar = utils.generateAvatar(account.appleId);
+                    const statusClass = account.loggedIn ? 'logged-in' : '';
+                    const statusText = account.loggedIn ? '已登录' : '未登录';
+                    const isCurrent = state.currentAccount && 
+                                     state.currentAccount.appleId === account.appleId;
+                    
+                    return `
+                        <div class="account-item ${isCurrent ? 'active-account' : ''}">
+                            <div class="account-info">
+                                <div class="account-avatar" style="background-color: ${avatar.color};">
+                                    ${avatar.letter}
+                                </div>
+                                <div class="account-details">
+                                    <div class="account-name">${account.appleId}</div>
+                                    <div class="account-status ${statusClass}">${statusText}</div>
+                                </div>
+                            </div>
+                            <div class="account-actions">
+                                ${isCurrent ? '' : `
+                                    <button class="btn btn-secondary btn-sm switch-account-btn" 
+                                            data-appleid="${account.appleId}">
+                                        切换
+                                    </button>
+                                `}
+                                <button class="btn btn-danger btn-sm remove-account-btn" 
+                                        data-appleid="${account.appleId}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // 添加事件监听器
+                document.querySelectorAll('.switch-account-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const appleId = e.target.dataset.appleid;
+                        this.switchAccount(appleId);
                     });
-                    const plistUrl = `${BASE_API_URL}/install.plist?${plistParams.toString()}`;
-                    document.getElementById('installPlistLink').href = plistUrl;
+                });
+                
+                document.querySelectorAll('.remove-account-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const appleId = e.target.dataset.appleid;
+                        this.removeAccount(appleId);
+                    });
+                });
+            }
+        };
+        
+        // 应用管理
+        const appManager = {
+            async loadAppDetails(appId, appVerId = '') {
+                try {
+                    elements.appDetailContent.style.display = 'none';
+                    elements.appDetailEmpty.style.display = 'block';
                     
-                    // 显示安装区域
-                    document.getElementById('installArea').style.display = 'block';
-                } else {
-                    showResult('appInfoResult', `获取失败：${data.error}`, false);
-                    document.getElementById('installArea').style.display = 'none';
+                    const data = await api.getAppInfo(appId, appVerId);
+                    const appInfo = data.appInfo;
+                    
+                    state.currentApp = {
+                        id: appId,
+                        ...appInfo
+                    };
+                    
+                    // 更新 UI
+                    this.renderAppDetails(appInfo);
+                    this.loadAppVersions(appId);
+                    
+                    // 显示应用详情
+                    elements.appDetailContent.style.display = 'block';
+                    elements.appDetailEmpty.style.display = 'none';
+                    
+                    // 切换到应用详情标签页
+                    document.querySelector('[data-tab="appDetail"]').click();
+                    
+                    return appInfo;
+                } catch (error) {
+                    utils.showAlert(`加载应用详情失败: ${error.message}`, 'error');
+                    throw error;
                 }
-            } catch (err) {
-                showResult('appInfoResult', `接口请求失败：${err.message}`, false);
-            }
-        });
-
-        // 4. 辅助功能：刷新Cookie
-        document.getElementById('refreshCookieBtn').addEventListener('click', async () => {
-            try {
-                const res = await fetch(`${BASE_API_URL}/auth/refresh`, { method: 'POST' });
-                const data = await res.json();
-                if (data.success) {
-                    showResult('auxResult', 'Cookie刷新成功', true);
+            },
+            
+            renderAppDetails(appInfo) {
+                elements.appName.textContent = appInfo.name;
+                elements.appBundleId.textContent = appInfo.bundleId;
+                elements.appVersion.textContent = appInfo.displayVersion;
+                elements.appBuildVersion.textContent = appInfo.buildVersion;
+                elements.appSize.textContent = utils.formatFileSize(appInfo.fileSize);
+                elements.appMinOS.textContent = `iOS ${appInfo.minimumOsVersion}`;
+                
+                // 设置图标
+                if (appInfo.icon) {
+                    elements.appIcon.innerHTML = `<img src="${appInfo.icon}" alt="${appInfo.name}">`;
                 } else {
-                    showResult('auxResult', `刷新失败：${data.error}`, false);
+                    const avatar = utils.generateAvatar(appInfo.name);
+                    elements.appIcon.innerHTML = `<div style="background-color: ${avatar.color}; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; border-radius: 20px;">${avatar.letter}</div>`;
                 }
-            } catch (err) {
-                showResult('auxResult', `请求失败：${err.message}`, false);
-            }
-        });
-
-        // 辅助功能：重置登录状态
-        document.getElementById('resetAuthBtn').addEventListener('click', async () => {
-            try {
-                const res = await fetch(`${BASE_API_URL}/auth/reset`, { method: 'POST' });
-                const data = await res.json();
-                if (data.success) {
-                    showResult('auxResult', '登录状态已重置，需重新登录', true);
-                    document.getElementById('appleId').value = '';
-                    document.getElementById('password').value = '';
-                    document.getElementById('code').value = '';
-                } else {
-                    showResult('auxResult', `重置失败：${data.error}`, false);
+                
+                // 清空警告
+                elements.appDetailAlerts.innerHTML = '';
+                
+                // 检查是否需要购买
+                if (appInfo.appleId && state.currentAccount && 
+                    appInfo.appleId !== state.currentAccount.appleId) {
+                    const alert = document.createElement('div');
+                    alert.className = 'alert alert-info';
+                    alert.innerHTML = `
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="alert-content">
+                            此应用使用账号 ${appInfo.appleId} 购买，当前账号 ${state.currentAccount.appleId} 可能需要购买后才能下载
+                        </div>
+                    `;
+                    elements.appDetailAlerts.appendChild(alert);
                 }
-            } catch (err) {
-                showResult('auxResult', `请求失败：${err.message}`, false);
-            }
-        });
-
-        // 辅助功能：获取应用历史版本
-        document.getElementById('getVersionListBtn').addEventListener('click', async () => {
-            const appId = document.getElementById('appId').value.trim();
-            if (!appId) {
-                showResult('auxResult', '请先填写应用ID', false);
-                return;
-            }
-
-            try {
-                const res = await fetch(`${BASE_API_URL}/apps/${appId}/versions`);
-                const data = await res.json();
-                if (data.success) {
-                    showResult('auxResult', `获取到${data.data.total}个历史版本`, true);
-                } else {
-                    showResult('auxResult', `获取失败：${data.error}`, false);
+            },
+            
+            async loadAppVersions(appId) {
+                try {
+                    elements.versionSelect.innerHTML = '<option value="">加载版本中...</option>';
+                    
+                    const data = await api.getAppVersions(appId, 'next', -1);
+                    
+                    // 更新版本选择器
+                    elements.versionSelect.innerHTML = data.data.map(item => {
+                        const [versionId, versionName] = item;
+                        const isCurrent = state.currentApp && 
+                                        state.currentApp.externalVersionId === versionId;
+                        
+                        return `<option value="${versionId}" ${isCurrent ? 'selected' : ''}>
+                            ${versionName || `版本 ${versionId}`}
+                        </option>`;
+                    }).join('');
+                    
+                    // 添加事件监听器
+                    elements.versionSelect.addEventListener('change', async (e) => {
+                        const versionId = e.target.value;
+                        if (versionId) {
+                            await this.loadAppDetails(appId, versionId);
+                        }
+                    });
+                    
+                } catch (error) {
+                    console.error('加载版本列表失败:', error);
+                    elements.versionSelect.innerHTML = '<option value="">加载失败</option>';
                 }
-            } catch (err) {
-                showResult('auxResult', `请求失败：${err.message}`, false);
-            }
-        });
-
-        // 辅助功能：购买应用
-        document.getElementById('purchaseAppBtn').addEventListener('click', async () => {
-            const appId = document.getElementById('appId').value.trim();
-            if (!appId) {
-                showResult('auxResult', '请先填写应用ID', false);
-                return;
-            }
-
-            try {
-                const res = await fetch(`${BASE_API_URL}/apps/${appId}/purchase`, { method: 'POST' });
-                const data = await res.json();
-                if (data.success) {
-                    showResult('auxResult', `应用购买请求提交成功（ID：${appId}）`, true);
-                } else {
-                    showResult('auxResult', `购买失败：${data.error}`, false);
+            },
+            
+            async loadVersionHistory(appId, source = 'official') {
+                try {
+                    elements.versionsLoading.style.display = 'block';
+                    
+                    let data;
+                    if (source === 'official') {
+                        data = await api.getAppVersions(appId, 'next', -1);
+                    } else {
+                        data = await api.getLegacyVersions(appId);
+                    }
+                    
+                    elements.versionsTitle.textContent = `版本历史 (${data.total} 个版本)`;
+                    this.renderVersionList(data.data, source);
+                    
+                    elements.versionsLoading.style.display = 'none';
+                } catch (error) {
+                    utils.showAlert(`加载版本历史失败: ${error.message}`, 'error');
+                    elements.versionsLoading.style.display = 'none';
                 }
-            } catch (err) {
-                showResult('auxResult', `请求失败：${err.message}`, false);
+            },
+            
+            renderVersionList(versions, source) {
+                elements.versionList.innerHTML = versions.map(item => {
+                    const [versionId, versionName] = item;
+                    const isCurrent = state.currentApp && 
+                                    state.currentApp.externalVersionId === versionId;
+                    
+                    return `
+                        <div class="version-item ${isCurrent ? 'current-version' : ''}">
+                            <div class="version-info">
+                                <div class="version-number">${versionName || `版本 ${versionId}`}</div>
+                                <div class="version-build">版本ID: ${versionId}</div>
+                                ${source === 'legacy' ? '<div class="version-date">第三方数据</div>' : ''}
+                            </div>
+                            <div class="version-actions">
+                                <button class="btn btn-primary btn-sm load-version-btn" 
+                                        data-appid="${state.currentApp.id}" 
+                                        data-versionid="${versionId}">
+                                    查看详情
+                                </button>
+                                <button class="btn btn-success btn-sm download-version-btn" 
+                                        data-appid="${state.currentApp.id}" 
+                                        data-versionid="${versionId}">
+                                    下载
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // 添加事件监听器
+                document.querySelectorAll('.load-version-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const appId = e.target.dataset.appid;
+                        const versionId = e.target.dataset.versionid;
+                        await this.loadAppDetails(appId, versionId);
+                    });
+                });
+                
+                document.querySelectorAll('.download-version-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const appId = e.target.dataset.appid;
+                        const versionId = e.target.dataset.versionid;
+                        await this.downloadApp(appId, versionId);
+                    });
+                });
+            },
+            
+            async downloadApp(appId, appVerId = '') {
+                try {
+                    if (!state.currentAccount || !state.currentAccount.loggedIn) {
+                        utils.showAlert('请先登录 Apple 账号', 'error');
+                        return;
+                    }
+                    
+                    const data = await api.getAppInfo(appId, appVerId);
+                    const appInfo = data.appInfo;
+                    
+                    // 添加到下载记录
+                    const download = {
+                        id: Date.now(),
+                        appId,
+                        appVerId,
+                        name: appInfo.name,
+                        version: appInfo.displayVersion,
+                        bundleId: appInfo.bundleId,
+                        size: appInfo.fileSize,
+                        downloadUrl: appInfo.url,
+                        downloadDate: new Date().toISOString(),
+                        metadata: appInfo.metadata
+                    };
+                    
+                    state.downloads.unshift(download);
+                    this.saveDownloads();
+                    this.renderDownloads();
+                    
+                    // 显示安装确认对话框
+                    this.showInstallModal(appInfo);
+                    
+                } catch (error) {
+                    // 检查是否需要购买
+                    if (error.message.includes('9610')) {
+                        const confirmPurchase = confirm('您需要购买此应用才能下载。是否立即购买？');
+                        if (confirmPurchase) {
+                            await this.purchaseApp(appId);
+                            // 购买成功后重试下载
+                            await this.downloadApp(appId, appVerId);
+                        }
+                    } else {
+                        utils.showAlert(`下载失败: ${error.message}`, 'error');
+                    }
+                }
+            },
+            
+            async purchaseApp(appId) {
+                try {
+                    utils.showAlert('正在购买应用...', 'info');
+                    await api.purchaseApp(appId);
+                    utils.showAlert('购买成功！现在可以下载应用了', 'success');
+                } catch (error) {
+                    utils.showAlert(`购买失败: ${error.message}`, 'error');
+                    throw error;
+                }
+            },
+            
+            showInstallModal(appInfo) {
+                elements.installAppName.textContent = `${appInfo.name} (${appInfo.displayVersion})`;
+                elements.installModal.classList.add('active');
+            },
+            
+            async installApp(appInfo, method = 'itms') {
+                switch (method) {
+                    case 'itms':
+                        // 通过 itms-services 协议安装
+                        const plistUrl = `${INSTALL_SERVICE_URL}?name=${encodeURIComponent(appInfo.name)}&displayVersion=${encodeURIComponent(appInfo.displayVersion)}&id=${appInfo.appId}&bundleId=${encodeURIComponent(appInfo.bundleId)}&url=${encodeURIComponent(appInfo.url)}`;
+                        const installUrl = `itms-services://?action=download-manifest&url=${encodeURIComponent(plistUrl)}`;
+                        
+                        window.location.href = installUrl;
+                        break;
+                        
+                    case 'safari':
+                        // 在 Safari 中打开下载链接
+                        window.open(appInfo.url, '_blank');
+                        break;
+                        
+                    case 'local':
+                        // 使用本地文件（通过文件选择器处理）
+                        elements.ipaFile.click();
+                        break;
+                }
             }
-        });
+        };
+        
+        // 下载管理
+        const downloadManager = {
+            saveDownloads() {
+                localStorage.setItem('app_downloads', JSON.stringify(state.downloads));
+            },
+            
+            loadDownloads() {
+                const saved = localStorage.getItem('app_downloads');
+                if (saved) {
+                    try {
+                        state.downloads = JSON.parse(saved);
+                        this.renderDownloads();
+                    } catch (error) {
+                        console.error('加载下载记录失败:', error);
+                    }
+                }
+            },
+            
+            renderDownloads() {
+                const container = elements.downloadList;
+                const emptyState = elements.downloadsEmpty;
+                const content = elements.downloadsContent;
+                
+                if (state.downloads.length === 0) {
+                    content.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                
+                content.style.display = 'block';
+                emptyState.style.display = 'none';
+                
+                container.innerHTML = state.downloads.map(download => {
+                    const date = new Date(download.downloadDate);
+                    const formattedDate = date.toLocaleString('zh-CN');
+                    const size = utils.formatFileSize(download.size);
+                    
+                    return `
+                        <div class="version-item">
+                            <div class="version-info">
+                                <div class="version-number">${download.name}</div>
+                                <div class="version-build">${download.version} • ${size}</div>
+                                <div class="version-date">${formattedDate}</div>
+                            </div>
+                            <div class="version-actions">
+                                <button class="btn btn-primary btn-sm reinstall-btn" 
+                                        data-downloadid="${download.id}">
+                                    重新安装
+                                </button>
+                                <button class="btn btn-danger btn-sm remove-download-btn" 
+                                        data-downloadid="${download.id}">
+                                    删除
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // 添加事件监听器
+                document.querySelectorAll('.reinstall-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const downloadId = parseInt(e.target.dataset.downloadid);
+                        const download = state.downloads.find(d => d.id === downloadId);
+                        if (download) {
+                            appManager.showInstallModal(download);
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.remove-download-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const downloadId = parseInt(e.target.dataset.downloadid);
+                        this.removeDownload(downloadId);
+                    });
+                });
+            },
+            
+            removeDownload(downloadId) {
+                state.downloads = state.downloads.filter(d => d.id !== downloadId);
+                this.saveDownloads();
+                this.renderDownloads();
+                utils.showAlert('下载记录已删除', 'success');
+            },
+            
+            clearDownloads() {
+                if (confirm('确定要清除所有下载记录吗？')) {
+                    state.downloads = [];
+                    this.saveDownloads();
+                    this.renderDownloads();
+                    utils.showAlert('所有下载记录已清除', 'success');
+                }
+            }
+        };
+        
+        // 搜索功能
+        const searchManager = {
+            async searchApps() {
+                const term = document.getElementById('searchTerm').value;
+                const limit = document.getElementById('searchLimit').value;
+                const country = document.getElementById('searchCountry').value;
+                
+                if (!term.trim()) {
+                    utils.showAlert('请输入搜索关键词', 'error');
+                    return;
+                }
+                
+                try {
+                    const data = await api.searchApps(term, parseInt(limit), country);
+                    this.renderSearchResults(data.results || []);
+                } catch (error) {
+                    utils.showAlert(`搜索失败: ${error.message}`, 'error');
+                }
+            },
+            
+            renderSearchResults(results) {
+                const container = elements.searchResults;
+                
+                if (results.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <p>未找到相关应用</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = results.map(app => {
+                    return `
+                        <div class="app-card" data-appid="${app.trackId}">
+                            <div class="app-icon">
+                                ${app.artworkUrl100 ? 
+                                    `<img src="${app.artworkUrl100}" alt="${app.trackName}">` : 
+                                    `<i class="fas fa-app-store"></i>`}
+                            </div>
+                            <div class="app-info">
+                                <div class="app-name">${app.trackName}</div>
+                                <div class="app-bundle">${app.bundleId}</div>
+                                <div class="app-version">${app.version} • ${app.primaryGenreName}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                // 添加事件监听器
+                document.querySelectorAll('.app-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const appId = e.currentTarget.dataset.appid;
+                        appManager.loadAppDetails(appId);
+                    });
+                });
+            }
+        };
+        
+        // 本地文件安装
+        const localInstallManager = {
+            init() {
+                // 文件选择按钮
+                elements.selectIpaBtn.addEventListener('click', () => {
+                    elements.ipaFile.click();
+                });
+                
+                // 文件选择器
+                elements.ipaFile.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        this.handleFileSelect(file);
+                    }
+                });
+                
+                // 拖放区域
+                elements.installDropzone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    elements.installDropzone.style.backgroundColor = 'rgba(0, 122, 255, 0.1)';
+                });
+                
+                elements.installDropzone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    elements.installDropzone.style.backgroundColor = '';
+                });
+                
+                elements.installDropzone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    elements.installDropzone.style.backgroundColor = '';
+                    
+                    const file = e.dataTransfer.files[0];
+                    if (file && file.name.endsWith('.ipa')) {
+                        this.handleFileSelect(file);
+                    } else {
+                        utils.showAlert('请选择有效的 IPA 文件', 'error');
+                    }
+                });
+            },
+            
+            async handleFileSelect(file) {
+                // 显示进度条
+                elements.progressContainer.style.display = 'block';
+                elements.progressFill.style.width = '0%';
+                elements.progressText.textContent = '读取文件中...';
+                
+                try {
+                    // 读取文件
+                    const reader = new FileReader();
+                    
+                    reader.onprogress = (e) => {
+                        if (e.lengthComputable) {
+                            const percent = (e.loaded / e.total) * 100;
+                            elements.progressFill.style.width = percent + '%';
+                            elements.progressText.textContent = `读取中: ${Math.round(percent)}%`;
+                        }
+                    };
+                    
+                    reader.onload = async (e) => {
+                        // 这里可以解析 IPA 文件并提取信息
+                        // 由于浏览器限制，我们无法直接解析 IPA 文件
+                        // 所以这里只模拟安装过程
+                        
+                        elements.progressFill.style.width = '100%';
+                        elements.progressText.textContent = '准备安装...';
+                        
+                        // 模拟安装
+                        setTimeout(() => {
+                            this.installLocalFile(file);
+                        }, 1000);
+                    };
+                    
+                    reader.onerror = () => {
+                        utils.showAlert('读取文件失败', 'error');
+                        elements.progressContainer.style.display = 'none';
+                    };
+                    
+                    reader.readAsArrayBuffer(file);
+                    
+                } catch (error) {
+                    utils.showAlert(`处理文件失败: ${error.message}`, 'error');
+                    elements.progressContainer.style.display = 'none';
+                }
+            },
+            
+            async installLocalFile(file) {
+                // 在实际应用中，这里应该上传文件到服务器并生成安装链接
+                // 由于安全限制，这里只显示提示
+                
+                elements.progressText.textContent = '安装准备完成';
+                
+                utils.showAlert(`已准备安装 ${file.name}，但由于浏览器安全限制，本地 IPA 文件需要通过其他方式安装。`, 'info');
+                
+                // 隐藏进度条
+                setTimeout(() => {
+                    elements.progressContainer.style.display = 'none';
+                }, 2000);
+            }
+        };
+        
+        // 初始化
+        const init = () => {
+            // 检查 API 连接
+            api.checkConnection();
+            
+            // 加载保存的数据
+            accountManager.loadAccounts();
+            downloadManager.loadDownloads();
+            
+            // 初始化本地安装
+            localInstallManager.init();
+            
+            // 标签页切换
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const tab = e.target.dataset.tab;
+                    
+                    // 更新按钮状态
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    // 显示对应的内容
+                    const container = e.target.closest('.sidebar') ? '.sidebar' : '.content';
+                    document.querySelectorAll(`${container} .tab-content`).forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tab).classList.add('active');
+                    
+                    // 特殊处理
+                    if (tab === 'versions' && state.currentApp) {
+                        appManager.loadVersionHistory(state.currentApp.id);
+                    }
+                });
+            });
+            
+            // 登录按钮
+            elements.loginBtn.addEventListener('click', async () => {
+                const appleId = document.getElementById('appleId').value;
+                const password = document.getElementById('password').value;
+                const code = document.getElementById('code').value;
+                
+                if (!appleId || !password) {
+                    utils.showAlert('请输入 Apple ID 和密码', 'error');
+                    return;
+                }
+                
+                // 显示确认对话框
+                elements.confirmAppleId.textContent = appleId;
+                elements.loginModal.classList.add('active');
+                
+                // 保存登录信息
+                elements.confirmLoginBtn.onclick = async () => {
+                    try {
+                        await accountManager.addAccount(appleId, password, code);
+                        elements.loginModal.classList.remove('active');
+                        
+                        // 清空表单
+                        document.getElementById('appleId').value = '';
+                        document.getElementById('password').value = '';
+                        document.getElementById('code').value = '';
+                    } catch (error) {
+                        // 错误已经在 addAccount 中处理
+                    }
+                };
+            });
+            
+            // 搜索按钮
+            elements.searchBtn.addEventListener('click', () => searchManager.searchApps());
+            
+            // 搜索输入框回车搜索
+            document.getElementById('searchTerm').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchManager.searchApps();
+                }
+            });
+            
+            // 下载按钮
+            elements.downloadBtn.addEventListener('click', async () => {
+                if (state.currentApp) {
+                    await appManager.downloadApp(state.currentApp.id, state.currentApp.externalVersionId);
+                }
+            });
+            
+            // 安装按钮
+            elements.installBtn.addEventListener('click', () => {
+                if (state.currentApp) {
+                    appManager.showInstallModal(state.currentApp);
+                }
+            });
+            
+            // 查看版本按钮
+            elements.viewVersionsBtn.addEventListener('click', () => {
+                if (state.currentApp) {
+                    document.querySelector('[data-tab="versions"]').click();
+                }
+            });
+            
+            // 刷新版本按钮
+            elements.refreshVersionsBtn.addEventListener('click', () => {
+                if (state.currentApp) {
+                    const source = document.getElementById('versionSource').value;
+                    appManager.loadVersionHistory(state.currentApp.id, source);
+                }
+            });
+            
+            // 清除下载按钮
+            elements.clearDownloadsBtn.addEventListener('click', () => {
+                downloadManager.clearDownloads();
+            });
+            
+            // 模态框关闭按钮
+            elements.closeLoginModal.addEventListener('click', () => {
+                elements.loginModal.classList.remove('active');
+            });
+            
+            elements.closeInstallModal.addEventListener('click', () => {
+                elements.installModal.classList.remove('active');
+            });
+            
+            elements.cancelLoginBtn.addEventListener('click', () => {
+                elements.loginModal.classList.remove('active');
+            });
+            
+            elements.cancelInstallBtn.addEventListener('click', () => {
+                elements.installModal.classList.remove('active');
+            });
+            
+            // 确认安装按钮
+            elements.confirmInstallBtn.addEventListener('click', () => {
+                const method = elements.installMethod.value;
+                if (state.currentApp) {
+                    appManager.installApp(state.currentApp, method);
+                    elements.installModal.classList.remove('active');
+                }
+            });
+            
+            // 版本源选择
+            document.getElementById('versionSource').addEventListener('change', (e) => {
+                if (state.currentApp) {
+                    appManager.loadVersionHistory(state.currentApp.id, e.target.value);
+                }
+            });
+            
+            // 初始化完成
+            utils.showAlert('应用已准备就绪，请登录 Apple 账号开始使用', 'info');
+        };
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
